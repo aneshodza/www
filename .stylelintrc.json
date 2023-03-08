@@ -1,0 +1,20 @@
+{
+  "extends": "stylelint-config-standard-scss",
+  "ignoreFiles": [
+    "node_modules/**/*",
+    "dist/**/*",
+    "app/assets/builds/**/*",
+    "coverage/**/*",
+    "src/**/*"
+  ],
+  "rules": {
+    "custom-property-pattern": [
+      "^([a-z][a-z0-9]*)(-[a-z0-9]+)*$",
+      {
+        "message": "Expected custom property name to be kebab-case"
+      }
+    ],
+    "color-named": "never",
+    "color-hex-case": "upper"
+  }
+}
