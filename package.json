@@ -3,16 +3,27 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "concurrently \"next dev\" \"npm run build:css:watch\"",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "lint:css": "npx stylelint '**/*.scss'",
+    "build:css:watch": "sass ./styles/global.scss ./public/styles/global.css --style compressed --load-path=node_modules --watch",
+    "build:css": "sass ./styles/global.scss ./public/styles/global.css --style compressed --load-path=node_modules",
+    "prepare": "husky install"
   },
   "dependencies": {
+    "concurrently": "^7.6.0",
     "eslint": "8.35.0",
     "eslint-config-next": "13.2.3",
     "next": "13.2.3",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "sass": "^1.58.3",
+    "stylelint": "^15.2.0",
+    "stylelint-config-standard-scss": "^7.0.1"
+  },
+  "devDependencies": {
+    "husky": "^8.0.3"
   }
 }

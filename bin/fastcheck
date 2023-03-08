@@ -1,0 +1,49 @@
+#!/bin/bash
+
+white='\033[1;37m'
+red='\033[0;31m'
+green='\033[0;32m'
+
+function return_code {
+  if [ $? -ne 0 ]; then
+    echo -e "${red} Error: $1 found errors! ${white}"
+    failing_checks+=("$1")
+    passing=false
+  fi
+}
+
+passing=true
+failing_checks=()
+
+echo "Executing fastchecks..."
+
+if [[ $* == *--fix* ]]; then
+  echo "Autocorrecting..."
+
+  npx eslint . --fix
+  return_code "ESLint"
+
+  npx stylelint "**/*.scss" --fix
+  return_code "Stylelint"
+else
+  echo "Note: Pass --fix to autofix"
+
+  npx eslint .
+  return_code "ESLint"
+
+  npx stylelint "**/*.scss"
+  return_code "Stylelint"
+fi
+
+if [ "$passing" = true ]; then
+  echo -e "${green}----------------------------------------"
+  echo -e "All checks passed"
+  echo -e "----------------------------------------${white}"
+  exit 0
+else
+  echo -e "${red}----------------------------------------"
+  echo -e "Some checks failed"
+  echo -e "Failed checks: ${failing_checks[@]}"
+  echo -e "----------------------------------------${white}"
+  exit 1
+fi
