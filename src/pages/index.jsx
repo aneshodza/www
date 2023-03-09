@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import Landing from "./components/Landing";
+import Landing from "../components/Landing";
 
 export default function App() {
   const app = useRef(null);
