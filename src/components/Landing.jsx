@@ -49,7 +49,6 @@ export default function Landing(props) {
             titleWrapper.current.offsetLeft * -1 + 'px')
         titleWrapper.current.classList.add('move-top-left')
         setTimeout(() => {
-            titleWrapper.current.classList.add('stay')
             caret.current.classList.add('blinking')
             mainBody.current.classList.add('fade-in')
             props.appRef.current.classList.add('expand')
@@ -70,7 +69,7 @@ export default function Landing(props) {
                 <h1>{name}<span ref={caret}>_</span></h1>
                 <div ref={mainBody} className="main-body">
                     <h2>Just another Software Engineer</h2>
-                    <div class="about">
+                    <div className="about">
                     </div>
                 </div>
             </div>
