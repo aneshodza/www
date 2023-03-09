@@ -11,7 +11,7 @@
 body {
   scroll-behavior: smooth;
   overflow-x: hidden;
-  overflow-y: hidden;
+  overflow-y: scroll;
   color: $font-color;
   background-color: $background-color;
   height: 100vh;
