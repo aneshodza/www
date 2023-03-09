@@ -1,0 +1,8 @@
+.about {
+    position: relative;
+}
+
+.app:not(.expand) .about {
+    display: none;
+}
+

@@ -1,0 +1,20 @@
+.languages-wrapper {
+    display: flex;
+    flex-direction: row;
+    margin-top: 40px;
+
+    .languages {
+        margin-left: 1ch;
+        position: relative;
+        top: -30px;
+        display: flex;
+        flex-direction: column;
+        overflow-y: hidden;
+        height: 90px;
+
+        &>* {
+            color: $font-color;
+            min-height: 30px;
+        }
+    }
+}

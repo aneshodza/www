@@ -1,0 +1,21 @@
+.arrows-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    color: $font-color;
+    text-decoration: none;
+}
+
+.landing-arrows {
+    position: absolute;
+    top: calc(100vh - 100px);
+
+    .bottom-arrow {
+        top: -30px;
+    }
+    
+    &>* {
+        position: relative;
+    }
+}

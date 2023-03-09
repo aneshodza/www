@@ -1,0 +1,34 @@
+.first-section {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+
+
+    h1, h2 {
+        margin-left: 20px;
+        margin-right: 20px;
+    } 
+
+    .main-body {
+        opacity: 0;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    h1 {
+        font-size: 40px;
+    }
+    
+    h2 {
+        font-size: 25px;
+    }
+}
+
+.position-top-left {
+    position: relative;
+    top: 0;
+    left: var(--scrollbard-width);
+}

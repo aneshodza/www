@@ -1,1 +1,47 @@
-// style here
+@import './sheets/variables';
+@import './sheets/fonts';
+@import './sheets/basics';
+@import './sheets/animations';
+@import './sheets/landing';
+@import './sheets/about';
+@import './sheets/projects';
+@import './sheets/languages-wrapper';
+@import './sheets/arrows-container';
+
+body {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  color: $font-color;
+  background-color: $background-color;
+  height: 100vh;
+  width: 100%;
+}
+
+.expand {
+  height: fit-content !important;
+}
+
+#top-of-page {
+  width: 100%;
+}
+
+// .js {
+//     color: #f0dc5a;
+// }
+
+// .rb {
+//     color: #e80015;
+// }
+
+// .py {
+//     color: #2b5e95;
+// }
+
+// .java {
+//     color: #dd590b;
+// }
+
+// .rs {
+//     color: #eb3409;
+// }
