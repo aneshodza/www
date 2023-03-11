@@ -49,6 +49,7 @@ export default function Landing(props) {
             titleWrapper.current.offsetLeft * -1 + 'px')
         titleWrapper.current.classList.add('move-top-left')
         setTimeout(() => {
+            titleWrapper.current.classList.add('stay')
             caret.current.classList.add('blinking')
             mainBody.current.classList.add('fade-in')
             props.appRef.current.classList.add('expand')

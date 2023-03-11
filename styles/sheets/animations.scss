@@ -111,4 +111,11 @@
 
 .move-top-left {
     animation: 0.5s move-top-left forwards ease;
+
+    &.stay {
+        transform: translate(0, 0) !important;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
 }
