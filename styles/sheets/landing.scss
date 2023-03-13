@@ -4,16 +4,20 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    color: $font-color-transparent;
 
-
+    a {
+        color: $link-color-transparent;
+        border: none;
+    }
 
     h1, h2 {
         margin-left: 20px;
         margin-right: 20px;
     } 
 
-    .main-body {
-        opacity: 0;
+    h1 {
+        color: $font-color;
     }
 }
 

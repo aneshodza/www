@@ -18,16 +18,30 @@
 
 @keyframes fade-in {
     0% {
-        opacity: 0;
+        color: $font-color-transparent;
     }
 
     100% {
-        opacity: 1;
+        color: $font-color;
+    }
+}
+
+@keyframes link-fade-in {
+    0% {
+        color: $link-color-transparent;
+    }
+
+    100% {
+        color: $link-color;
     }
 }
 
 .fade-in {
     animation: fade-in 0.5s forwards;
+
+    a {
+        animation: link-fade-in 0.5s forwards;
+    }
 }
 
 @keyframes scroll-languages {
