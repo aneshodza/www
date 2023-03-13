@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import DownArrows from "./DownArrows";
+import UnderConstruction from "./UnderConstruction";
 
 let fullName = 'anes-hodza'; let minDelay = 120;
 
@@ -65,16 +66,17 @@ export default function Landing(props) {
     }, []);
 
     return (
-        <div className="first-section">
+        <div className="first-section" ref={mainBody}>
             <div className="center" ref={titleWrapper}>
                 <h1>{name}<span ref={caret}>_</span></h1>
-                <div ref={mainBody} className="main-body">
+                <div className="main-body">
                     <h2>Just another Software Engineer</h2>
                     <div className="about">
                     </div>
                 </div>
             </div>
-            { downArrows }
+            <UnderConstruction />
+            {/* { downArrows } */}
         </div>
     );
 }

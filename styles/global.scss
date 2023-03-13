@@ -7,6 +7,7 @@
 @import './sheets/projects';
 @import './sheets/languages-wrapper';
 @import './sheets/arrows-container';
+@import './sheets/under-construction';
 
 body {
   scroll-behavior: smooth;
@@ -24,6 +25,14 @@ body {
 
 #top-of-page {
   width: 100%;
+}
+
+a {
+  color: $link-color;
+
+  &:hover {
+    color: $link-color-hover !important;
+  }
 }
 
 // .js {
