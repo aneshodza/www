@@ -3,4 +3,18 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    &>* {
+        text-align: center;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .under-construction {
+        h2 {
+            font-size: 1.5rem;
+        }
+    }
 }
