@@ -39,6 +39,10 @@
 .fade-in {
     animation: fade-in 0.5s forwards;
 
+    &> * {
+        display: inherit !important;
+    }
+
     a {
         animation: link-fade-in 0.5s forwards;
     }
