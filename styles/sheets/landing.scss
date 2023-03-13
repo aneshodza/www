@@ -6,6 +6,15 @@
     align-items: center;
     color: $font-color-transparent;
 
+    .center {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &> :not(:first-child) {
+        display: none;
+    }
+
     a {
         color: $link-color-transparent;
         border: none;
