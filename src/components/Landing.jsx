@@ -1,15 +1,17 @@
-import { useEffect, useState, useRef } from "react";
+import React from "react";
+import CssBox from "./CssBox";
 import DownArrows from "./DownArrows";
 import UnderConstruction from "./UnderConstruction";
 
 let fullName = 'anes-hodza'; let minDelay = 120;
 
 export default function Landing(props) {
-    const [name, setName] = useState('');
-    const [downArrows, setDownArrows] = useState(null);
-    const caret = useRef(null);
-    const mainBody = useRef(null);
-    const titleWrapper = useRef(null);
+    const [name, setName] = React.useState('');
+    const [downArrows, setDownArrows] = React.useState(null);
+    const [css, setCss] = React.useState(`display: flex;\nflex-direction: column;\njustify-content: center;\nalign-items: center;`);
+    const caret = React.useRef(null);
+    const mainBody = React.useRef(null);
+    const titleWrapper = React.useRef(null);
 
     const appendName = (idx) => {
         if (fullName.length === idx-1) {
@@ -54,12 +56,29 @@ export default function Landing(props) {
             caret.current.classList.add('blinking')
             mainBody.current.classList.add('fade-in')
             props.appRef.current.classList.add('expand')
-            setDownArrows(
+            setDownArrows(  
                 <DownArrows href={'#about'} givenClass={"jump-in float landing-arrows"}/>)
         }, 600)
     }
 
-    useEffect(() => {
+    const parseCss = (css) => {
+      const cssArray = css.replace(/(\r\n|\n|\r)/gm, '').split(';');
+      console.log(cssArray)
+      cssArray.forEach(property => {
+        const [key, value] = property.split(':');
+        if (key && value) {
+          console.log(key, value)
+          mainBody.current.style.setProperty(key, value, 'important')
+        }
+      })
+    }
+    
+    React.useEffect(() => {
+      console.log('css changed')
+      parseCss(css)
+    }, [css]);
+
+    React.useEffect(() => {
         setTimeout(() => {
             appendName(0)
         }, minDelay*1.5)
@@ -74,8 +93,8 @@ export default function Landing(props) {
                     <div className="about">
                     </div>
                 </div>
+                <CssBox css={css} setCss={setCss} />
             </div>
-            <UnderConstruction />
             {/* { downArrows } */}
         </div>
     );

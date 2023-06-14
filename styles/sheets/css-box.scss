@@ -1,0 +1,27 @@
+.css-box {
+  border-radius: 5px;
+  padding: 10px;
+  margin-left: 10vw;
+  margin-top: 50px;
+  border: none;
+
+  textarea {
+    background: none;
+    color: $font-color;
+    border: none;
+    margin-left: 20px;
+    font-size: 16px;
+    resize: none;
+    width: 40vw;
+    display: none;
+    outline: none !important;
+  }
+}
+
+.stay .css-box {
+  border: $font-color 2px solid;
+
+  textarea {
+    display: block;
+  }
+}
