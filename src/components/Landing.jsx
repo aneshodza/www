@@ -1,6 +1,5 @@
 import { useEffect, useState, useRef } from "react";
 import DownArrows from "./DownArrows";
-import UnderConstruction from "./UnderConstruction";
 
 let fullName = 'anes-hodza'; let minDelay = 120;
 
@@ -75,8 +74,8 @@ export default function Landing(props) {
                     </div>
                 </div>
             </div>
-            <UnderConstruction />
-            {/* { downArrows } */}
+            {/* <UnderConstruction /> */}
+            { downArrows }
         </div>
     );
 }
