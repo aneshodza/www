@@ -1,9 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import DownArrows from "./DownArrows";
 import Languages from "./Languages";
+import localFont from 'next/font/local'
 
 let fullName = "anes-hodza";
 let minDelay = 120;
+
+const jbMono = localFont({ src: '../fonts/JetBrainsMono-Regular.woff2' })
 
 export default function Landing(props) {
   const [name, setName] = useState("");
@@ -68,7 +71,7 @@ export default function Landing(props) {
         />,
       );
 
-      setLanguages(<Languages />);
+      // setLanguages(<Languages />);
     }, 600);
   };
 
@@ -81,7 +84,7 @@ export default function Landing(props) {
   return (
     <div className="first-section" ref={mainBody}>
       <div className="center" ref={titleWrapper}>
-        <h1 className="main-title">
+        <h1 className={`main-title ${jbMono.className}`}>
           {name}
           <span ref={caret}>_</span>
         </h1>
