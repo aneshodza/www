@@ -8,6 +8,7 @@
 @import './sheets/languages-wrapper';
 @import './sheets/arrows-container';
 @import './sheets/under-construction';
+@import './sheets/languages.scss';
 
 body {
   scroll-behavior: smooth;
@@ -26,12 +27,6 @@ body {
 
 h1, h2, h3 {
   margin: 0;
-}
-
-h1 {
-  &:not(.main-title)::before {
-    content: '> '
-  }
 }
 
 #top-of-page {

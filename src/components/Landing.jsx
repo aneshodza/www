@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import DownArrows from "./DownArrows";
+import Languages from "./Languages";
 
 let fullName = "anes-hodza";
 let minDelay = 120;
@@ -7,6 +8,7 @@ let minDelay = 120;
 export default function Landing(props) {
   const [name, setName] = useState("");
   const [downArrows, setDownArrows] = useState(null);
+  const [languages, setLanguages] = useState(null);
   const caret = useRef(null);
   const mainBody = useRef(null);
   const titleWrapper = useRef(null);
@@ -65,6 +67,8 @@ export default function Landing(props) {
           givenClass={"jump-in float landing-arrows"}
         />,
       );
+
+      setLanguages(<Languages />);
     }, 600);
   };
 
@@ -87,6 +91,7 @@ export default function Landing(props) {
           </div>
         </div>
       </div>
+      {languages}
       {downArrows}
     </div>
   );
