@@ -9,7 +9,7 @@ export default function App() {
     <div ref={app} className="app contracted">
       <div id="top-of-page"></div>
       <Landing appRef={app} setNameDone={setNameDone} />
-      {/* { nameDone && <About /> } */}
+      { nameDone && <About /> }
     </div>
   );
 }
