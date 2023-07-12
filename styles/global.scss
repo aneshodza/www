@@ -28,12 +28,6 @@ h1, h2, h3 {
   margin: 0;
 }
 
-h1 {
-  &:not(.main-title)::before {
-    content: '> '
-  }
-}
-
 #top-of-page {
   width: 100%;
 }
