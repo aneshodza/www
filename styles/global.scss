@@ -15,12 +15,23 @@ body {
   overflow-y: hidden;
   color: $font-color;
   background-color: $background-color;
-  height: 100vh;
+  min-height: 100vh;
   width: 100%;
+  margin: 0;
 }
 
-.expand {
-  height: fit-content !important;
+.app {
+  margin-left: 10px;
+}
+
+h1, h2, h3 {
+  margin: 0;
+}
+
+h1 {
+  &:not(.main-title)::before {
+    content: '> '
+  }
 }
 
 #top-of-page {
