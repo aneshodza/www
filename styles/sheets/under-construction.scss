@@ -29,6 +29,10 @@
     img {
       filter: invert(1);
       transition: filter 0.2s ease;
+
+      &:hover {
+        filter: invert(0.8);
+      }
     }
   }
 }
