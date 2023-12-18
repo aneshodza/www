@@ -119,6 +119,12 @@
     &>* {
         animation: float 4s ease-in-out infinite;
     }
+
+    &:hover {
+      &>* {
+        animation-play-state: paused;    
+      }
+    }
 }
 
 @keyframes move-top-left {
