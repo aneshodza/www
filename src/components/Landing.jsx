@@ -83,13 +83,13 @@ export default function Landing(props) {
 
   return (
     <div className="first-section" ref={mainBody}>
-      <div className="center" ref={titleWrapper}>
-        <h1 className={`main-title ${jbMono.className}`}>
+      <div className={`center ${jbMono.className}`} ref={titleWrapper}>
+        <h1 className={`main-title`}>
           {name}
           <span ref={caret}>_</span>
         </h1>
         <div className="main-body">
-          <h2>Just another Software Engineer</h2>
+          <h2>Just another programmer</h2>
           <div className="about">
           </div>
         </div>

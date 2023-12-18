@@ -9,8 +9,10 @@
 @import './sheets/arrows-container';
 @import './sheets/under-construction';
 @import './sheets/languages';
+@import './sheets/socials';
 
 body {
+  font-weight: 100 !important;
   scroll-behavior: smooth;
   overflow-x: hidden;
   overflow-y: hidden;

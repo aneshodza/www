@@ -1,20 +1,42 @@
 .under-construction {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  &>* {
+    text-align: center;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
+  .socials-announcement {
+    margin-top: 20px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    gap: 15px;
+  }
 
-    &>* {
-        text-align: center;
-        margin-left: 10px;
-        margin-right: 10px;
+  .socials {
+    margin-top: 0;
+  }
+
+  a {
+    height: 40px;
+    width: 40px;
+
+    img {
+      filter: invert(1);
+      transition: filter 0.2s ease;
     }
+  }
 }
 
 @media screen and (max-width: 400px) {
-    .under-construction {
-        h2 {
-            font-size: 1.5rem;
-        }
+  .under-construction {
+    h2 {
+      font-size: 1.5rem;
     }
+  }
 }
