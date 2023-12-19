@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import CssBox from "./CssBox";
 import DownArrows from "./DownArrows";
 import Languages from "./Languages";
 import localFont from 'next/font/local'
@@ -47,7 +48,7 @@ export default function Landing(props) {
       }, minDelay + Math.random() * 100);
     }
   };
-
+  
   const afterName = () => {
     titleWrapper.current.style.setProperty(
       "--from-top",
@@ -75,6 +76,23 @@ export default function Landing(props) {
     }, 600);
   };
 
+  const parseCss = (css) => {
+      const cssArray = css.replace(/(\r\n|\n|\r)/gm, '').split(';');
+      console.log(cssArray)
+      cssArray.forEach(property => {
+        const [key, value] = property.split(':');
+        if (key && value) {
+          console.log(key, value)
+          mainBody.current.style.setProperty(key, value, 'important')
+        }
+      })
+    }
+    
+    React.useEffect(() => {
+      console.log('css changed')
+      parseCss(css)
+    }, [css]);
+
   useEffect(() => {
     setTimeout(() => {
       appendName(0);
@@ -92,6 +110,7 @@ export default function Landing(props) {
           <h2>Just another programmer</h2>
           <div className="about">
           </div>
+          <CssBox css={css} setCss={setCss} />
         </div>
       </div>
       {languages}
