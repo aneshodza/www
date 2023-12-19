@@ -3,8 +3,13 @@
     flex-direction: column;
     align-items: center;
     cursor: pointer;
-    color: $font-color;
     text-decoration: none;
+    transition: 0.4s transform;
+
+    &:hover {
+      color: $font-color !important;
+      transform: translateY(20px);
+    }
 }
 
 .landing-arrows {
