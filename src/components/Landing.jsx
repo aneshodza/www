@@ -13,7 +13,7 @@ export default function Landing(props) {
   const [name, setName] = useState("");
   const [downArrows, setDownArrows] = useState(null);
   const [languages, setLanguages] = useState(null);
-  const [css, setCss] = useState(`display: flex;\nflex-direction: column;\njustify-content: center;\nalign-items: center;`);
+  const [css, setCss] = useState(`.first-section {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n}`);
   const caret = useRef(null);
   const firstSection = useRef(null);
   const titleWrapper = useRef(null);
@@ -82,21 +82,6 @@ export default function Landing(props) {
     }, 600);
   };
 
-  const parseCss = (css) => {
-    firstSection.current.style = null;
-    const cssArray = css.replace(/(\r\n|\n|\r)/gm, '').split(';');
-    cssArray.forEach(property => {
-      const [key, value] = property.split(':').map(item => item.trim());
-      if (key && value) {
-        firstSection.current.style.setProperty(key, value, 'important')
-      }
-    })
-  }
-
-  useEffect(() => {
-    parseCss(css)
-  }, [css]);
-
   useEffect(() => {
     setTimeout(() => {
       appendName(0);
@@ -113,6 +98,7 @@ export default function Landing(props) {
         <div className="main-body">
           <h2>Just another programmer</h2>
           <CssBox css={css} setCss={setCss} />
+          <style>{css}</style>
         </div>
       </div>
       {languages}
