@@ -1,20 +1,84 @@
+.css-box-wrapper {
+  display: flex;
+  align-items: center;
+  width: 98vw;
+  justify-content: center;
+  margin-top: 20vh;
+}
+
+div.contracted {
+  .css-box-wrapper {
+    display: none !important;
+  }
+}
+
 .css-box {
-  border-radius: 5px;
-  padding: 10px;
-  margin-left: 10vw;
-  margin-top: 50px;
+  width: 90%;
+  background: #222C31;
+  padding: 6px;
   border: none;
+  display: flex;
+  flex-direction: column;
+
+  .comment {
+    color: $passive-color;
+  }
+
+  .editor-window {
+    width: 100%;
+    margin-left: 8px;
+  }
+
+  .editor-header {
+    padding-bottom: 5px;
+    display: flex;
+    flex-direction: column;
+
+    .tab-wrapper {
+      display: flex;
+      flex-direction: column;
+      width: fit-content;
+      border: 1px solid $editor-main;
+
+      .tab {
+        display: flex;
+        align-items: center;
+        padding: 0 5px;
+      }
+
+      &::after {
+        content: '';
+        height: 5px;
+        width: 100%;
+        background: $editor-main;
+      }
+    }
+
+    .close-icon {
+      cursor: pointer;
+      color: $close-color;
+      font-size: 18px;
+      height: fit-content;
+    }
+
+    .tab-text {
+      margin: 0 30px 0 12px;
+      color: $passive-color;
+    }
+
+  }
 
   textarea {
     background: none;
     color: $font-color;
     border: none;
-    margin-left: 20px;
+    margin-left: 5%;
     font-size: 16px;
     resize: none;
-    width: 40vw;
+    width: 95%;
     display: none;
     outline: none !important;
+    padding: 3px;
   }
 }
 
