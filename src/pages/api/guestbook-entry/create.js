@@ -1,7 +1,7 @@
 import simpleGit from "simple-git";
 import path from "path";
 
-const git = simpleGit(path.join(process.cwd(), 'guestbook'));
+const git = simpleGit(path.join(global.__basedir, 'guestbook'));
 
 export default async function handler(req, res) {
   try {
