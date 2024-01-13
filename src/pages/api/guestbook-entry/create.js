@@ -1,11 +1,7 @@
 import simpleGit from "simple-git";
 import path from "path";
 
-const git = simpleGit(path.join(process.cwd(), 'guestbook'), {
-  config: [
-    `http.extraHeader=Authorization: Bearer ${process.env.GITHUB_TOKEN}`
-  ]
-});
+const git = simpleGit(path.join(process.cwd(), 'guestbook'));
 
 export default async function handler(req, res) {
   try {
