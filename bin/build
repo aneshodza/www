@@ -1,3 +1,2 @@
 npm run build:css
 next build
-git clone https://${GITHUB_TOKEN}@github.com/aneshodza/guestbook.git
