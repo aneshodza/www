@@ -29,7 +29,7 @@ export default async function handler(req, res) {
       parents: [latestCommitSha],
       author: {
         name: req.body.name,
-        email: `${req.body.name}@guest-on-aneshodza.ch`,
+        email: `${req.body.name.replace(' ', '-')}@guest-on-aneshodza.ch`,
       },
     });
 
