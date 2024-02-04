@@ -3,13 +3,28 @@ import localFont from 'next/font/local'
 
 const nunito = localFont({ src: '../fonts/Nunito-Light.woff2' })
 
+console.log(`
+██╗  ██╗███████╗██╗   ██╗██╗
+██║  ██║██╔════╝╚██╗ ██╔╝██║
+███████║█████╗   ╚████╔╝ ██║
+██╔══██║██╔══╝    ╚██╔╝  ╚═╝
+██║  ██║███████╗   ██║   ██╗
+╚═╝  ╚═╝╚══════╝   ╚═╝   ╚═╝
+
+Nice to see another programmer.
+The source code of this website
+and all its cool features are on
+my GitHub account.
+https://github.com/aneshodza/www
+`)
+
 export default function App({ Component, pageProps }) {
   return (
     <main className={nunito.className}>
       <title>Anes Hodza</title>
       <meta
         name="description"
-        content="Anes Hodza - Your friendly neighborhood developer."
+        content="Does anyone read these? Anyways, gotta have this for SEO: Artifical Intelligence, Crypto, Blockchain, [insert more buzzwords]"
       />
       <Component {...pageProps} />
     </main>
