@@ -44,7 +44,7 @@ export default function CssBox(props) {
   }
 
   React.useEffect(() => {
-    adjustHeight(120);
+    adjustHeight(122);
   }, []);
 
   return (
