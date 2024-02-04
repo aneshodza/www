@@ -7,13 +7,16 @@ import localFont from 'next/font/local'
 let fullName = "anes-hodza";
 let minDelay = 120;
 
-const jbMono = localFont({ src: '../fonts/JetBrainsMono-Regular.woff2' })
+const jbMono = localFont({ src: '../fonts/JetBrainsMono-Regular.ttf' })
+// TODO: Put medium font on mobile
+// const jbMonoMedium = localFont({ src: '../fonts/JetBrainsMono-Medium.ttf' })
 
 export default function Landing(props) {
   const [name, setName] = useState("");
   const [downArrows, setDownArrows] = useState(null);
   const [languages, setLanguages] = useState(null);
   const [css, setCss] = useState(`.first-section {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n}`);
+
   const caret = useRef(null);
   const firstSection = useRef(null);
   const titleWrapper = useRef(null);
