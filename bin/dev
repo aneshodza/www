@@ -1,1 +1,2 @@
+open -a Firefox localhost:3000
 npm run dev
