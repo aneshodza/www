@@ -21,11 +21,6 @@ https://github.com/aneshodza/www
 export default function App({ Component, pageProps }) {
   return (
     <main className={nunito.className}>
-      <title>Ran on my machine</title>
-      <meta
-        name="description"
-        content="Does anyone read these? Anyways, gotta have this for SEO: Artifical Intelligence, Crypto, Blockchain, [insert more buzzwords]"
-      />
       <Component {...pageProps} />
     </main>
   )
