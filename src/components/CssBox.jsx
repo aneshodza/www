@@ -57,6 +57,7 @@ export default function CssBox(props) {
                 src="assets/css.svg"
                 width={icon_size}
                 height={icon_size}
+                alt="css icon"
               />
               <span className="tab-text">user-editable.css</span><span className="close-icon">×</span>
             </div>

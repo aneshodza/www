@@ -9,6 +9,7 @@ export default function Socials() {
             src="assets/linked_in.svg"
             width={icon_size}
             height={icon_size}
+            alt="linkedin icon"
             />
         </a>
 
@@ -17,6 +18,7 @@ export default function Socials() {
             src="assets/github.svg"
             width={icon_size}
             height={icon_size}
+            alt="github icon"
             />
         </a>
 
@@ -25,6 +27,7 @@ export default function Socials() {
           src="assets/dev.svg"
           width={icon_size}
           height={icon_size}
+          alt="devto icon"
           />
         </a>
       </div>
