@@ -15,8 +15,8 @@ const titles = [
 ]
 
 const isGooglebot = (userAgent) => {
-  return /googlebot/i.test(userAgent);
-}
+  return /(googlebot|google-inspectiontool\/1\.0)/i.test(userAgent);
+};
 
 export default function App({ title, index }) {
   const app = React.useRef(null);
