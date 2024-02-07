@@ -1,5 +1,3 @@
-import Head from "next/head";
-import { useEffect, useState } from "react";
 import '/public/styles/global.css'
 import localFont from 'next/font/local'
 

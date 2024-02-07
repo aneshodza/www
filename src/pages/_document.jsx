@@ -9,6 +9,7 @@ export default function Document() {
           content="I need to make the computer overlord happy, so: Anes Hodza made this! This is Anes Hodzas' digital property!"
         />
         <link rel="icon" href="/favicon.ico" />
+        <title>Anes Hodzas' personal website</title>
       </Head>
       <body>
         <Main />
