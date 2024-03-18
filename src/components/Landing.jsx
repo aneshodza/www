@@ -3,6 +3,7 @@ import CssBox from "./CssBox";
 import DownArrows from "./DownArrows";
 import Languages from "./Languages";
 import localFont from 'next/font/local'
+import GuestbookGIF from "./GuestbookGIF";
 
 let fullName = "anes-hodza";
 let minDelay = 120;
@@ -14,6 +15,7 @@ const jbMono = localFont({ src: '../fonts/JetBrainsMono-Regular.ttf' })
 export default function Landing(props) {
   const [name, setName] = useState("");
   const [downArrows, setDownArrows] = useState(null);
+  const [guestbookGIF, setGuestbookGIF] = useState(null);
   const [languages, setLanguages] = useState(null);
   const [css, setCss] = useState(`.first-section {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n}`);
 
@@ -76,6 +78,9 @@ export default function Landing(props) {
           givenClass={"jump-in float landing-arrows"}
         />,
       );
+      setGuestbookGIF(
+        <GuestbookGIF />
+      );
 
       setTimeout(() => {
         mainTitle.current.classList.remove("not-done");
@@ -106,6 +111,7 @@ export default function Landing(props) {
       </div>
       {languages}
       {downArrows}
+      {guestbookGIF}
     </div>
   );
 }
