@@ -1,0 +1,21 @@
+.guestbook-wrapper {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  height: 100px;
+  width: 110px;
+  opacity: 0;
+
+  .close-gif {
+    cursor: pointer;
+  }
+
+  img {
+    height: 100%;
+  }
+}
+
+.show-gif {
+  opacity: 1 !important;
+  transition: opacity 0.5s;
+}
