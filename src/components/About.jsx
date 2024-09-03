@@ -1,11 +1,11 @@
-import Timeline from "./Timeline";
-import UnderConstruction from "./UnderConstruction";
+import Education from "./about/Education";
+import Work from "./about/Work";
 
 export default function About() {
   return (
     <div id="about">
-      <UnderConstruction/>
-      <Timeline />
+      <Education />
+      <Work />
     </div>
   )
 }
