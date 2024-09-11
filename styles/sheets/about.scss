@@ -2,4 +2,39 @@
   margin-top: calc(30px + 20vh);
   margin-bottom: 20vh;
   height: 60vh;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  width: 100vw;
+  justify-content: center;
+
+  #timeline {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+
+    .timeunit {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .year {
+        border-radius: 50%;
+        padding: 5px;
+        height: 20px;
+        aspect-ratio: 1;
+        display: inline-block;
+        background: $font-color;
+        color: $background-color;
+      }
+
+      .line {
+        width: 2px;
+        background: $font-color;
+        height: 60px;
+      }
+    }
+  }
 }
