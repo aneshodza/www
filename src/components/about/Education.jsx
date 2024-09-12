@@ -3,5 +3,5 @@ export default function Education() {
     <div id="education">
       <h3>Academic Milestones</h3>
     </div>
-  )
+  );
 }

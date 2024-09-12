@@ -33,7 +33,14 @@
       .line {
         width: 2px;
         background: $font-color;
-        height: 60px;
+      }
+    }
+  }
+
+  .experience-line {
+    .experience-item {
+      .decimals-of-years {
+        color: $year-decimals;
       }
     }
   }
