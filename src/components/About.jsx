@@ -42,7 +42,7 @@ const experience = {
     {
       title: "TA in Theoretical Computer Science",
       company: "ZHAW",
-      start_date: new Date("2023-08-01"),
+      start_date: new Date("2024-08-01"),
       end_date: null,
     },
   ],

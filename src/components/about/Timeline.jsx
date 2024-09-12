@@ -16,7 +16,7 @@ export default function Timeline(props) {
   return (
     <div id="timeline">
       {yearArray.slice(0, -1).map((year) => (
-        <div className="timeunit">
+        <div className="timeunit" key={year}>
           <span className="year">{String(year).slice(2, 4)}</span>
           <span className="line" style={{ height: props.lineLength }}></span>
         </div>

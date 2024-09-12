@@ -37,13 +37,22 @@ export default function ExpItem({ item, lineLength }) {
   };
 
   useEffect(() => {
+    const { years, decimals: initialDecimals } = toYears(item.start_date, item.end_date);
+    setYears(years);
+    setDecimals(initialDecimals);
     const updateTime = () => {
-      const { years, decimals } = toYears(item.start_date, item.end_date);
-      setYears(years);
-      setDecimals(decimals);
+    setDecimals((prevDecimals) => {
+        const newDecimals = prevDecimals + 0.000000001633055;
+        if (newDecimals >= 1) {
+          setYears((prevYears) => prevYears + 1);
+          return newDecimals % 1;
+        }
+        return newDecimals;
+      });
     };
 
-    const interval = setInterval(updateTime, 100);
+    if (item.end_date !== null) return;
+    const interval = setInterval(updateTime, 50);
 
     return () => clearInterval(interval);
   }, [item.start_date, item.end_date]);
