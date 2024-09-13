@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export default function ExpItem({ item, lineLength }) {
+export default function ExpItem({ item }) {
   const [years, setYears] = useState(0);
   const [decimals, setDecimals] = useState(0);
 

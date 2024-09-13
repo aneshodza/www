@@ -1,3 +1,5 @@
+import { useRef } from "react";
+
 import Education from "./about/Education";
 import Work from "./about/Work";
 import Timeline from "./about/Timeline";
@@ -48,14 +50,16 @@ const experience = {
   ],
 };
 
-const lineLength = "60px";
+const lineLength = 75;
 
 export default function About() {
+  const lineRef = useRef(null);
+
   return (
     <div id="about">
-      <Education items={experience.education} lineLength={lineLength} />
-      <Timeline items={experience} lineLength={lineLength} />
-      <Work items={experience.work} lineLength={lineLength} />
+      <Education items={experience.education} lineRef={lineRef} />
+      <Timeline items={experience} lineLength={lineLength} lineRef={lineRef} />
+      <Work items={experience.work} lineRef={lineRef} />
     </div>
   );
 }

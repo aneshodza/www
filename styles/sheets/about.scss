@@ -1,11 +1,11 @@
 #about {
-  margin-top: calc(30px + 20vh);
-  margin-bottom: 20vh;
+  margin-top: calc(100px);
   height: 60vh;
   display: flex;
   flex-direction: row;
   gap: 20px;
   width: 100vw;
+  min-height: 100vh;
   justify-content: center;
 
   #timeline {
@@ -13,26 +13,62 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 5px;
 
     .timeunit {
       display: flex;
       flex-direction: column;
       align-items: center;
+      height: fit-content;
 
       .year {
-        border-radius: 50%;
         padding: 5px;
         height: 20px;
         aspect-ratio: 1;
         display: inline-block;
         background: $font-color;
         color: $background-color;
+
+        &.next {
+          position: relative;
+          top: -30px;
+          border-top: none;
+          width: 25px;
+          padding: 5px 0;
+          text-align: center;
+        }
+      }
+
+      &:first-of-type .year {
+        border-radius: 25% 25% 0 0;
       }
 
       .line {
-        width: 2px;
+        position: relative;
+        z-index: -1;
+        width: 30px;
         background: $font-color;
+      }
+
+      .current {
+        position: relative;
+        top: -30px;
+        background: $highlight;
+        color: $font-color;
+
+        &.year {
+          border-radius: 25% 25% 0 0;
+        }
+      }
+
+      .empty {
+        width: 25px;
+        border-bottom: none !important;
+      }
+
+      .next {
+        background: $background-color;
+        border: 3px dashed $font-color;
+        color: $passive-color;
       }
     }
   }
@@ -40,7 +76,7 @@
   .experience-line {
     .experience-item {
       .decimals-of-years {
-        color: $year-decimals;
+        color: $highlight;
       }
     }
   }
