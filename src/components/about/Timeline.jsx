@@ -1,3 +1,5 @@
+import Timeunit from './Timeunit';
+
 export default function Timeline(props) {
   const allStartDates = [
     ...props.items.education.map((item) => item.start_date),
@@ -28,21 +30,13 @@ export default function Timeline(props) {
   return (
     <div id="timeline" ref={props.lineRef}>
       {yearArray.slice(0, -2).map((year) => (
-        <div className="timeunit" key={year}>
-          <span className="year">{String(year).slice(2, 4)}</span>
-          <span className="line" style={{ height: props.lineLength }}></span>
-        </div>
+        <Timeunit year={year} lineLength={props.lineLength} />
       ))}
-      <div className="timeunit" key={currentYear - 1}>
-        <span className="year">{String(currentYear - 1).slice(2, 4)}</span>
-        <span className="line" style={{ height: props.lineLength + 30 }}></span>
-      </div>
-      <div className="timeunit">
-        <span className="year current">{String(currentYear).slice(2, 4)}</span>
-        <span className="line current" style={{ height: props.lineLength * passedYear() }}></span>
+      <Timeunit year={currentYear - 1} lineLength={props.lineLength + 30} />
+      <Timeunit year={currentYear} lineLength={props.lineLength} classes={'current'}>
         <span className="empty line current next" style={{ height: props.lineLength - props.lineLength * passedYear() }}></span>
         <span className="year next">{String(currentYear + 1).slice(2, 4)}</span>
-      </div>
+      </Timeunit>
     </div>
   );
 }
