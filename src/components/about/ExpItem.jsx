@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export default function ExpItem({ item }) {
+export default function ExpItem({ item, orientation }) {
   const [years, setYears] = useState(0);
   const [decimals, setDecimals] = useState(0);
 
@@ -58,9 +58,12 @@ export default function ExpItem({ item }) {
   }, [item.start_date, item.end_date]);
 
   return (
-    <div className="experience-item" key={`${item.title}-${item.company}`}>
-      {years}
-      <span className="decimals-of-years">{decimals.toFixed(9).slice(1)}</span>
+    <div className={`experience-item ${orientation}`} key={`${item.title}-${item.company}`}>
+      {
+        // {years}
+        // <span className="decimals-of-years">{decimals.toFixed(9).slice(1)}</span>
+      }
+      <span className={`span-display`} style={{height: (years + decimals) * 70}}></span>
     </div>
   );
 }

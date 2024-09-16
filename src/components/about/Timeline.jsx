@@ -9,7 +9,7 @@ export default function Timeline(props) {
     Math.min(...allStartDates.map((date) => date.getTime())),
   );
   const currentYear = new Date().getFullYear();
-  const minYear = minDate.getFullYear();
+  const minYear = props.minYear;
 
   const yearArray = Array.from(
     { length: currentYear - minYear + 1 },

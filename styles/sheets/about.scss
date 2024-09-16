@@ -9,7 +9,6 @@
   justify-content: center;
 
   #timeline {
-    margin-top: 50px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -75,8 +74,33 @@
 
   .experience-line {
     .experience-item {
+      display: flex;
+
       .decimals-of-years {
         color: $highlight;
+      }
+
+      .span-display {
+        width: 10px;
+        border: 2px solid $highlight;
+        display: inline-block;
+
+      }
+
+      &.left {
+        justify-content: flex-end;
+
+        .span-display {
+          border-right: none;
+        }
+      }
+
+      &.right {
+        justify-content: flex-start;
+
+        .span-display {
+          border-left: none;
+        }
       }
     }
   }
