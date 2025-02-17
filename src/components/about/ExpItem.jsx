@@ -28,7 +28,7 @@ export default function ExpItem({ item, orientation }) {
     } else if (decimals < 0.01) {
       decimals = 0;
     }
-    if (decimals > 0.99) {
+    if (decimals > 0.997) {
       decimals = 0;
       years += 1;
     }
