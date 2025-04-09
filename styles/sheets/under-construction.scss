@@ -15,7 +15,7 @@
     margin-top: 20px;
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 10px;
   }
 
   .socials {
@@ -25,14 +25,17 @@
   a {
     height: 40px;
     width: 40px;
+  }
+
+  .studyweek-announcement {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
 
     img {
-      filter: invert(1);
-      transition: filter 0.2s ease;
-
-      &:hover {
-        filter: invert(0.8);
-      }
+      border-radius: 5px;
     }
   }
 }

@@ -44,6 +44,15 @@ textarea {
   font-family: inherit;
 }
 
+a.tinted img {
+  filter: invert(1);
+  transition: filter 0.2s ease;
+
+  &:hover {
+    filter: invert(0.8);
+  }
+}
+
 // .js {
 //     color: #f0dc5a;
 // }

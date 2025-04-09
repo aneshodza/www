@@ -4,7 +4,7 @@ const icon_size = 40;
 export default function Socials() {
     return (
       <div className="socials">
-        <a className="linkedin" href="https://www.linkedin.com/in/anes-hodza-8454aa24a/" target="_blank" rel="noreferrer">
+        <a className="linkedin tinted" href="https://www.linkedin.com/in/anes-hodza-8454aa24a/" target="_blank" rel="noreferrer">
           <Image
             src="assets/linked_in.svg"
             width={icon_size}
@@ -13,7 +13,7 @@ export default function Socials() {
             />
         </a>
 
-        <a className="github" href="https://github.com/aneshodza" target="_blank" rel="noreferrer">
+        <a className="github tinted" href="https://github.com/aneshodza" target="_blank" rel="noreferrer">
           <Image
             src="assets/github.svg"
             width={icon_size}
@@ -22,7 +22,7 @@ export default function Socials() {
             />
         </a>
 
-        <a className="devto" href="https://dev.to/aneshodza" target="_blank" rel="noreferrer">
+        <a className="devto tinted" href="https://dev.to/aneshodza" target="_blank" rel="noreferrer">
         <Image
           src="assets/dev.svg"
           width={icon_size}
