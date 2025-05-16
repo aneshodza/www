@@ -11,6 +11,7 @@
 @import './sheets/languages';
 @import './sheets/socials';
 @import './sheets/css-box';
+@import './pages/projects_index';
 
 body {
   font-weight: 100 !important;
@@ -44,7 +45,11 @@ textarea {
   font-family: inherit;
 }
 
-a.tinted img {
+.back img {
+  transform: rotate(180deg);
+}
+
+.tinted img {
   filter: invert(1);
   transition: filter 0.2s ease;
 
@@ -52,6 +57,28 @@ a.tinted img {
     filter: invert(0.8);
   }
 }
+
+.chapter-title {
+  width: 100%;
+  text-align: center;
+}
+
+.icon-link {
+  position: absolute;
+  left: 20px;
+  font-size: 20px;
+
+  &:hover {
+    filter: invert(0.6);
+  }
+
+  span {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+}
+
 
 // .js {
 //     color: #f0dc5a;
