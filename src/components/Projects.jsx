@@ -9,13 +9,13 @@ export default function Projects({ showAll = false }) {
           .filter((project) => project.pinned !== 0)
           .sort((a, b) => a.pinned - b.pinned)
           .map((project, index) => (
-            <ProjectCard project={project} index={index} />
+            <ProjectCard project={project} index={index} key={index} />
           ))}
         {showAll
           ? projects
             .filter((project) => project.pinned === 0)
             .map((project, index) => (
-              <ProjectCard project={project} index={index} />
+              <ProjectCard project={project} index={index} key={index} />
             ))
           : null}
       </div>
