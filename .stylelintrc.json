@@ -15,6 +15,7 @@
       }
     ],
     "color-named": "never",
-    "color-hex-case": "upper"
+    "color-hex-case": "upper",
+    "scss/no-global-function-names": null
   }
 }

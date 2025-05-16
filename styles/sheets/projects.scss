@@ -1,3 +1,89 @@
+.more-projects-link {
+  width: calc(100% - 40px);
+  display: flex;
+  justify-content: end;
+
+  span {
+    flex-direction: row-reverse !important;
+  }
+}
+
 #projects {
+  width: auto;
+
+  #cards {
+    display: grid;
+    gap: 10px;
+    justify-content: center;
     width: 100%;
+    height: fit-content;
+
+    .project-card {
+      padding: 20px;
+      border-radius: 10px;
+      border: 3px solid $passive-color;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      text-decoration: none;
+      color: $font-color !important;
+      transition: all 0.4s ease;   
+
+      &:hover {
+        cursor: pointer;
+        background-color: lighten($background-color, 5%);
+      }
+
+      .project-card-header {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .project-card-body {
+        p {
+          margin: 0;
+        }
+      }
+
+      .status-badge {
+        margin-top: auto;
+        width: fit-content;
+        padding: 5px 10px;
+        border-radius: 25px;
+
+        &.in-development {
+          border: 2px solid $in-development-badge;
+          color: $in-development-badge;
+        }
+
+        &.finished {
+          border: 2px solid $finished-badge;
+          color: $finished-badge;
+        }
+
+        &.maintenance {
+          border: 2px solid $maintenance-badge;
+          color: $maintenance-badge;
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: 901px) {
+  #cards {
+    grid-template-columns: calc(100% / 3) calc(100% / 3) calc(100% / 3);
+  }
+}
+
+@media (max-width: 900px) and (min-width: 801px) {
+  #cards {
+    grid-template-columns: calc(100% / 2) calc(100% / 2);
+  }
+}
+
+@media (max-width: 800px) {
+  #cards {
+    grid-template-columns: 100%;
+  }
 }
