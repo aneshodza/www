@@ -1,20 +1,33 @@
 import { useEffect, useRef, useState } from "react";
 import CssBox from "./CssBox";
 import DownArrows from "./DownArrows";
-import Languages from "./Languages";
 import localFont from 'next/font/local'
 
-let fullName = "anes-hodza";
+const fullNameStates = [
+  "a",
+  "an",
+  "ane",
+  "anes",
+  "anes-",
+  "anes-h",
+  "anes-ho",
+  "anes-hoz",
+  "anes-hozd",
+  "anes-hozd",
+  "anes-hozd",
+  "anes-hoz",
+  "anes-ho",
+  "anes-hod",
+  "anes-hodz",
+  "anes-hodza",
+]
 let minDelay = 120;
 
 const jbMono = localFont({ src: '../fonts/JetBrainsMono-Regular.ttf' })
-// TODO: Put medium font on mobile
-// const jbMonoMedium = localFont({ src: '../fonts/JetBrainsMono-Medium.ttf' })
 
 export default function Landing(props) {
   const [name, setName] = useState("");
   const [downArrows, setDownArrows] = useState(null);
-  const [languages, setLanguages] = useState(null);
   const [css, setCss] = useState(`.first-section {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n}`);
 
   const caret = useRef(null);
@@ -23,34 +36,16 @@ export default function Landing(props) {
   const mainTitle = useRef(null);
 
   const appendName = (idx) => {
-    if (fullName.length === idx - 1) {
+    if (fullNameStates.length === idx) {
       afterName();
       props.setNameDone(true);
+      sessionStorage.setItem("animated", true);
       return;
     } else {
-      setName(fullName.slice(0, idx));
-    }
-
-    if (fullName[idx] === "d") {
-      setTimeout(() => {
-        setName(fullName.slice(0, idx) + "z");
-        setTimeout(() => {
-          setName(fullName.slice(0, idx) + "zd");
-          setTimeout(() => {
-            setName(fullName.slice(0, idx) + "z");
-            setTimeout(() => {
-              setName(fullName.slice(0, idx));
-              setTimeout(() => {
-                appendName(idx + 1);
-              }, minDelay + Math.random() * 100);
-            }, minDelay + Math.random() * 100);
-          }, minDelay + 200 + Math.random() * 100);
-        }, minDelay + Math.random() * 100);
-      }, minDelay + Math.random() * 100);
-    } else {
+      setName(fullNameStates[idx]);
       setTimeout(() => {
         appendName(idx + 1);
-      }, minDelay + Math.random() * 100);
+      }, (minDelay + Math.random() * 100));
     }
   };
 
@@ -80,12 +75,28 @@ export default function Landing(props) {
       setTimeout(() => {
         mainTitle.current.classList.remove("not-done");
       }, 100)
-
-      // setLanguages(<Languages />);
     }, 600);
   };
 
   useEffect(() => {
+    const animated = sessionStorage.getItem("animated") == "true" ? true : false;
+
+    console.log("animated", animated);
+    if (animated) {
+      setName(fullNameStates[fullNameStates.length - 1]);
+      props.setNameDone(true);
+      titleWrapper.current.classList.add("stay");
+      caret.current.classList.add("blinking");
+      firstSection.current.classList.add("fade-in");
+      props.appRef.current.classList.add("expand");
+      props.appRef.current.classList.remove("contracted");
+      setDownArrows(
+        <DownArrows
+          href={"#about"}
+          givenClass={"jump-in float landing-arrows"}
+        />,
+      );
+    }
     setTimeout(() => {
       appendName(0);
     }, minDelay * 1.5);
@@ -104,7 +115,6 @@ export default function Landing(props) {
           <style>{css}</style>
         </div>
       </div>
-      {languages}
       {downArrows}
     </div>
   );
