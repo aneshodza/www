@@ -10,6 +10,7 @@ export default function About() {
       </h2>
       <Projects />
       <IconLink text='Other projects' src='assets/arrow.svg' href='/projects' classes="more-projects-link"/>
+
       <UnderConstruction />
     </div>
   )
