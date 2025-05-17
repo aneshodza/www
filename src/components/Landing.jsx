@@ -28,7 +28,7 @@ const jbMono = localFont({ src: '../fonts/JetBrainsMono-Regular.ttf' })
 export default function Landing(props) {
   const [name, setName] = useState("");
   const [downArrows, setDownArrows] = useState(null);
-  const [css, setCss] = useState(`.first-section {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n}`);
+  const [css, setCss] = useState(`.first-section {\n  width: 100%;\n  height: 100vh;\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n}`);
 
   const caret = useRef(null);
   const firstSection = useRef(null);

@@ -23,6 +23,7 @@ export default function CssBox(props) {
     editorNumbers.current.innerHTML = Array(lineCount(e.target.value))
       .fill('<span></span>')
       .join('')
+
     commentNumbers.current.style.counterSet = `linenumber ${lineCount(e.target.value)}`
     adjustHeight();
   };
@@ -44,7 +45,8 @@ export default function CssBox(props) {
   }
 
   React.useEffect(() => {
-    adjustHeight(122);
+    handleCssChange({ target: { value: props.css } });
+    adjustHeight(20.1 * lineCount(props.css));
   }, []);
 
   return (
@@ -64,14 +66,7 @@ export default function CssBox(props) {
           </div>
         </div>
         <div className="editor-window">
-          <div className="editor-numbers" ref={editorNumbers}>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
+          <div className="editor-numbers" ref={editorNumbers} />
           <div className="editor-editable">
             <textarea
               value={props.css}
@@ -88,15 +83,21 @@ export default function CssBox(props) {
             <span></span>
             <span></span>
             <span></span>
+            <span></span>
+            <span></span>
           </div>
           <span className="comment">
             {"/*"}
             <br />
-            *&ensp; Try editing the CSS code!
+            &nbsp;* =====================================
             <br />
-            *&ensp; For example: Add `background: orange`
+            &nbsp;* &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Try editing the CSS code!
+            <br/>
+            &nbsp;* For example: Add `background: orange`
             <br />
-            {"*/"}
+            &nbsp;* =====================================
+            <br />
+            &nbsp;{"*/"}
           </span>
         </div>
       </div>
