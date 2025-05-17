@@ -45,8 +45,13 @@ textarea {
   font-family: inherit;
 }
 
-.back img {
-  transform: rotate(180deg);
+.back {
+  position: absolute;
+  left: 20px;
+
+  img {
+    transform: rotate(180deg);
+  }
 }
 
 .tinted img {
@@ -64,8 +69,6 @@ textarea {
 }
 
 .icon-link {
-  position: absolute;
-  left: 20px;
   font-size: 20px;
 
   &:hover {
