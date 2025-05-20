@@ -18,14 +18,13 @@ const isGooglebot = (userAgent) => {
   return /(googlebot|google-inspectiontool\/1\.0)/i.test(userAgent);
 };
 
-export default function App({ title, index }) {
+export default function App({ title }) {
   const app = React.useRef(null);
   const [nameDone, setNameDone] = React.useState(false);
   return (
     <div ref={app} className="app contracted">
       <Head>
         <title>{title}</title>
-        { index === 7 ? <link rel="icon" href="/arch.ico" /> : <link rel="icon" href="/favicon.ico" /> }
       </Head>
       <div id="top-of-page"></div>
       <Landing appRef={app} setNameDone={setNameDone} />

@@ -25,7 +25,7 @@ const projects = [
   },
   {
     name: 'pushdown-automaton',
-    repo: 'https://github.com/aneshodza/pushdown-automaton',
+    npm: 'https://www.npmjs.com/package/pushdown-automaton',
     description: 'An npm library for creating pushdown automata',
     tags: ['typescript', 'tcs', 'npm', 'theoretical computer science'],
     pinned: 3,
@@ -49,7 +49,7 @@ const projects = [
   },
   {
     name: 'abstract.ts',
-    repo: 'https://github.com/aneshodza/abstract.ts',
+    npm: 'https://www.npmjs.com/package/abstract.ts',
     description: 'An npm package that implements and offers ADTs like binary trees, linked lists and more.',
     tags: ['typescript', 'npm', 'adt', 'data structure'],
     pinned: 0,
