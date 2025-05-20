@@ -84,18 +84,15 @@ export default function CssBox(props) {
             <span></span>
             <span></span>
             <span></span>
-            <span></span>
           </div>
           <span className="comment">
             {"/*"}
             <br />
-            &nbsp;* =====================================
+            &nbsp;* ===========================
             <br />
-            &nbsp;* &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Try editing the CSS code!
+            &nbsp;* &nbsp;Try editing the CSS code!
             <br/>
-            &nbsp;* For example: Add `background: orange`
-            <br />
-            &nbsp;* =====================================
+            &nbsp;* ===========================
             <br />
             &nbsp;{"*/"}
           </span>
