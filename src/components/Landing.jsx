@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import CssBox from "./CssBox";
 import DownArrows from "./DownArrows";
 import localFont from 'next/font/local'
+import RestartAnimationButton from "./RestartAnimation";
 
 const fullNameStates = [
   "a",
@@ -28,6 +29,7 @@ const jbMono = localFont({ src: '../fonts/JetBrainsMono-Regular.ttf' })
 export default function Landing(props) {
   const [name, setName] = useState("");
   const [downArrows, setDownArrows] = useState(null);
+  const [restartButton, setRestartButton] = useState(null);
   const [css, setCss] = useState(`.first-section {\n  width: 100%;\n  height: 100vh;\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n}`);
 
   const caret = useRef(null);
@@ -71,6 +73,7 @@ export default function Landing(props) {
           givenClass={"jump-in float landing-arrows"}
         />,
       );
+      setRestartButton(<RestartAnimationButton />);
 
       setTimeout(() => {
         mainTitle.current.classList.remove("not-done");
@@ -96,6 +99,7 @@ export default function Landing(props) {
           givenClass={"jump-in float landing-arrows"}
         />,
       );
+      setRestartButton(<RestartAnimationButton />)
     }
     setTimeout(() => {
       appendName(0);
@@ -110,8 +114,9 @@ export default function Landing(props) {
           <span ref={caret}>_</span>
         </h1>
         <div className="main-body">
-          <h2>Just another programmer</h2>
+          <h2>Software Engineer</h2>
           <CssBox css={css} setCss={setCss} />
+          {restartButton}
           <style>{css}</style>
         </div>
       </div>
