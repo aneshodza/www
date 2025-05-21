@@ -4,7 +4,8 @@ const technologies = [
   'typescript',
   'nextjs',
   'rust',
-  'java'
+  'java',
+  'swift'
 ];
 
 export default technologies;

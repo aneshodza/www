@@ -10,18 +10,18 @@ export default function Whoami() {
   const router = useRouter();
 
   return (
-    <div id="whoami">
+    <div id="whoami" className={jbMono.className}>
       <div id="whoami-intro">
         <div id="whoami-start">
           <h2
-            className={`chapter-title ${jbMono.className}`}
+            className="chapter-title"
             id="whoami-header"
           >
             ~/web $&gt; whoami
             <br />
             anes-hodza
           </h2>
-          <p className={`${jbMono.className}`} id="whoami-text">
+          <p id="whoami-text">
             &gt; Bsc. Computer Science
             <br />
             &gt; Full Stack RoR Developer
@@ -37,8 +37,8 @@ export default function Whoami() {
         />
       </div>
       <div id="whoami-technologies">
-        <h2 className={`chapter-title ${jbMono.className}`} id="whoami-tech">
-          Technologies
+        <h2 className="chapter-title" id="whoami-tech">
+          .technologies
         </h2>
         <div id="whoami-technologies-list">
           {technologies.map((technology) => (
