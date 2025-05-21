@@ -1,3 +1,5 @@
+/* stylelint-disable no-descending-specificity */
+
 #whoami-header {
   text-align: left;
 }
@@ -28,14 +30,50 @@
   }
 }
 
+#whoami-dotfiles {
+  p {
+    text-align: center;
+  }
+
+  #whoami-dotfiles-list {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    width: 100%;
+    justify-content: center;
+
+    i {
+      font-size: 35px;
+      width: fit-content;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 30px;
+      border-radius: 20px;
+      transition: all 0.3s ease-in-out;
+
+      &:hover {
+        cursor: pointer;
+        background-color: rgba($font-color, 0.1);
+      }
+    }
+  }
+}
+
 #whoami-technologies {
   display: flex;
   flex-direction: column;
   gap: 10px;
 
+  p {
+    margin-top: 10px;
+    margin-bottom: 0;
+    text-align: center;
+  }
+
   #whoami-technologies-list {
     display: flex;
-    flex-direction: row;
+    flex-flow: row wrap;
     gap: 15px;
     width: 100%;
     align-items: center;
@@ -44,8 +82,8 @@
     i {
       font-size: 35px;
       transition: all 0.3s ease-in-out;
-      padding: 2px;
-      border-radius: 5px;
+      padding: 5px;
+      border-radius: 7px;
 
       &:hover {
         background-color: $font-color;

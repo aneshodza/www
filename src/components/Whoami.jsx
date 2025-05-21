@@ -36,8 +36,28 @@ export default function Whoami() {
           alt="image of me"
         />
       </div>
+      <div id="whoami-dotfiles">
+        <h2 className="chapter-title" id="whoami-dotfiles-title">
+          .dotfiles
+        </h2>
+        <p>
+          My .dotfiles are open-sourced on GitHub
+          <br />
+          Check them out!
+        </p>
+        <div id="whoami-dotfiles-list">
+          <i
+            className="devicon-vim-plain"
+            onClick={() => window.open("https://github.com/aneshodza/nvim", "_blank")}
+          />
+          <i
+            className="devicon-bash-plain"
+            onClick={() => window.open("https://github.com/aneshodza/.dotfiles", "_blank")}
+          />
+        </div>
+      </div>
       <div id="whoami-technologies">
-        <h2 className="chapter-title" id="whoami-tech">
+        <h2 className="chapter-title" id="whoami-technologies-title">
           .technologies
         </h2>
         <div id="whoami-technologies-list">
@@ -51,6 +71,9 @@ export default function Whoami() {
             />
           ))}
         </div>
+        <p>
+          Click on the icons to see my projects built with these technologies!
+        </p>
       </div>
     </div>
   );
