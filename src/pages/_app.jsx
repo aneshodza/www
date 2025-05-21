@@ -1,5 +1,6 @@
 import '/public/styles/global.css'
 import localFont from 'next/font/local'
+import 'devicon/devicon.min.css';
 
 const nunito = localFont({ src: '../fonts/Nunito-Light.woff2' })
 

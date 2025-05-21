@@ -52,6 +52,9 @@ export default function Landing(props) {
   };
 
   const afterName = () => {
+    if (!titleWrapper.current) {
+      return;
+    }
     titleWrapper.current.style.setProperty(
       "--from-top",
       titleWrapper.current.offsetTop * -1 + "px",
@@ -84,7 +87,6 @@ export default function Landing(props) {
   useEffect(() => {
     const animated = sessionStorage.getItem("animated") == "true" ? true : false;
 
-    console.log("animated", animated);
     if (animated) {
       setName(fullNameStates[fullNameStates.length - 1]);
       props.setNameDone(true);

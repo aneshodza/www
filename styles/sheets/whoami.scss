@@ -8,10 +8,11 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  margin-bottom: 30px;
+  gap: 35px;
 }
 
-#whoami-into {
-  margin-bottom: 30px;
+#whoami-intro {
   display: flex;
   flex-direction: row-reverse;
   justify-content: space-between;
@@ -25,10 +26,48 @@
   img {
     border-radius: 10%;
   }
+}
+
+#whoami-technologies {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  #whoami-technologies-list {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+
+    i {
+      font-size: 35px;
+      transition: all 0.3s ease-in-out;
+      padding: 2px;
+      border-radius: 5px;
+
+      &:hover {
+        background-color: $font-color;
+        transform: scale(1.2);
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+@media (max-width: 700px) {
+  #whoami-intro {
+    flex-direction: column-reverse;
+    align-items: center;
+    text-align: center;
+
+    #whoami-text {
+      text-align: left;
+    }
+  }
 
   #whoami-technologies {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    justify-content: center;
   }
 }
