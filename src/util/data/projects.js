@@ -21,7 +21,7 @@ const projects = [
     name: 'Universal Turing Machine',
     website: 'https://universal-turing-machine.ch/',
     description: 'A tool used in THIN at the ZHAW to simulate Turing machines',
-    tags: ['theoretical computer science', 'typescript', 'vue.js'],
+    tags: ['theoretical computer science', 'typescript', 'vuejs'],
     language: 'vuejs',
     pinned: 4,
     status: 'maintenance'

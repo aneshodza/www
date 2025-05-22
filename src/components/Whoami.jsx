@@ -85,6 +85,7 @@ export default function Whoami() {
           {technologies.map((technology) => (
             <i
               key={technology}
+              title={technology}
               className={`devicon-${technology}-plain`}
               onMouseEnter={(e) => e.target.classList.add("colored")}
               onMouseLeave={(e) => e.target.classList.remove("colored")}

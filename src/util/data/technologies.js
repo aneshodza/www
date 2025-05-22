@@ -5,7 +5,8 @@ const technologies = [
   'nextjs',
   'rust',
   'java',
-  'swift'
+  'swift',
+  'vuejs'
 ];
 
 export default technologies;
