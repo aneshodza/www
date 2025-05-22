@@ -1,11 +1,13 @@
 import Projects from "./Projects";
 import UnderConstruction from "./UnderConstruction";
 import IconLink from "./IconLink";
+import Whoami from "./Whoami";
 
 export default function About() {
   return (
     <div id="about">
-      <h2 class="chapter-title" id="projects-header">
+      <Whoami />
+      <h2 className="chapter-title" id="projects-header">
         Projects
       </h2>
       <Projects />
