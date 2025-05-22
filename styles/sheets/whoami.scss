@@ -23,6 +23,10 @@
   #whoami-text {
     margin: 0;
     margin-left: 20px;
+
+    #whoami-age {
+      color: $age-color;
+    }
   }
 
   img {
