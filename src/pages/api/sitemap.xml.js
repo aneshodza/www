@@ -1,11 +1,12 @@
 export default async function handler(req, res) {
   const baseUrl =  "https://aneshodza.ch"
 
-  let commit = await fetch('https://api.github.com/repos/aneshodza/www/commits')
+  let commit = await fetch('https://api.github.com/repos/aneshodza/www/commits?sha=main')
   commit = await commit.json()
 
   const routes = [
     { url: '/', changefreq: 'daily', priority: 1 },
+    { url: '/projects', changefreq: 'daily', priority: 0.5 },
   ];
 
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
