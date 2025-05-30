@@ -12,6 +12,32 @@
   flex-direction: column;
   margin-bottom: 50px;
   gap: 25px;
+
+  a {
+    color: $font-color;
+    text-decoration: none;
+    position: relative;
+    transition: all 0.3s ease-in-out;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 35%;
+      transform: translateY(-50%);
+      width: 20px;
+      aspect-ratio: 1;
+      filter: invert(1);
+      transition: all 0.3s ease-in-out;
+      background-image: url('../../public/assets/web.svg');
+      background-size: contain;
+      background-repeat: no-repeat;
+      pointer-events: none;
+    }
+
+    &:hover::after {
+      filter: invert(0.6);
+    }
+  }
 }
 
 #whoami-intro {
@@ -34,12 +60,12 @@
   }
 }
 
-#whoami-dotfiles {
+#whoami-dotfiles, #whoami-socials {
   p {
     text-align: center;
   }
 
-  #whoami-dotfiles-list {
+  #whoami-dotfiles-list, #whoami-socials-list {
     display: flex;
     flex-direction: row;
     gap: 15px;

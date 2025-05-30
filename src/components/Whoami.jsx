@@ -3,6 +3,7 @@ import Image from "next/image";
 import technologies from "@/util/data/technologies";
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from "react";
+import Link from "next/link";
 
 const jbMono = localFont({ src: "../fonts/JetBrainsMono-Regular.ttf" });
 const image_size = 200;
@@ -45,7 +46,7 @@ export default function Whoami() {
             <br />
             &gt; Full Stack RoR Developer
             <br />
-            &gt; Open Source Contributor
+            &gt; <Link href="https://dev.to/aneshodza" target="_blank">Blog Writer</Link>
             <br />
             &gt; <span id="whoami-age">{age}</span> years old
           </p>
@@ -57,12 +58,31 @@ export default function Whoami() {
           alt="image of me"
         />
       </div>
+      <div id="whoami-socials">
+        <h2 className="chapter-title" id="whoami-dotfiles-title">
+          .socials
+        </h2>
+        <p>
+          Find me on following platforms:
+        </p>
+        <div id="whoami-socials-list">
+          <i
+            className="devicon-linkedin-plain"
+            onClick={() => window.open("https://www.linkedin.com/in/aneshodza/", "_blank")}
+          />
+          <i
+            className="devicon-github-plain"
+            onClick={() => window.open("https://github.com/aneshodza", "_blank")}
+          />
+        </div>
+      </div>
       <div id="whoami-dotfiles">
         <h2 className="chapter-title" id="whoami-dotfiles-title">
           .dotfiles
         </h2>
         <p>
-          My .dotfiles are open-sourced on GitHub
+          My .dotfiles are open-sourced on
+          <Link href="https://github.com/aneshodza/" target="_blank"> GitHub</Link>
           <br />
           Check them out!
         </p>
@@ -81,6 +101,9 @@ export default function Whoami() {
         <h2 className="chapter-title" id="whoami-technologies-title">
           .technologies
         </h2>
+        <p>
+          Click on the icons to see my projects built with these technologies!
+        </p>
         <div id="whoami-technologies-list">
           {technologies.map((technology) => (
             <i
@@ -93,9 +116,6 @@ export default function Whoami() {
             />
           ))}
         </div>
-        <p>
-          Click on the icons to see my projects built with these technologies!
-        </p>
       </div>
     </div>
   );
