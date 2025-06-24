@@ -6,7 +6,8 @@ const technologies = [
   'rust',
   'java',
   'swift',
-  'vuejs'
+  'vuejs',
+  'c'
 ];
 
 export default technologies;
