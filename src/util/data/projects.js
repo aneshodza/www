@@ -9,6 +9,15 @@ const projects = [
     status: 'finished'
   },
   {
+    name: 'http.c',
+    repo: 'https://github.com/aneshodza/http.c',
+    description: 'An HTTP-Server written in C',
+    tags: ['c', 'http', 'server', 'low-level'],
+    language: 'c',
+    pinned: 0,
+    status: 'in development'
+  },
+  {
     name: 'www',
     repo: 'https://github.com/aneshodza/www',
     description: 'The website powering aneshodza.ch',
