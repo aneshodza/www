@@ -6,7 +6,7 @@ summary: Complete static-file HTTP server written in Rust with a worker pool for
 role: Author
 status: live
 statusLabel: Live
-year: "2024"
+year: "2025"
 featured: false
 order: 6
 tech:
@@ -22,6 +22,6 @@ links:
 
 A complete static-file HTTP server in **Rust**. The server accepts TCP connections directly through sockets, distributes them across a hand-built worker pool, and serves responses from the filesystem.
 
-There is no HTTP library and no framework. Parsing of the request line and headers and the construction of responses are implemented in code. The codebase is fully **unit tested** and built in a **CI** pipeline.
+The implementation is built without any HTTP libraries or frameworks. Parsing of the request line and headers and the construction of responses are implemented in code. The codebase is fully **unit tested** and built in a **CI** pipeline.
 
 A project meant to teach networking and concurrency fundamentals rather than abstractions over them.

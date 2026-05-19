@@ -6,7 +6,7 @@ summary: Bibliotheksfreies neuronales Netz in reinem TypeScript und JavaScript, 
 role: Autor
 status: live
 statusLabel: Live
-year: "2024"
+year: "2026"
 featured: false
 order: 5
 tech:

@@ -6,7 +6,7 @@ summary: Open-Source-Angular-Bibliothek für Markdown-getriebene Blogs. Strikt d
 role: Autor und Maintainer
 status: live
 statusLabel: Live
-year: "2024"
+year: "2026"
 featured: false
 order: 4
 tech:

@@ -13,7 +13,7 @@ export const ui = {
     'site.description':
       'Anes Hodza. Full-Stack Software- und Security-Engineer. Mitgründer von Centro Labs. BSc Informatik an der ZHAW.',
     'hero.name': 'Anes Hodza',
-    'hero.tagline': 'Full-Stack Software- und Security-Engineer',
+    'hero.tagline': 'Full-Stack, Security & AI-Engineer',
     'hero.support':
       'Mitgründer von Centro Labs. Gewinner des Hack Winterthur 2026. BSc Informatik an der ZHAW.',
     'hero.cta.projects': 'Projekte',
@@ -44,7 +44,7 @@ export const ui = {
       'Lebenslauf. Berufliche Stationen und Ausbildung, neueste zuerst.',
     'about.intro': 'Ein längerer Text über meine Arbeit und Interessen.',
     'contact.intro':
-      'Für Anfragen zu Anstellung, Zusammenarbeit oder Partnerschaften mit Centro Labs erreichen Sie mich am besten per E-Mail.',
+      'Für Anfragen zu Anstellung, Zusammenarbeit oder Partnerschaften mit Centro Labs bin ich am besten per E-Mail erreichbar.',
     'contact.email': 'E-Mail',
     'contact.github': 'GitHub',
     'contact.npm': 'npm',
@@ -80,9 +80,9 @@ export const ui = {
     'nav.contact': 'Contact',
     'site.title': 'Anes Hodza',
     'site.description':
-      'Anes Hodza. Full-Stack Software- and Security-Engineer. Co-founder of Centro Labs. BSc Computer Science at ZHAW.',
+      'Anes Hodza. Full-stack software and security engineer. Co-founder of Centro Labs. BSc Computer Science at ZHAW.',
     'hero.name': 'Anes Hodza',
-    'hero.tagline': 'Full-Stack Software- and Security-Engineer',
+    'hero.tagline': 'Full-Stack, Security & AI-Engineer',
     'hero.support':
       'Co-founder of Centro Labs. Winner of Hack Winterthur 2026. BSc Computer Science at ZHAW.',
     'hero.cta.projects': 'View projects',
@@ -110,7 +110,7 @@ export const ui = {
     'project.view': 'View project',
     'cv.print': 'Print',
     'cv.intro':
-      'Curriculum vitae. Professional stations and education, newest first.',
+      'Curriculum vitae. Work history and education, newest first.',
     'about.intro': 'A longer note on my work and interests.',
     'contact.intro':
       'For hiring conversations, collaboration, or Centro Labs partnerships, email is the best way to reach me.',

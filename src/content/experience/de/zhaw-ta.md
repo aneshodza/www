@@ -10,4 +10,4 @@ tech:
   - Lehre
 ---
 
-Vorbereitung und Durchführung von Übungseinheiten zu **Turing-Maschinen**, **Kellerautomaten** und **formalen Grammatiken** in der Vorlesung Theoretische Informatik an der **ZHAW**.
+Vorbereitung und Durchführung von Übungseinheiten zu **Turing-Maschinen**, **Kellerautomaten** und **formalen Grammatiken** im Modul Theoretische Informatik (THIN) an der **ZHAW**.

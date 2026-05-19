@@ -34,8 +34,8 @@ const remaining = Math.max(projects.length - 1, 0);
         <div class="mt-12 md:mt-16 border-t border-[var(--rule)] pt-6 flex flex-wrap items-baseline justify-between gap-4">
           <p class="font-serif italic text-[1rem] text-[var(--fg-muted)] max-w-[32rem]">
             {locale === 'de'
-              ? `Weitere ${String(remaining).padStart(2, '0')} Projekte, von HR-Tooling über agentische Pipelines bis zu systemnahen Übungen in Rust und C.`
-              : `${String(remaining).padStart(2, '0')} further projects, from HR tooling through agentic pipelines to low-level exercises in Rust and C.`}
+              ? `${remaining} weitere Projekte, von HR-Tooling über agentische Pipelines bis zu systemnahen Übungen in Rust und C.`
+              : `${remaining} further projects, from HR tooling through agentic pipelines to low-level exercises in Rust and C.`}
           </p>
           <a href={localizePath('/projects', locale)} class="btn-text">
             {t('sections.projects.all')} &nbsp;&rarr;

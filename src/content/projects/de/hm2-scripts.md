@@ -6,7 +6,7 @@ summary: Implementierungen numerischer Algorithmen aus der ZHAW-Vorlesung Höher
 role: Autor
 status: archived
 statusLabel: Archiviert
-year: "2024"
+year: "2025"
 featured: false
 order: 8
 tech:

@@ -6,7 +6,7 @@ summary: Multithreaded HTTP/1.1-Server in reinem C mit eigenem Thread-Pool, MIME
 role: Autor
 status: live
 statusLabel: Live
-year: "2024"
+year: "2025"
 featured: false
 order: 7
 tech:

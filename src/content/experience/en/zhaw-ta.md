@@ -10,4 +10,4 @@ tech:
   - Teaching
 ---
 
-Preparing and delivering lab sessions on **Turing machines**, **pushdown automata**, and **formal grammars** for the Theoretical Computer Science course at **ZHAW**.
+Preparing and delivering lab sessions on **Turing machines**, **pushdown automata**, and **formal grammars** for the Theoretical Computer Science module (THIN) at **ZHAW**.

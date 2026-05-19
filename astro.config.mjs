@@ -1,5 +1,6 @@
 import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
+import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
   site: 'https://aneshodza.ch',
@@ -10,6 +11,17 @@ export default defineConfig({
       prefixDefaultLocale: false,
     },
   },
+  integrations: [
+    sitemap({
+      i18n: {
+        defaultLocale: 'de',
+        locales: {
+          de: 'de-CH',
+          en: 'en-GB',
+        },
+      },
+    }),
+  ],
   vite: {
     plugins: [tailwindcss()],
   },

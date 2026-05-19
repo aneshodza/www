@@ -2,7 +2,7 @@
 locale: de
 company: Diartis AG
 role: Security & Full-Stack Software Engineer
-location: Schweiz
+location: Lenzburg
 period: Jan 2026 · heute
 order: 2
 tech:

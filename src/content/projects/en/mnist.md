@@ -6,7 +6,7 @@ summary: Library-free neural network in pure TypeScript and JavaScript that clas
 role: Author
 status: live
 statusLabel: Live
-year: "2024"
+year: "2026"
 featured: false
 order: 5
 tech:

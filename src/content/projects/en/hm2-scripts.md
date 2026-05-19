@@ -6,7 +6,7 @@ summary: Implementations of numeric algorithms from the ZHAW course Höhere Math
 role: Author
 status: archived
 statusLabel: Archived
-year: "2024"
+year: "2025"
 featured: false
 order: 8
 tech:

@@ -2,7 +2,7 @@
 locale: de
 company: Centro Labs
 role: Mitgründer
-location: Schweiz
+location: Zürich
 period: Jan 2026 · heute
 order: 1
 tech:

@@ -2,7 +2,7 @@
 locale: en
 company: Centro Labs
 role: Co-founder
-location: Switzerland
+location: Zurich
 period: Jan 2026 · present
 order: 1
 tech:

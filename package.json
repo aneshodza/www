@@ -13,9 +13,10 @@
   },
   "dependencies": {
     "@astrojs/check": "0.9.4",
+    "@astrojs/sitemap": "^3.7.2",
     "@fontsource/inter": "5.2.5",
-    "@fontsource/source-serif-4": "5.2.5",
     "@fontsource/jetbrains-mono": "5.2.5",
+    "@fontsource/source-serif-4": "5.2.5",
     "@tailwindcss/vite": "4.1.13",
     "astro": "5.14.1",
     "tailwindcss": "4.1.13",

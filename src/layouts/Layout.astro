@@ -20,13 +20,43 @@ const t = useTranslations(locale);
 
 const { title, description, ogType = 'website' } = Astro.props;
 
-const pageTitle = title ? `${title} . ${t('site.title')}` : `${t('site.title')} . ${t('hero.tagline')}`;
+const pageTitle = `${title ?? t('nav.home')} | Anes`;
 const metaDescription = description ?? t('site.description');
 
 const altLocale = locale === 'de' ? 'en' : 'de';
 const altPath = switchLocalePath(Astro.url.pathname, altLocale);
 const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin).toString();
 const altUrl = new URL(altPath, Astro.site ?? Astro.url.origin).toString();
+const socialImage = new URL('/og.png', Astro.site ?? Astro.url.origin).toString();
+
+const personJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Anes Hodza',
+  url: 'https://aneshodza.ch',
+  image: new URL('/portrait.jpg', Astro.site ?? Astro.url.origin).toString(),
+  jobTitle: t('hero.tagline'),
+  email: 'mailto:anes@centrolabs.ch',
+  sameAs: [
+    'https://github.com/aneshodza',
+    'https://www.linkedin.com/in/aneshodza/',
+    'https://dev.to/aneshodza',
+    'https://www.npmjs.com/~aneshodza',
+  ],
+  address: {
+    '@type': 'PostalAddress',
+    addressCountry: 'CH',
+  },
+  alumniOf: {
+    '@type': 'EducationalOrganization',
+    name: 'ZHAW Zurich University of Applied Sciences',
+  },
+  worksFor: {
+    '@type': 'Organization',
+    name: 'Centro Labs',
+    url: 'https://centrolabs.ch',
+  },
+};
 ---
 
 <!doctype html>
@@ -35,6 +65,8 @@ const altUrl = new URL(altPath, Astro.site ?? Astro.url.origin).toString();
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#fbfaf7" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#14110d" media="(prefers-color-scheme: dark)" />
     <title>{pageTitle}</title>
     <meta name="description" content={metaDescription} />
     <meta name="author" content="Anes Hodza" />
@@ -51,7 +83,13 @@ const altUrl = new URL(altPath, Astro.site ?? Astro.url.origin).toString();
     <meta property="og:url" content={canonical} />
     <meta property="og:locale" content={locale === 'de' ? 'de_CH' : 'en_GB'} />
     <meta property="og:site_name" content="Anes Hodza" />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content={socialImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={metaDescription} />
+    <meta name="twitter:image" content={socialImage} />
+
+    <script type="application/ld+json" set:html={JSON.stringify(personJsonLd)} />
 
     <ClientRouter />
 

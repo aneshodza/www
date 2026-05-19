@@ -6,7 +6,7 @@ summary: Open-source Angular library for Markdown-driven blogs. Strictly data-la
 role: Author and maintainer
 status: live
 statusLabel: Live
-year: "2024"
+year: "2026"
 featured: false
 order: 4
 tech:
