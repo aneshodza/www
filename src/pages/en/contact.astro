@@ -1,0 +1,10 @@
+---
+import Layout from '~/layouts/Layout.astro';
+import ContactView from '~/components/pages/ContactView.astro';
+import { useTranslations } from '~/i18n/utils';
+const t = useTranslations('en');
+---
+
+<Layout title={t('nav.contact')}>
+  <ContactView />
+</Layout>

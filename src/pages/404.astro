@@ -1,0 +1,10 @@
+---
+import Layout from '~/layouts/Layout.astro';
+import NotFoundView from '~/components/pages/NotFoundView.astro';
+import { useTranslations } from '~/i18n/utils';
+const t = useTranslations('de');
+---
+
+<Layout title={t('404.title')}>
+  <NotFoundView />
+</Layout>

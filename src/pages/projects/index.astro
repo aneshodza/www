@@ -1,0 +1,10 @@
+---
+import Layout from '~/layouts/Layout.astro';
+import ProjectsView from '~/components/pages/ProjectsView.astro';
+import { useTranslations } from '~/i18n/utils';
+const t = useTranslations('de');
+---
+
+<Layout title={t('nav.projects')}>
+  <ProjectsView />
+</Layout>

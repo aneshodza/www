@@ -1,0 +1,75 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { getLocaleFromUrl, useTranslations, localizePath } from '~/i18n/utils';
+
+interface Props {
+  entry: CollectionEntry<'projects'>;
+  index?: number;
+  featured?: boolean;
+}
+
+const { entry, index, featured = false } = Astro.props;
+const locale = getLocaleFromUrl(Astro.url);
+const t = useTranslations(locale);
+
+const href = localizePath(`/projects/${entry.data.slug}`, locale);
+const number =
+  typeof index === 'number' ? String(index + 1).padStart(2, '0') : null;
+---
+
+<article
+  class={`group ${featured ? 'lg:grid lg:grid-cols-[1fr_2fr] lg:gap-12' : ''}`}
+>
+  {
+    featured && (
+      <aside class="hidden lg:block">
+        <p class="label">{t('sections.featured')}</p>
+        <p class="font-serif text-[0.92rem] text-[var(--fg-subtle)] italic mt-3">
+          {entry.data.year}
+        </p>
+      </aside>
+    )
+  }
+
+  <div>
+    <div class="flex items-baseline justify-between gap-4 border-b border-[var(--rule)] pb-3 mb-4">
+      <p class="label">
+        {number ? `Nr. ${number}` : entry.data.year}
+        <span class="mx-2 text-[var(--rule)]">/</span>
+        {entry.data.statusLabel}
+      </p>
+      <p class="font-sans text-[0.72rem] text-[var(--fg-subtle)] uppercase tracking-[0.14em]">
+        {entry.data.role}
+      </p>
+    </div>
+
+    <h3
+      class={`display ${featured ? 'text-[2rem] md:text-[2.75rem]' : 'text-[1.5rem] md:text-[1.85rem]'}`}
+    >
+      <a
+        href={href}
+        class="transition-colors hover:text-[var(--accent)]"
+      >
+        {entry.data.title}
+      </a>
+    </h3>
+
+    <p
+      class={`mt-4 ${featured ? 'text-[1.05rem]' : 'text-[1rem]'} text-[var(--fg-muted)] leading-relaxed max-w-[42rem]`}
+    >
+      {entry.data.summary}
+    </p>
+
+    <ul class="mt-5 flex flex-wrap gap-x-3 gap-y-1">
+      {entry.data.tech.slice(0, featured ? 8 : 5).map((t) => (
+        <li class="tag">{t}</li>
+      ))}
+    </ul>
+
+    <div class="mt-5">
+      <a href={href} class="btn-text">
+        {t('project.view')} &nbsp;&rarr;
+      </a>
+    </div>
+  </div>
+</article>

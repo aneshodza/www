@@ -1,0 +1,112 @@
+---
+import { getCollection } from 'astro:content';
+import Hero from '~/components/Hero.astro';
+import ProjectCard from '~/components/ProjectCard.astro';
+import {
+  getLocaleFromUrl,
+  useTranslations,
+  localizePath,
+} from '~/i18n/utils';
+
+const locale = getLocaleFromUrl(Astro.url);
+const t = useTranslations(locale);
+
+const allProjects = await getCollection('projects', (e) => e.data.locale === locale);
+const projects = allProjects.sort((a, b) => a.data.order - b.data.order);
+const featured = projects[0];
+const remaining = Math.max(projects.length - 1, 0);
+---
+
+<Hero />
+
+{
+  featured && (
+    <section class="mx-auto max-w-[68rem] px-5 md:px-10 py-16 md:py-20 border-t border-[var(--rule)]">
+      <div class="flex items-baseline justify-between border-b border-[var(--rule)] pb-3 mb-10">
+        <h2 class="label">{t('sections.featured')}</h2>
+        <p class="font-sans text-[0.72rem] uppercase tracking-[0.14em] text-[var(--fg-subtle)]">
+          {locale === 'de' ? 'Nr. 01' : 'No. 01'}
+        </p>
+      </div>
+      <ProjectCard entry={featured} featured />
+
+      {remaining > 0 && (
+        <div class="mt-12 md:mt-16 border-t border-[var(--rule)] pt-6 flex flex-wrap items-baseline justify-between gap-4">
+          <p class="font-serif italic text-[1rem] text-[var(--fg-muted)] max-w-[32rem]">
+            {locale === 'de'
+              ? `Weitere ${String(remaining).padStart(2, '0')} Projekte, von HR-Tooling über agentische Pipelines bis zu systemnahen Übungen in Rust und C.`
+              : `${String(remaining).padStart(2, '0')} further projects, from HR tooling through agentic pipelines to low-level exercises in Rust and C.`}
+          </p>
+          <a href={localizePath('/projects', locale)} class="btn-text">
+            {t('sections.projects.all')} &nbsp;&rarr;
+          </a>
+        </div>
+      )}
+    </section>
+  )
+}
+
+<section class="mx-auto max-w-[68rem] px-5 md:px-10 py-16 md:py-20 border-t border-[var(--rule)]">
+  <div class="flex items-baseline justify-between border-b border-[var(--rule)] pb-3 mb-10">
+    <h2 class="label">{t('sections.contact')}</h2>
+    <p class="font-sans text-[0.72rem] uppercase tracking-[0.14em] text-[var(--fg-subtle)]">
+      {locale === 'de' ? 'Erreichbar' : 'Reachable'}
+    </p>
+  </div>
+  <div class="grid grid-cols-1 lg:grid-cols-[2fr_3fr] gap-10 lg:gap-16">
+    <p class="font-serif text-[1.35rem] md:text-[1.85rem] leading-snug text-[var(--fg)]">
+      {locale === 'de'
+        ? 'Offen für Anfragen zu Anstellung, Zusammenarbeit oder Partnerschaften mit Centro Labs.'
+        : 'Open to hiring conversations, collaboration, and Centro Labs partnerships.'}
+    </p>
+    <dl class="grid grid-cols-1 sm:grid-cols-2 gap-6 self-end">
+      <div>
+        <dt class="label mb-1">{t('contact.email')}</dt>
+        <dd>
+          <a href={`mailto:${t('meta.email')}`} class="link-inline font-serif text-[0.98rem] break-all">
+            {t('meta.email')}
+          </a>
+        </dd>
+      </div>
+      <div>
+        <dt class="label mb-1">GitHub</dt>
+        <dd>
+          <a
+            href="https://github.com/aneshodza"
+            target="_blank"
+            rel="noopener noreferrer me"
+            class="link-inline font-serif text-[0.98rem]"
+          >
+            github.com/aneshodza
+          </a>
+        </dd>
+      </div>
+      <div>
+        <dt class="label mb-1">LinkedIn</dt>
+        <dd>
+          <a
+            href="https://www.linkedin.com/in/aneshodza/"
+            target="_blank"
+            rel="noopener noreferrer me"
+            class="link-inline font-serif text-[0.98rem]"
+          >
+            linkedin.com/in/aneshodza
+          </a>
+        </dd>
+      </div>
+      <div>
+        <dt class="label mb-1">dev.to</dt>
+        <dd>
+          <a
+            href="https://dev.to/aneshodza"
+            target="_blank"
+            rel="noopener noreferrer me"
+            class="link-inline font-serif text-[0.98rem]"
+          >
+            dev.to/aneshodza
+          </a>
+        </dd>
+      </div>
+    </dl>
+  </div>
+</section>

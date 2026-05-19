@@ -1,0 +1,88 @@
+---
+import '~/styles/global.css';
+import { ClientRouter } from 'astro:transitions';
+import Header from '~/components/Header.astro';
+import Footer from '~/components/Footer.astro';
+import {
+  getLocaleFromUrl,
+  useTranslations,
+  switchLocalePath,
+} from '~/i18n/utils';
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogType?: string;
+}
+
+const locale = getLocaleFromUrl(Astro.url);
+const t = useTranslations(locale);
+
+const { title, description, ogType = 'website' } = Astro.props;
+
+const pageTitle = title ? `${title} . ${t('site.title')}` : `${t('site.title')} . ${t('hero.tagline')}`;
+const metaDescription = description ?? t('site.description');
+
+const altLocale = locale === 'de' ? 'en' : 'de';
+const altPath = switchLocalePath(Astro.url.pathname, altLocale);
+const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin).toString();
+const altUrl = new URL(altPath, Astro.site ?? Astro.url.origin).toString();
+---
+
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={metaDescription} />
+    <meta name="author" content="Anes Hodza" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate icon" href="/favicon.ico" />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang={altLocale} href={altUrl} />
+    <link rel="alternate" hreflang={locale} href={canonical} />
+    <link rel="alternate" hreflang="x-default" href={canonical} />
+
+    <meta property="og:type" content={ogType} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={metaDescription} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content={locale === 'de' ? 'de_CH' : 'en_GB'} />
+    <meta property="og:site_name" content="Anes Hodza" />
+    <meta name="twitter:card" content="summary" />
+
+    <ClientRouter />
+
+    <script is:inline>
+      (() => {
+        const apply = () => {
+          try {
+            const stored = localStorage.getItem('theme');
+            const prefersDark =
+              window.matchMedia &&
+              window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const isDark = stored ? stored === 'dark' : prefersDark;
+            document.documentElement.classList.toggle('dark', isDark);
+          } catch {}
+        };
+        apply();
+        document.addEventListener('astro:after-swap', apply);
+      })();
+    </script>
+  </head>
+  <body class="min-h-dvh flex flex-col">
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:bg-[var(--bg)] focus:text-[var(--fg)] focus:px-3 focus:py-2 focus:border focus:border-[var(--rule)]"
+    >
+      Skip to content
+    </a>
+    <Header />
+    <main id="main" class="flex-1">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

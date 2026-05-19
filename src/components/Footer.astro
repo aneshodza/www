@@ -1,0 +1,55 @@
+---
+import { getLocaleFromUrl, useTranslations } from '~/i18n/utils';
+const locale = getLocaleFromUrl(Astro.url);
+const t = useTranslations(locale);
+const year = new Date().getFullYear();
+---
+
+<footer class="no-print mt-24 border-t border-[var(--rule)]">
+  <div
+    class="mx-auto max-w-[68rem] px-5 md:px-10 py-8 flex flex-col md:flex-row md:items-baseline md:justify-between gap-4"
+  >
+    <p class="font-sans text-[0.78rem] text-[var(--fg-muted)] tracking-tight">
+      &copy; {year} {t('footer.copyright')}.&nbsp;{t('meta.location')}.
+    </p>
+    <ul
+      class="flex flex-wrap items-baseline gap-x-5 gap-y-2 font-sans text-[0.78rem] text-[var(--fg-muted)]"
+    >
+      <li>
+        <a class="link-inline" href={`mailto:${t('meta.email')}`}>
+          {t('contact.email')}
+        </a>
+      </li>
+      <li>
+        <a
+          class="link-inline"
+          href="https://github.com/aneshodza"
+          target="_blank"
+          rel="noopener noreferrer me"
+        >
+          GitHub
+        </a>
+      </li>
+      <li>
+        <a
+          class="link-inline"
+          href="https://www.linkedin.com/in/aneshodza/"
+          target="_blank"
+          rel="noopener noreferrer me"
+        >
+          LinkedIn
+        </a>
+      </li>
+      <li>
+        <a
+          class="link-inline"
+          href="https://dev.to/aneshodza"
+          target="_blank"
+          rel="noopener noreferrer me"
+        >
+          dev.to
+        </a>
+      </li>
+    </ul>
+  </div>
+</footer>

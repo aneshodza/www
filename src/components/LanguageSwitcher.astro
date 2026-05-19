@@ -1,0 +1,22 @@
+---
+import {
+  getLocaleFromUrl,
+  otherLocale,
+  switchLocalePath,
+  useTranslations,
+} from '~/i18n/utils';
+
+const locale = getLocaleFromUrl(Astro.url);
+const target = otherLocale(locale);
+const href = switchLocalePath(Astro.url.pathname, target);
+const t = useTranslations(locale);
+---
+
+<a
+  href={href}
+  class="inline-flex items-center min-h-[44px] md:min-h-0 px-1 font-sans text-[0.72rem] uppercase tracking-[0.14em] text-[var(--fg-subtle)] hover:text-[var(--accent)] transition-colors"
+  aria-label={t('lang.switch')}
+  hreflang={target}
+>
+  {target === 'en' ? 'EN' : 'DE'}
+</a>

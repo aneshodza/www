@@ -1,0 +1,112 @@
+---
+import {
+  getLocaleFromUrl,
+  useTranslations,
+  localizePath,
+} from '~/i18n/utils';
+import ThemeToggle from './ThemeToggle.astro';
+import LanguageSwitcher from './LanguageSwitcher.astro';
+
+const locale = getLocaleFromUrl(Astro.url);
+const t = useTranslations(locale);
+
+const nav = [
+  { key: 'nav.projects' as const, path: '/projects' },
+  { key: 'nav.cv' as const, path: '/cv' },
+  { key: 'nav.about' as const, path: '/about' },
+  { key: 'nav.contact' as const, path: '/contact' },
+];
+
+const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
+
+function isActive(itemPath: string): boolean {
+  const target = localizePath(itemPath, locale).replace(/\/$/, '') || '/';
+  if (target === '/' || target === '/en') {
+    return currentPath === '/' || currentPath === '/en';
+  }
+  return currentPath === target || currentPath.startsWith(`${target}/`);
+}
+---
+
+<header class="no-print border-b border-[var(--rule)]">
+  <div class="site-header mx-auto max-w-[68rem] px-5 md:px-10 pt-3 pb-2 md:py-5">
+    <a
+      href={localizePath('/', locale)}
+      class="mark font-serif text-[1.1rem] md:text-[1.05rem] font-semibold tracking-tight text-[var(--fg)] hover:text-[var(--accent)] transition-colors inline-flex items-center min-h-[44px] md:min-h-0"
+      aria-label={t('hero.name')}
+    >
+      Anes Hodza
+    </a>
+
+    <nav aria-label={t('nav.projects')} class="primary-nav">
+      <ul class="flex items-baseline gap-x-3 md:gap-x-6 justify-end md:justify-end">
+        {
+          nav.map(({ key, path }) => {
+            const href = localizePath(path, locale);
+            const active = isActive(path);
+            return (
+              <li>
+                <a
+                  href={href}
+                  class={`inline-flex items-center min-h-[44px] md:min-h-0 font-sans text-[0.78rem] md:text-[0.82rem] tracking-tight transition-colors whitespace-nowrap ${
+                    active
+                      ? 'text-[var(--accent)]'
+                      : 'text-[var(--fg-muted)] hover:text-[var(--fg)]'
+                  }`}
+                  aria-current={active ? 'page' : undefined}
+                >
+                  {t(key)}
+                </a>
+              </li>
+            );
+          })
+        }
+      </ul>
+    </nav>
+
+    <div class="controls flex items-baseline justify-end gap-3 pt-2 mt-1 md:pt-0 md:mt-0 border-t md:border-t-0 border-[var(--rule)]">
+      <LanguageSwitcher />
+      <span aria-hidden="true" class="text-[var(--rule)]">/</span>
+      <ThemeToggle />
+    </div>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    display: grid;
+    align-items: baseline;
+    column-gap: 1rem;
+    row-gap: 0.25rem;
+    grid-template-columns: auto 1fr;
+    grid-template-areas:
+      'mark nav'
+      'controls controls';
+  }
+
+  .mark {
+    grid-area: mark;
+  }
+
+  .primary-nav {
+    grid-area: nav;
+    justify-self: end;
+  }
+
+  .controls {
+    grid-area: controls;
+  }
+
+  @media (min-width: 768px) {
+    .site-header {
+      grid-template-columns: auto 1fr auto;
+      grid-template-areas: 'mark nav controls';
+      column-gap: 2.5rem;
+      row-gap: 0;
+    }
+
+    .controls {
+      justify-self: end;
+    }
+  }
+</style>

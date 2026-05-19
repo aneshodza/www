@@ -1,0 +1,90 @@
+---
+import { getLocaleFromUrl, useTranslations, localizePath } from '~/i18n/utils';
+
+const locale = getLocaleFromUrl(Astro.url);
+const t = useTranslations(locale);
+
+const dateLabel = new Date().toLocaleDateString(t('date.format'), {
+  day: '2-digit',
+  month: '2-digit',
+  year: 'numeric',
+});
+
+const issueLabel =
+  locale === 'de'
+    ? `Ausgabe · ${dateLabel} · Kanton Aargau`
+    : `Issue · ${dateLabel} · Aargau, Switzerland`;
+---
+
+<section
+  aria-labelledby="hero-name"
+  class="mx-auto max-w-[68rem] px-5 md:px-10 pt-8 md:pt-20 pb-14 md:pb-24"
+>
+  <div class="flex items-baseline justify-between gap-4 border-b border-[var(--rule)] pb-3 mb-8 md:mb-14">
+    <p class="label">{t('hero.kicker')}</p>
+    <p class="font-sans text-[0.68rem] md:text-[0.72rem] tracking-[0.14em] uppercase text-[var(--fg-subtle)] text-right">
+      {issueLabel}
+    </p>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-6 lg:gap-16 items-start">
+    <figure class="w-[10rem] sm:w-[11rem] lg:w-auto lg:max-w-[20rem] lg:col-start-2 lg:row-start-1 lg:justify-self-end">
+      <div class="aspect-[4/5] overflow-hidden border border-[var(--rule)] bg-[var(--bg-tint)]">
+        <img
+          src="/portrait.jpg"
+          alt="Portrait of Anes Hodza"
+          width="400"
+          height="500"
+          loading="eager"
+          decoding="async"
+          fetchpriority="high"
+          class="w-full h-full object-cover"
+        />
+      </div>
+    </figure>
+
+    <div class="max-w-[40rem] lg:col-start-1 lg:row-start-1">
+      <p class="label mb-4">{t('meta.role')}</p>
+      <h1
+        id="hero-name"
+        class="display text-[2.1rem] sm:text-[2.5rem] md:text-[3.5rem] lg:text-[4.25rem]"
+      >
+        {t('hero.name')}. <span class="block md:inline">{t('hero.tagline')}.</span>
+      </h1>
+
+      <p class="mt-6 md:mt-8 text-[1.05rem] md:text-[1.25rem] text-[var(--fg-muted)] leading-relaxed max-w-[36rem]">
+        {t('hero.support')}
+      </p>
+
+      <div class="mt-8 md:mt-10 flex flex-wrap items-baseline gap-x-8 gap-y-4">
+        <a href={localizePath('/projects', locale)} class="btn-text">
+          {t('hero.cta.projects')} &nbsp;&rarr;
+        </a>
+        <a href={localizePath('/contact', locale)} class="btn-text">
+          {t('hero.cta.contact')} &nbsp;&rarr;
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <dl class="mt-12 md:mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-10 border-t border-[var(--rule)] pt-8">
+    <div>
+      <dt class="label mb-1">{locale === 'de' ? 'Ort' : 'Location'}</dt>
+      <dd class="font-serif text-[0.98rem]">{t('meta.location')}</dd>
+    </div>
+    <div>
+      <dt class="label mb-1">{locale === 'de' ? 'Studium' : 'Studies'}</dt>
+      <dd class="font-serif text-[0.98rem]">{t('meta.studies')}</dd>
+    </div>
+    <div>
+      <dt class="label mb-1">{locale === 'de' ? 'Auszeichnung' : 'Recognition'}</dt>
+      <dd class="font-serif text-[0.98rem]">Hack Winterthur 2026</dd>
+    </div>
+    <div>
+      <dt class="label mb-1">{t('contact.email')}</dt>
+      <dd class="font-serif text-[0.98rem] break-all">
+        <a href={`mailto:${t('meta.email')}`} class="link-inline">{t('meta.email')}</a>
+      </dd>
+    </div>
+  </dl>
+</section>

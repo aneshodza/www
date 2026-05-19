@@ -1,0 +1,35 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  entry: CollectionEntry<'education'>;
+}
+
+const { entry } = Astro.props;
+---
+
+<article class="grid grid-cols-1 md:grid-cols-[14rem_1fr] gap-3 md:gap-10 py-8 border-t border-[var(--rule)] first:border-t-0 first:pt-0">
+  <header>
+    <p class="font-sans text-[0.72rem] uppercase tracking-[0.14em] text-[var(--fg-subtle)]">
+      {entry.data.period}
+    </p>
+    {
+      entry.data.grade && (
+        <p class="font-serif text-[0.92rem] italic text-[var(--fg-muted)] mt-1">
+          {entry.data.grade}
+        </p>
+      )
+    }
+  </header>
+
+  <div>
+    <h3 class="font-serif text-[1.25rem] font-semibold tracking-tight">
+      {entry.data.qualification}
+      <span class="text-[var(--fg-subtle)] font-normal"> &middot; </span>
+      <span class="font-normal italic">{entry.data.institution}</span>
+    </h3>
+    <div class="prose-editorial mt-3 max-w-none">
+      <slot />
+    </div>
+  </div>
+</article>

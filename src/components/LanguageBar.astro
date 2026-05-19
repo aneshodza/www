@@ -1,0 +1,46 @@
+---
+interface Props {
+  label: string;
+  level: 'A1' | 'A2' | 'B1' | 'B2' | 'C1' | 'C2';
+  note?: string;
+}
+
+const { label, level, note } = Astro.props;
+
+const levels = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'] as const;
+const filled = levels.indexOf(level) + 1;
+---
+
+<div class="language-row grid grid-cols-[1fr_auto] gap-x-4 items-baseline py-3 border-b border-[var(--rule)] last:border-b-0">
+  <div class="flex items-baseline gap-3 flex-wrap">
+    <span class="font-serif text-[1.05rem]">{label}</span>
+    {note && (
+      <span class="font-serif italic text-[0.92rem] text-[var(--fg-subtle)]">
+        {note}
+      </span>
+    )}
+  </div>
+  <div class="flex items-baseline gap-3">
+    <span
+      class="font-sans text-[0.72rem] uppercase tracking-[0.14em] text-[var(--fg-muted)] tabular-nums"
+    >
+      {level}
+    </span>
+    <ul
+      class="flex gap-[3px]"
+      role="img"
+      aria-label={`${label}: ${level}`}
+    >
+      {
+        levels.map((_, i) => (
+          <li
+            class={`h-[10px] w-[14px] border border-[var(--rule)] ${
+              i < filled ? 'bg-[var(--accent)] border-[var(--accent)]' : ''
+            }`}
+            aria-hidden="true"
+          />
+        ))
+      }
+    </ul>
+  </div>
+</div>

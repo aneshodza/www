@@ -1,0 +1,98 @@
+---
+import { getLocaleFromUrl, useTranslations } from '~/i18n/utils';
+
+const locale = getLocaleFromUrl(Astro.url);
+const t = useTranslations(locale);
+
+const channels = [
+  {
+    label: locale === 'de' ? 'E-Mail' : 'Email',
+    value: t('meta.email'),
+    href: `mailto:${t('meta.email')}`,
+    note:
+      locale === 'de'
+        ? 'Bevorzugter Weg. Antwort meist innerhalb von 24 Stunden.'
+        : 'Preferred channel. Replies usually within 24 hours.',
+    external: false,
+  },
+  {
+    label: 'GitHub',
+    value: 'github.com/aneshodza',
+    href: 'https://github.com/aneshodza',
+    note:
+      locale === 'de'
+        ? 'Quellcode, Open-Source-Beiträge und Experimente.'
+        : 'Source code, open-source contributions, and experiments.',
+    external: true,
+  },
+  {
+    label: 'LinkedIn',
+    value: 'linkedin.com/in/aneshodza',
+    href: 'https://www.linkedin.com/in/aneshodza/',
+    note:
+      locale === 'de'
+        ? 'Beruflicher Werdegang und Anfragen für Anstellungen.'
+        : 'Professional background and hiring conversations.',
+    external: true,
+  },
+  {
+    label: 'dev.to',
+    value: 'dev.to/aneshodza',
+    href: 'https://dev.to/aneshodza',
+    note:
+      locale === 'de'
+        ? 'Technische Notizen und längere Texte.'
+        : 'Technical notes and longer-form writing.',
+    external: true,
+  },
+  {
+    label: 'npm',
+    value: 'npmjs.com/~aneshodza',
+    href: 'https://www.npmjs.com/~aneshodza',
+    note:
+      locale === 'de'
+        ? 'Veröffentlichte Pakete unter @centrolabs.'
+        : 'Published packages under @centrolabs.',
+    external: true,
+  },
+];
+---
+
+<section class="mx-auto max-w-[68rem] px-5 md:px-10 pt-12 md:pt-20 pb-24">
+  <div class="flex items-baseline justify-between border-b border-[var(--rule)] pb-3 mb-10">
+    <p class="label">{t('nav.contact')}</p>
+    <p class="font-sans text-[0.72rem] uppercase tracking-[0.14em] text-[var(--fg-subtle)]">
+      {t('meta.location')}
+    </p>
+  </div>
+
+  <h1 class="display text-[2.25rem] md:text-[3.5rem] max-w-[40rem] leading-[1.05]">
+    {locale === 'de' ? 'Reden wir.' : 'Let us talk.'}
+  </h1>
+
+  <p class="mt-8 max-w-[36rem] text-[var(--fg-muted)] text-[1.0625rem] md:text-[1.125rem] leading-relaxed">
+    {t('contact.intro')}
+  </p>
+
+  <dl class="mt-14 md:mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-10 border-t border-[var(--rule)] pt-10">
+    {
+      channels.map((c) => (
+        <div>
+          <dt class="label mb-2">{c.label}</dt>
+          <dd>
+            <a
+              href={c.href}
+              class="link-inline font-serif text-[1.1rem] md:text-[1.25rem] break-all"
+              {...(c.external
+                ? { target: '_blank', rel: 'noopener noreferrer me' }
+                : {})}
+            >
+              {c.value}
+            </a>
+          </dd>
+          <p class="figure-caption mt-2 not-italic">{c.note}</p>
+        </div>
+      ))
+    }
+  </dl>
+</section>

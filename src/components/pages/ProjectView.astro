@@ -1,0 +1,105 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { render } from 'astro:content';
+import {
+  getLocaleFromUrl,
+  useTranslations,
+  localizePath,
+} from '~/i18n/utils';
+
+interface Props {
+  entry: CollectionEntry<'projects'>;
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+const locale = getLocaleFromUrl(Astro.url);
+const t = useTranslations(locale);
+
+const isExternal = (url: string) => /^https?:\/\//.test(url);
+---
+
+<article class="mx-auto max-w-[68rem] px-5 md:px-10 pt-12 md:pt-20 pb-20">
+  <div class="flex items-baseline justify-between border-b border-[var(--rule)] pb-3 mb-10">
+    <p class="label">{t('nav.projects')}</p>
+    <a
+      href={localizePath('/projects', locale)}
+      class="font-sans text-[0.72rem] uppercase tracking-[0.14em] text-[var(--fg-subtle)] hover:text-[var(--accent)] inline-flex items-center min-h-[44px] md:min-h-0"
+    >
+      &larr; &nbsp;{t('project.back')}
+    </a>
+  </div>
+
+  <header>
+    <p class="label">
+      {entry.data.year} <span class="mx-2 text-[var(--rule)]">/</span>{' '}
+      {entry.data.statusLabel}
+    </p>
+    <h1 class="display text-[2.5rem] md:text-[4.5rem] mt-3 leading-[1.05]">
+      {entry.data.title}.
+    </h1>
+    <p class="mt-6 font-serif italic text-[1.1rem] md:text-[1.35rem] text-[var(--fg-muted)] max-w-[42rem] leading-snug">
+      {entry.data.summary}
+    </p>
+  </header>
+
+  <dl class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-6 border-t border-[var(--rule)] pt-6">
+    <div>
+      <dt class="label mb-1">{t('project.role')}</dt>
+      <dd class="font-serif text-[0.98rem]">{entry.data.role}</dd>
+    </div>
+    <div>
+      <dt class="label mb-1">{t('project.status')}</dt>
+      <dd class="font-serif text-[0.98rem]">{entry.data.statusLabel}</dd>
+    </div>
+    <div>
+      <dt class="label mb-1">{t('project.year')}</dt>
+      <dd class="font-serif text-[0.98rem]">{entry.data.year}</dd>
+    </div>
+    <div>
+      <dt class="label mb-1">{t('project.links')}</dt>
+      <dd>
+        <ul class="space-y-1">
+          {
+            entry.data.links.map((l) => (
+              <li>
+                <a
+                  class="link-inline font-serif text-[0.95rem] break-all"
+                  href={l.url}
+                  {...(isExternal(l.url)
+                    ? { target: '_blank', rel: 'noopener noreferrer' }
+                    : {})}
+                >
+                  {l.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </dd>
+    </div>
+  </dl>
+
+  <section class="mt-16 grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-12 lg:gap-20">
+    <div class="prose-editorial max-w-[40rem]">
+      <Content />
+    </div>
+
+    <aside class="lg:sticky lg:top-10 self-start">
+      <p class="label mb-3">{t('project.tech')}</p>
+      <ul class="flex flex-wrap gap-x-3 gap-y-2 border-t border-[var(--rule)] pt-3">
+        {entry.data.tech.map((tag) => <li class="tag">{tag}</li>)}
+      </ul>
+    </aside>
+  </section>
+
+  <nav class="mt-20 border-t border-[var(--rule)] pt-6 flex items-baseline justify-between">
+    <a href={localizePath('/projects', locale)} class="btn-text">
+      &larr; {t('project.back')}
+    </a>
+    <a href={localizePath('/contact', locale)} class="btn-text">
+      {t('hero.cta.contact')} &nbsp;&rarr;
+    </a>
+  </nav>
+</article>

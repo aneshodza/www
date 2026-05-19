@@ -1,0 +1,10 @@
+---
+import Layout from '~/layouts/Layout.astro';
+import CVView from '~/components/pages/CVView.astro';
+import { useTranslations } from '~/i18n/utils';
+const t = useTranslations('de');
+---
+
+<Layout title={t('nav.cv')}>
+  <CVView />
+</Layout>

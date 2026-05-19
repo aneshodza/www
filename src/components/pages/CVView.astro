@@ -1,0 +1,208 @@
+---
+import { getCollection } from 'astro:content';
+import ExperienceItem from '~/components/ExperienceItem.astro';
+import LanguageBar from '~/components/LanguageBar.astro';
+import { render } from 'astro:content';
+import { getLocaleFromUrl, useTranslations } from '~/i18n/utils';
+
+const locale = getLocaleFromUrl(Astro.url);
+const t = useTranslations(locale);
+
+const experience = (
+  await getCollection('experience', (e) => e.data.locale === locale)
+).sort((a, b) => a.data.order - b.data.order);
+
+const education = (
+  await getCollection('education', (e) => e.data.locale === locale)
+).sort((a, b) => a.data.order - b.data.order);
+
+const educationRendered = await Promise.all(
+  education.map(async (entry) => {
+    const { Content } = await render(entry);
+    return { entry, Content };
+  }),
+);
+
+const skills = [
+  {
+    key: 'skills.languages' as const,
+    items: ['TypeScript', 'C#', 'Ruby', 'Rust', 'C', 'Python', 'SQL', 'PowerShell', 'Bash'],
+  },
+  {
+    key: 'skills.frameworks' as const,
+    items: ['Angular', 'NestJS', 'ASP.NET', 'Ruby on Rails', 'Astro', 'LangGraph.js'],
+  },
+  {
+    key: 'skills.data' as const,
+    items: ['PostgreSQL', 'MySQL', 'Qdrant', 'Drizzle', 'ActiveRecord'],
+  },
+  {
+    key: 'skills.infrastructure' as const,
+    items: ['Docker', 'CI/CD', 'Bun', 'Turborepo'],
+  },
+  {
+    key: 'skills.concepts' as const,
+    items:
+      locale === 'de'
+        ? ['MCP', 'RAG', 'Agentische Systeme', 'NLP', 'IR', 'Secure Development', 'Scrum', 'TDD']
+        : ['MCP', 'RAG', 'Agentic systems', 'NLP', 'IR', 'Secure development', 'Scrum', 'TDD'],
+  },
+];
+
+const languages =
+  locale === 'de'
+    ? [
+        { label: 'Deutsch', level: 'C2' as const, note: 'Muttersprache' },
+        { label: 'Bosnisch', level: 'C2' as const, note: 'Muttersprache' },
+        { label: 'Englisch', level: 'C2' as const },
+        { label: 'Französisch', level: 'B2' as const },
+        { label: 'Niederländisch', level: 'A1' as const },
+      ]
+    : [
+        { label: 'German', level: 'C2' as const, note: 'Native' },
+        { label: 'Bosnian', level: 'C2' as const, note: 'Native' },
+        { label: 'English', level: 'C2' as const },
+        { label: 'French', level: 'B2' as const },
+        { label: 'Dutch', level: 'A1' as const },
+      ];
+---
+
+<section class="mx-auto max-w-[68rem] px-5 md:px-10 pt-12 md:pt-20 pb-10">
+  <div class="flex items-baseline justify-between border-b border-[var(--rule)] pb-3 mb-10">
+    <p class="label">{t('nav.cv')}</p>
+    <button
+      type="button"
+      data-print
+      class="no-print font-sans text-[0.72rem] uppercase tracking-[0.14em] text-[var(--fg-subtle)] hover:text-[var(--accent)] inline-flex items-center min-h-[44px] md:min-h-0 px-1"
+    >
+      {t('cv.print')}
+    </button>
+  </div>
+
+  <h1 class="display text-[2.5rem] md:text-[3.25rem] max-w-[42rem]">
+    Anes Hodza.
+  </h1>
+  <p class="mt-3 font-serif italic text-[1.15rem] text-[var(--fg-muted)] max-w-[40rem]">
+    {t('hero.tagline')}.
+  </p>
+
+  <dl class="mt-10 grid grid-cols-2 md:grid-cols-4 gap-6 border-t border-[var(--rule)] pt-6">
+    <div>
+      <dt class="label mb-1">{locale === 'de' ? 'Ort' : 'Location'}</dt>
+      <dd class="font-serif text-[0.98rem]">{t('meta.location')}</dd>
+    </div>
+    <div>
+      <dt class="label mb-1">{t('contact.email')}</dt>
+      <dd class="font-serif text-[0.98rem] break-all">
+        <a href={`mailto:${t('meta.email')}`} class="link-inline">{t('meta.email')}</a>
+      </dd>
+    </div>
+    <div>
+      <dt class="label mb-1">GitHub</dt>
+      <dd class="font-serif text-[0.98rem]">
+        <a
+          href="https://github.com/aneshodza"
+          class="link-inline"
+          target="_blank"
+          rel="noopener noreferrer me"
+        >
+          github.com/aneshodza
+        </a>
+      </dd>
+    </div>
+    <div>
+      <dt class="label mb-1">LinkedIn</dt>
+      <dd class="font-serif text-[0.98rem]">
+        <a
+          href="https://www.linkedin.com/in/aneshodza/"
+          class="link-inline"
+          target="_blank"
+          rel="noopener noreferrer me"
+        >
+          linkedin.com/in/aneshodza
+        </a>
+      </dd>
+    </div>
+  </dl>
+</section>
+
+<section class="mx-auto max-w-[68rem] px-5 md:px-10 py-12">
+  <h2 class="font-serif text-[1.5rem] md:text-[1.75rem] font-semibold tracking-tight border-b border-[var(--rule)] pb-2 mb-2">
+    {t('sections.experience')}
+  </h2>
+  <div>
+    {experience.map((entry) => <ExperienceItem entry={entry} />)}
+  </div>
+</section>
+
+<section class="mx-auto max-w-[68rem] px-5 md:px-10 py-12">
+  <h2 class="font-serif text-[1.5rem] md:text-[1.75rem] font-semibold tracking-tight border-b border-[var(--rule)] pb-2 mb-2">
+    {t('sections.education')}
+  </h2>
+  <div>
+    {
+      educationRendered.map(({ entry, Content }) => (
+        <article class="grid grid-cols-1 md:grid-cols-[14rem_1fr] gap-3 md:gap-10 py-8 border-t border-[var(--rule)] first:border-t-0 first:pt-0">
+          <header>
+            <p class="font-sans text-[0.72rem] uppercase tracking-[0.14em] text-[var(--fg-subtle)]">
+              {entry.data.period}
+            </p>
+            {entry.data.grade && (
+              <p class="font-serif text-[0.92rem] italic text-[var(--fg-muted)] mt-1">
+                {entry.data.grade}
+              </p>
+            )}
+          </header>
+          <div>
+            <h3 class="font-serif text-[1.2rem] md:text-[1.25rem] font-semibold tracking-tight">
+              {entry.data.qualification}
+              <span class="text-[var(--fg-subtle)] font-normal"> &middot; </span>
+              <span class="font-normal italic">{entry.data.institution}</span>
+            </h3>
+            <div class="prose-editorial mt-3 max-w-none">
+              <Content />
+            </div>
+          </div>
+        </article>
+      ))
+    }
+  </div>
+</section>
+
+<section class="mx-auto max-w-[68rem] px-5 md:px-10 py-12">
+  <h2 class="font-serif text-[1.5rem] md:text-[1.75rem] font-semibold tracking-tight border-b border-[var(--rule)] pb-2 mb-6">
+    {t('sections.skills')}
+  </h2>
+  <dl class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-x-8 gap-y-8">
+    {
+      skills.map((group) => (
+        <div>
+          <dt class="label mb-2">{t(group.key)}</dt>
+          <dd>
+            <ul class="space-y-1">
+              {group.items.map((item) => (
+                <li class="font-serif text-[0.98rem]">{item}</li>
+              ))}
+            </ul>
+          </dd>
+        </div>
+      ))
+    }
+  </dl>
+</section>
+
+<section class="mx-auto max-w-[68rem] px-5 md:px-10 py-12 pb-20">
+  <h2 class="font-serif text-[1.5rem] md:text-[1.75rem] font-semibold tracking-tight border-b border-[var(--rule)] pb-2 mb-6">
+    {t('languages.spoken')}
+  </h2>
+  <div class="max-w-[34rem] border-t border-[var(--rule)]">
+    {languages.map((lang) => (
+      <LanguageBar label={lang.label} level={lang.level} note={lang.note} />
+    ))}
+  </div>
+</section>
+
+<script>
+  const printBtn = document.querySelector<HTMLButtonElement>('[data-print]');
+  printBtn?.addEventListener('click', () => window.print());
+</script>

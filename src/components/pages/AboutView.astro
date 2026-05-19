@@ -1,0 +1,201 @@
+---
+import { getLocaleFromUrl, useTranslations } from '~/i18n/utils';
+import LanguageBar from '~/components/LanguageBar.astro';
+
+const locale = getLocaleFromUrl(Astro.url);
+const t = useTranslations(locale);
+
+const languages =
+  locale === 'de'
+    ? [
+        { label: 'Deutsch', level: 'C2' as const, note: 'Muttersprache' },
+        { label: 'Bosnisch', level: 'C2' as const, note: 'Muttersprache' },
+        { label: 'Englisch', level: 'C2' as const },
+        { label: 'Französisch', level: 'B2' as const },
+        { label: 'Niederländisch', level: 'A1' as const },
+      ]
+    : [
+        { label: 'German', level: 'C2' as const, note: 'Native' },
+        { label: 'Bosnian', level: 'C2' as const, note: 'Native' },
+        { label: 'English', level: 'C2' as const },
+        { label: 'French', level: 'B2' as const },
+        { label: 'Dutch', level: 'A1' as const },
+      ];
+---
+
+<section class="mx-auto max-w-[68rem] px-5 md:px-10 pt-12 md:pt-20 pb-8">
+  <div class="flex items-baseline justify-between border-b border-[var(--rule)] pb-3 mb-10">
+    <p class="label">{t('nav.about')}</p>
+    <p class="font-sans text-[0.72rem] uppercase tracking-[0.14em] text-[var(--fg-subtle)]">
+      {t('meta.location')}
+    </p>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-[3fr_2fr] gap-12 lg:gap-16 items-start">
+    <div>
+      <h1 class="display text-[2.25rem] md:text-[3.25rem] leading-[1.05]">
+        {locale === 'de'
+          ? 'Notiz an die Leserin, den Leser.'
+          : 'A note to the reader.'}
+      </h1>
+
+      {
+        locale === 'de' ? (
+          <div class="prose-editorial mt-10 max-w-[36rem] text-[1.0625rem]">
+            <p class="drop-cap">
+              Geboren in eine kosovarische Familie, aufgewachsen und ansässig in
+              der Schweiz, im Kanton <strong>Aargau</strong>. Zweisprachig
+              aufgewachsen mit <strong>Deutsch</strong> und <strong>Bosnisch</strong>{' '}
+              als Muttersprachen, mit <strong>Englisch</strong> als fliessender
+              Arbeitssprache.
+            </p>
+
+            <p>
+              Mein technisches Profil ist <strong>Full-Stack</strong> in der Breite,
+              mit Erfahrung in <strong>TypeScript</strong>, <strong>C#</strong>,{' '}
+              <strong>Ruby</strong>, <strong>Rust</strong> und <strong>C</strong>.
+              Der aktuelle Schwerpunkt liegt auf <strong>agentischer AI</strong>,{' '}
+              <strong>NLP</strong>, <strong>Information Retrieval</strong> und{' '}
+              <strong>Security-Engineering</strong>. Konkret beschäftigt mich,
+              wie sich agentische Multi-Hop-Retrieval-Pipelines über{' '}
+              <strong>MCP (Model Context Protocol)</strong> sauber komponieren
+              lassen, ohne in unkontrollierte Werkzeug-Aufruf-Schleifen
+              abzudriften.
+            </p>
+
+            <p>
+              Akademisch: <strong>BSc Informatik</strong> an der <strong>ZHAW</strong>{' '}
+              mit Schwerpunkt in <strong>Information Retrieval</strong>,{' '}
+              <strong>NLP</strong>, <strong>AI</strong> und{' '}
+              <strong>Cyber Security</strong>. Aktueller Notenschnitt 5.3. Ziel
+              ist ein anschliessender <strong>MSc Computer Science</strong> an
+              der <strong>ETH Zürich</strong>.
+            </p>
+
+            <p>
+              Ausserhalb der Informatik gilt mein Interesse der Makroökonomie,
+              insbesondere der <strong>Modern Monetary Theory</strong>: der
+              Frage, wie Geld tatsächlich durch eine Volkswirtschaft fliesst,
+              welche Zweit- und Drittrundeneffekte ökonomische Anreize auf das
+              Verhalten haben, und wie sich die Mechanik von{' '}
+              <strong>Finanzderivaten</strong> aus diesen Grundsätzen herleitet.
+              Das ist ein präzises Hobby, kein Smalltalk-Thema.
+            </p>
+
+            <p class="text-[0.95rem] text-[var(--fg-muted)] mt-8">
+              Werkzeuge und Setup:{' '}
+              <a
+                class="link-inline"
+                href="https://github.com/aneshodza/.dotfiles"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                dotfiles
+              </a>{' '}
+              und{' '}
+              <a
+                class="link-inline"
+                href="https://github.com/aneshodza/nvim"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Neovim-Konfiguration
+              </a>{' '}
+              auf GitHub.
+            </p>
+          </div>
+        ) : (
+          <div class="prose-editorial mt-10 max-w-[36rem] text-[1.0625rem]">
+            <p class="drop-cap">
+              Born to a Kosovar family, raised and based in Switzerland, in the
+              canton of <strong>Aargau</strong>. Grew up bilingual with{' '}
+              <strong>German</strong> and <strong>Bosnian</strong> as native
+              languages, and <strong>English</strong> as a fluent working
+              language.
+            </p>
+
+            <p>
+              My technical profile is <strong>full-stack</strong> in breadth,
+              with experience across <strong>TypeScript</strong>,{' '}
+              <strong>C#</strong>, <strong>Ruby</strong>, <strong>Rust</strong>,
+              and <strong>C</strong>. The current focus is{' '}
+              <strong>agentic AI</strong>, <strong>NLP</strong>,{' '}
+              <strong>information retrieval</strong>, and{' '}
+              <strong>security engineering</strong>. Concretely, I work on how
+              agentic multi-hop retrieval pipelines can be composed cleanly over{' '}
+              <strong>MCP (Model Context Protocol)</strong>, without drifting
+              into uncontrolled tool-call loops.
+            </p>
+
+            <p>
+              Academically: <strong>BSc Computer Science</strong> at{' '}
+              <strong>ZHAW</strong>, with a Schwerpunkt in{' '}
+              <strong>Information Retrieval</strong>, <strong>NLP</strong>,{' '}
+              <strong>AI</strong>, and <strong>Cyber Security</strong>. Current
+              GPA 5.3. The intended next step is an{' '}
+              <strong>MSc Computer Science</strong> at <strong>ETH Zürich</strong>.
+            </p>
+
+            <p>
+              Outside engineering my interest is macroeconomics, specifically{' '}
+              <strong>Modern Monetary Theory</strong>: how money actually moves
+              through an economy, the second and third order effects of
+              incentives on economic behaviour, and how the mechanics of{' '}
+              <strong>financial derivatives</strong> follow from those
+              fundamentals. It is a precise hobby, not small talk.
+            </p>
+
+            <p class="text-[0.95rem] text-[var(--fg-muted)] mt-8">
+              Tools and setup:{' '}
+              <a
+                class="link-inline"
+                href="https://github.com/aneshodza/.dotfiles"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                dotfiles
+              </a>{' '}
+              and{' '}
+              <a
+                class="link-inline"
+                href="https://github.com/aneshodza/nvim"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Neovim configuration
+              </a>{' '}
+              on GitHub.
+            </p>
+          </div>
+        )
+      }
+    </div>
+
+    <div class="lg:sticky lg:top-10 self-start space-y-10">
+      <figure>
+        <div class="aspect-[4/5] overflow-hidden border border-[var(--rule)] bg-[var(--bg-tint)] max-w-[22rem]">
+          <img
+            src="/portrait.jpg"
+            alt="Portrait of Anes Hodza"
+            width="400"
+            height="500"
+            loading="lazy"
+            decoding="async"
+            class="w-full h-full object-cover"
+          />
+        </div>
+      </figure>
+
+      <div class="max-w-[22rem]">
+        <p class="label mb-3">
+          {locale === 'de' ? 'Sprachen' : 'Languages'}
+        </p>
+        <div class="border-t border-[var(--rule)]">
+          {languages.map((lang) => (
+            <LanguageBar label={lang.label} level={lang.level} note={lang.note} />
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
