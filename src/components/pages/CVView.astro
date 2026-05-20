@@ -16,6 +16,13 @@ const education = (
   await getCollection('education', (e) => e.data.locale === locale)
 ).sort((a, b) => a.data.order - b.data.order);
 
+const experienceRendered = await Promise.all(
+  experience.map(async (entry) => {
+    const { Content } = await render(entry);
+    return { entry, Content };
+  }),
+);
+
 const educationRendered = await Promise.all(
   education.map(async (entry) => {
     const { Content } = await render(entry);
@@ -65,144 +72,498 @@ const languages =
         { label: 'French', level: 'B2' as const },
         { label: 'Dutch', level: 'A1' as const },
       ];
+
+const cefr = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'] as const;
+
+const contact = [
+  { label: locale === 'de' ? 'Ort' : 'Location', value: t('meta.location') },
+  { label: t('contact.email'), value: t('meta.email') },
+  { label: 'GitHub', value: 'github.com/aneshodza' },
+  { label: 'LinkedIn', value: 'linkedin.com/in/aneshodza' },
+  { label: 'dev.to', value: 'dev.to/aneshodza' },
+];
 ---
 
-<section class="mx-auto max-w-[68rem] px-5 md:px-10 pt-12 md:pt-20 pb-10">
-  <div class="flex items-baseline justify-between border-b border-[var(--rule)] pb-3 mb-10">
-    <p class="label">{t('nav.cv')}</p>
-    <button
-      type="button"
-      data-print
-      class="no-print font-sans text-[0.72rem] uppercase tracking-[0.14em] text-[var(--fg-subtle)] hover:text-[var(--accent)] inline-flex items-center min-h-[44px] md:min-h-0 px-1"
-    >
-      {t('cv.print')}
-    </button>
-  </div>
-
-  <h1 class="display text-[2.5rem] md:text-[3.25rem] max-w-[42rem]">
-    Anes Hodza.
-  </h1>
-  <p class="mt-3 font-serif italic text-[1.15rem] text-[var(--fg-muted)] max-w-[40rem]">
-    {t('hero.tagline')}.
-  </p>
-
-  <dl class="mt-10 grid grid-cols-2 md:grid-cols-4 gap-6 border-t border-[var(--rule)] pt-6">
-    <div>
-      <dt class="label mb-1">{locale === 'de' ? 'Ort' : 'Location'}</dt>
-      <dd class="font-serif text-[0.98rem]">{t('meta.location')}</dd>
+<div class="cv-screen">
+  <section class="mx-auto max-w-[68rem] px-5 md:px-10 pt-12 md:pt-20 pb-10">
+    <div class="flex items-baseline justify-between border-b border-[var(--rule)] pb-3 mb-10">
+      <p class="label">{t('nav.cv')}</p>
+      <button
+        type="button"
+        onclick="window.print()"
+        class="no-print font-sans text-[0.72rem] uppercase tracking-[0.14em] text-[var(--fg-subtle)] hover:text-[var(--accent)] inline-flex items-center min-h-[44px] md:min-h-0 px-1"
+      >
+        {t('cv.print')}
+      </button>
     </div>
-    <div>
-      <dt class="label mb-1">{t('contact.email')}</dt>
-      <dd class="font-serif text-[0.98rem] break-all">
-        <a href={`mailto:${t('meta.email')}`} class="link-inline">{t('meta.email')}</a>
-      </dd>
-    </div>
-    <div>
-      <dt class="label mb-1">GitHub</dt>
-      <dd class="font-serif text-[0.98rem]">
-        <a
-          href="https://github.com/aneshodza"
-          class="link-inline"
-          target="_blank"
-          rel="noopener noreferrer me"
-        >
-          github.com/aneshodza
-        </a>
-      </dd>
-    </div>
-    <div>
-      <dt class="label mb-1">LinkedIn</dt>
-      <dd class="font-serif text-[0.98rem]">
-        <a
-          href="https://www.linkedin.com/in/aneshodza/"
-          class="link-inline"
-          target="_blank"
-          rel="noopener noreferrer me"
-        >
-          linkedin.com/in/aneshodza
-        </a>
-      </dd>
-    </div>
-  </dl>
-</section>
 
-<section class="mx-auto max-w-[68rem] px-5 md:px-10 py-12">
-  <h2 class="font-serif text-[1.5rem] md:text-[1.75rem] font-semibold tracking-tight border-b border-[var(--rule)] pb-2 mb-2">
-    {t('sections.experience')}
-  </h2>
-  <div>
-    {experience.map((entry) => <ExperienceItem entry={entry} />)}
-  </div>
-</section>
+    <h1 class="display text-[2.5rem] md:text-[3.25rem] max-w-[42rem]">
+      Anes Hodza.
+    </h1>
+    <p class="mt-3 font-serif italic text-[1.15rem] text-[var(--fg-muted)] max-w-[40rem]">
+      {t('hero.tagline')}.
+    </p>
 
-<section class="mx-auto max-w-[68rem] px-5 md:px-10 py-12">
-  <h2 class="font-serif text-[1.5rem] md:text-[1.75rem] font-semibold tracking-tight border-b border-[var(--rule)] pb-2 mb-2">
-    {t('sections.education')}
-  </h2>
-  <div>
-    {
-      educationRendered.map(({ entry, Content }) => (
-        <article class="grid grid-cols-1 md:grid-cols-[14rem_1fr] gap-3 md:gap-10 py-8 border-t border-[var(--rule)] first:border-t-0 first:pt-0">
-          <header>
-            <p class="font-sans text-[0.72rem] uppercase tracking-[0.14em] text-[var(--fg-subtle)]">
-              {entry.data.period}
-            </p>
-            {entry.data.grade && (
-              <p class="font-serif text-[0.92rem] italic text-[var(--fg-muted)] mt-1">
-                {entry.data.grade}
+    <dl class="mt-10 grid grid-cols-2 md:grid-cols-4 gap-6 border-t border-[var(--rule)] pt-6">
+      <div>
+        <dt class="label mb-1">{locale === 'de' ? 'Ort' : 'Location'}</dt>
+        <dd class="font-serif text-[0.98rem]">{t('meta.location')}</dd>
+      </div>
+      <div>
+        <dt class="label mb-1">{t('contact.email')}</dt>
+        <dd class="font-serif text-[0.98rem] break-all">
+          <a href={`mailto:${t('meta.email')}`} class="link-inline">{t('meta.email')}</a>
+        </dd>
+      </div>
+      <div>
+        <dt class="label mb-1">GitHub</dt>
+        <dd class="font-serif text-[0.98rem]">
+          <a
+            href="https://github.com/aneshodza"
+            class="link-inline"
+            target="_blank"
+            rel="noopener noreferrer me"
+          >
+            github.com/aneshodza
+          </a>
+        </dd>
+      </div>
+      <div>
+        <dt class="label mb-1">LinkedIn</dt>
+        <dd class="font-serif text-[0.98rem]">
+          <a
+            href="https://www.linkedin.com/in/aneshodza/"
+            class="link-inline"
+            target="_blank"
+            rel="noopener noreferrer me"
+          >
+            linkedin.com/in/aneshodza
+          </a>
+        </dd>
+      </div>
+    </dl>
+  </section>
+
+  <section class="mx-auto max-w-[68rem] px-5 md:px-10 py-12">
+    <h2 class="font-serif text-[1.5rem] md:text-[1.75rem] font-semibold tracking-tight border-b border-[var(--rule)] pb-2 mb-2">
+      {t('sections.experience')}
+    </h2>
+    <div>
+      {experience.map((entry) => <ExperienceItem entry={entry} />)}
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-[68rem] px-5 md:px-10 py-12">
+    <h2 class="font-serif text-[1.5rem] md:text-[1.75rem] font-semibold tracking-tight border-b border-[var(--rule)] pb-2 mb-2">
+      {t('sections.education')}
+    </h2>
+    <div>
+      {
+        educationRendered.map(({ entry, Content }) => (
+          <article class="grid grid-cols-1 md:grid-cols-[14rem_1fr] gap-3 md:gap-10 py-8 border-t border-[var(--rule)] first:border-t-0 first:pt-0">
+            <header>
+              <p class="font-sans text-[0.72rem] uppercase tracking-[0.14em] text-[var(--fg-subtle)]">
+                {entry.data.period}
               </p>
-            )}
-          </header>
+              {entry.data.grade && (
+                <p class="font-serif text-[0.92rem] italic text-[var(--fg-muted)] mt-1">
+                  {entry.data.grade}
+                </p>
+              )}
+            </header>
+            <div>
+              <h3 class="font-serif text-[1.2rem] md:text-[1.25rem] font-semibold tracking-tight">
+                {entry.data.qualification}
+                <span class="text-[var(--fg-subtle)] font-normal"> &middot; </span>
+                <span class="font-normal italic">{entry.data.institution}</span>
+              </h3>
+              <div class="prose-editorial mt-3 max-w-none">
+                <Content />
+              </div>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-[68rem] px-5 md:px-10 py-12">
+    <h2 class="font-serif text-[1.5rem] md:text-[1.75rem] font-semibold tracking-tight border-b border-[var(--rule)] pb-2 mb-6">
+      {t('sections.skills')}
+    </h2>
+    <dl class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-x-8 gap-y-8">
+      {
+        skills.map((group) => (
           <div>
-            <h3 class="font-serif text-[1.2rem] md:text-[1.25rem] font-semibold tracking-tight">
-              {entry.data.qualification}
-              <span class="text-[var(--fg-subtle)] font-normal"> &middot; </span>
-              <span class="font-normal italic">{entry.data.institution}</span>
+            <dt class="label mb-2">{t(group.key)}</dt>
+            <dd>
+              <ul class="space-y-1">
+                {group.items.map((item) => (
+                  <li class="font-serif text-[0.98rem]">{item}</li>
+                ))}
+              </ul>
+            </dd>
+          </div>
+        ))
+      }
+    </dl>
+  </section>
+
+  <section class="mx-auto max-w-[68rem] px-5 md:px-10 py-12 pb-20">
+    <h2 class="font-serif text-[1.5rem] md:text-[1.75rem] font-semibold tracking-tight border-b border-[var(--rule)] pb-2 mb-6">
+      {t('languages.spoken')}
+    </h2>
+    <div class="max-w-[34rem] border-t border-[var(--rule)]">
+      {languages.map((lang) => (
+        <LanguageBar label={lang.label} level={lang.level} note={lang.note} />
+      ))}
+    </div>
+  </section>
+</div>
+
+<!-- Print-only document: dedicated single-page A4 CV. Hidden on screen. -->
+<div class="cv-doc" aria-hidden="true">
+  <aside class="cv-doc__side">
+    <figure class="cv-doc__portrait">
+      <img src="/portrait.jpg" alt="" width="400" height="500" />
+    </figure>
+
+    <section class="cv-doc__block">
+      <h2 class="cv-doc__label">{t('nav.contact')}</h2>
+      <ul class="cv-doc__contact">
+        {contact.map((c) => (
+          <li>
+            <span class="cv-doc__contact-key">{c.label}</span>
+            <span class="cv-doc__contact-val">{c.value}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="cv-doc__block">
+      <h2 class="cv-doc__label">{t('languages.spoken')}</h2>
+      <ul class="cv-doc__langs">
+        {languages.map((lang) => {
+          const filled = cefr.indexOf(lang.level) + 1;
+          return (
+            <li>
+              <div class="cv-doc__lang-top">
+                <span>{lang.label}</span>
+                <span class="cv-doc__lang-level">{lang.level}</span>
+              </div>
+              <div class="cv-doc__bar">
+                {cefr.map((_, i) => (
+                  <span class={i < filled ? 'on' : ''} />
+                ))}
+              </div>
+            </li>
+          );
+        })}
+      </ul>
+    </section>
+
+    <section class="cv-doc__block">
+      <h2 class="cv-doc__label">{t('sections.skills')}</h2>
+      <dl class="cv-doc__skills">
+        {skills.map((group) => (
+          <div>
+            <dt>{t(group.key)}</dt>
+            <dd>{group.items.join(', ')}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+  </aside>
+
+  <main class="cv-doc__main">
+    <header class="cv-doc__head">
+      <h1>Anes Hodza</h1>
+      <p class="cv-doc__tagline">{t('hero.tagline')}.</p>
+    </header>
+
+    <section class="cv-doc__section">
+      <h2 class="cv-doc__heading">{t('sections.experience')}</h2>
+      {experienceRendered.map(({ entry, Content }) => (
+        <article class="cv-doc__entry">
+          <div class="cv-doc__entry-meta">
+            <p class="cv-doc__period">{entry.data.period}</p>
+            <p class="cv-doc__loc">{entry.data.location}</p>
+          </div>
+          <div class="cv-doc__entry-body">
+            <h3>
+              {entry.data.role}
+              <span class="cv-doc__sep"> · </span>
+              <em>{entry.data.company}</em>
             </h3>
-            <div class="prose-editorial mt-3 max-w-none">
+            <div class="cv-doc__desc">
               <Content />
             </div>
+            {entry.data.tech.length > 0 && (
+              <p class="cv-doc__tech">{entry.data.tech.join(' · ')}</p>
+            )}
           </div>
         </article>
-      ))
+      ))}
+    </section>
+
+    <section class="cv-doc__section">
+      <h2 class="cv-doc__heading">{t('sections.education')}</h2>
+      {educationRendered.map(({ entry }) => (
+        <article class="cv-doc__entry">
+          <div class="cv-doc__entry-meta">
+            <p class="cv-doc__period">{entry.data.period}</p>
+            {entry.data.grade && <p class="cv-doc__loc">{entry.data.grade}</p>}
+          </div>
+          <div class="cv-doc__entry-body">
+            <h3>
+              {entry.data.qualification}
+              <span class="cv-doc__sep"> · </span>
+              <em>{entry.data.institution}</em>
+            </h3>
+          </div>
+        </article>
+      ))}
+    </section>
+  </main>
+</div>
+
+<style>
+  /* Print document is invisible on screen; only the browser print path shows it. */
+  .cv-doc {
+    display: none;
+  }
+
+  @media print {
+    .cv-screen {
+      display: none !important;
     }
-  </div>
-</section>
 
-<section class="mx-auto max-w-[68rem] px-5 md:px-10 py-12">
-  <h2 class="font-serif text-[1.5rem] md:text-[1.75rem] font-semibold tracking-tight border-b border-[var(--rule)] pb-2 mb-6">
-    {t('sections.skills')}
-  </h2>
-  <dl class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-x-8 gap-y-8">
-    {
-      skills.map((group) => (
-        <div>
-          <dt class="label mb-2">{t(group.key)}</dt>
-          <dd>
-            <ul class="space-y-1">
-              {group.items.map((item) => (
-                <li class="font-serif text-[0.98rem]">{item}</li>
-              ))}
-            </ul>
-          </dd>
-        </div>
-      ))
+    .cv-doc {
+      display: grid;
+      grid-template-columns: 54mm 1fr;
+      gap: 8mm;
+      padding: 0.5in;
+      color: #111;
+      font-family: var(--font-serif);
+      font-size: 8.4pt;
+      line-height: 1.38;
+      box-sizing: border-box;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
     }
-  </dl>
-</section>
 
-<section class="mx-auto max-w-[68rem] px-5 md:px-10 py-12 pb-20">
-  <h2 class="font-serif text-[1.5rem] md:text-[1.75rem] font-semibold tracking-tight border-b border-[var(--rule)] pb-2 mb-6">
-    {t('languages.spoken')}
-  </h2>
-  <div class="max-w-[34rem] border-t border-[var(--rule)]">
-    {languages.map((lang) => (
-      <LanguageBar label={lang.label} level={lang.level} note={lang.note} />
-    ))}
-  </div>
-</section>
+    .cv-doc__side > :last-child,
+    .cv-doc__main > :last-child,
+    .cv-doc__section:last-child .cv-doc__entry:last-child {
+      margin-bottom: 0 !important;
+    }
 
-<script>
-  const printBtn = document.querySelector<HTMLButtonElement>('[data-print]');
-  printBtn?.addEventListener('click', () => window.print());
-</script>
+    .cv-doc * {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .cv-doc__label,
+    .cv-doc__heading {
+      font-family: var(--font-sans);
+      font-size: 7pt;
+      font-weight: 600;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      color: #555;
+    }
+
+    /* Sidebar */
+    .cv-doc__side {
+      border-right: 0.5pt solid #ccc;
+      padding-right: 7mm;
+    }
+
+    .cv-doc__portrait {
+      margin: 0 0 6mm 0;
+    }
+    .cv-doc__portrait img {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+      border: 0.5pt solid #bbb;
+    }
+
+    .cv-doc__block {
+      margin-bottom: 5mm;
+      break-inside: avoid;
+    }
+    .cv-doc__block .cv-doc__label {
+      padding-bottom: 1mm;
+      margin-bottom: 2mm;
+      border-bottom: 0.5pt solid #ccc;
+    }
+
+    .cv-doc__contact {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .cv-doc__contact li {
+      margin-bottom: 1.6mm;
+    }
+    .cv-doc__contact-key {
+      display: block;
+      font-family: var(--font-sans);
+      font-size: 6.4pt;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #888;
+    }
+    .cv-doc__contact-val {
+      display: block;
+      font-size: 8.2pt;
+      color: #111;
+      word-break: break-word;
+    }
+
+    .cv-doc__langs {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .cv-doc__langs li {
+      margin-bottom: 2.2mm;
+    }
+    .cv-doc__lang-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-size: 8pt;
+    }
+    .cv-doc__lang-level {
+      font-family: var(--font-sans);
+      font-size: 6.6pt;
+      letter-spacing: 0.08em;
+      color: #777;
+    }
+    .cv-doc__bar {
+      display: flex;
+      gap: 1pt;
+      margin-top: 1.2mm;
+    }
+    .cv-doc__bar span {
+      flex: 1;
+      height: 3.4pt;
+      border: 0.4pt solid #aaa;
+    }
+    .cv-doc__bar span.on {
+      background: #111;
+      border-color: #111;
+    }
+
+    .cv-doc__skills {
+      margin: 0;
+    }
+    .cv-doc__skills > div {
+      margin-bottom: 2.6mm;
+    }
+    .cv-doc__skills dt {
+      font-family: var(--font-sans);
+      font-size: 6.6pt;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 0.6mm;
+    }
+    .cv-doc__skills dd {
+      margin: 0;
+      font-size: 7.8pt;
+      line-height: 1.35;
+      color: #222;
+    }
+
+    /* Main column */
+    .cv-doc__head {
+      margin-bottom: 5mm;
+    }
+    .cv-doc__head h1 {
+      font-family: var(--font-serif);
+      font-weight: 600;
+      font-size: 22pt;
+      line-height: 1;
+      letter-spacing: -0.015em;
+      color: #000;
+    }
+    .cv-doc__tagline {
+      margin-top: 1.5mm;
+      font-style: italic;
+      font-size: 10pt;
+      color: #444;
+    }
+
+    .cv-doc__section {
+      margin-bottom: 5mm;
+    }
+    .cv-doc__heading {
+      padding-bottom: 1mm;
+      margin-bottom: 3mm;
+      border-bottom: 0.5pt solid #bbb;
+    }
+
+    .cv-doc__entry {
+      display: grid;
+      grid-template-columns: 26mm 1fr;
+      gap: 4mm;
+      margin-bottom: 3.6mm;
+      break-inside: avoid;
+    }
+    .cv-doc__entry-meta {
+      padding-top: 0.4mm;
+    }
+    .cv-doc__period {
+      font-family: var(--font-sans);
+      font-size: 6.8pt;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #555;
+    }
+    .cv-doc__loc {
+      font-style: italic;
+      font-size: 7.4pt;
+      color: #777;
+      margin-top: 0.6mm;
+    }
+    .cv-doc__entry-body h3 {
+      font-family: var(--font-serif);
+      font-weight: 600;
+      font-size: 9.2pt;
+      line-height: 1.2;
+      color: #000;
+    }
+    .cv-doc__entry-body h3 em {
+      font-weight: 400;
+    }
+    .cv-doc__sep {
+      color: #999;
+      font-weight: 400;
+    }
+    .cv-doc__desc {
+      margin-top: 1mm;
+      color: #222;
+    }
+    .cv-doc__desc :global(p) {
+      margin: 0;
+    }
+    .cv-doc__desc :global(strong) {
+      font-weight: 600;
+      color: #000;
+    }
+    .cv-doc__desc :global(em) {
+      font-style: italic;
+    }
+    .cv-doc__tech {
+      margin-top: 1.2mm;
+      font-family: var(--font-sans);
+      font-size: 6.8pt;
+      letter-spacing: 0.02em;
+      color: #666;
+    }
+  }
+</style>
