@@ -1,0 +1,60 @@
+---
+import { getLocaleFromUrl } from '~/i18n/utils';
+
+const locale = getLocaleFromUrl(Astro.url);
+const text =
+  locale === 'de'
+    ? 'Diese Seite verwendet keine Cookies.'
+    : 'This page does not use cookies.';
+const dismiss = locale === 'de' ? 'Schliessen' : 'Dismiss';
+---
+
+<div
+  id="cookie-notice"
+  hidden
+  class="no-print fixed bottom-4 left-4 right-4 z-40 mx-auto flex w-auto items-center gap-4 border border-[var(--rule)] bg-[var(--bg)] px-5 py-3 md:bottom-6 md:left-1/2 md:right-auto md:w-full md:max-w-[34rem] md:-translate-x-1/2"
+>
+  <p class="flex-1 font-sans text-[0.8rem] leading-snug text-[var(--fg-muted)]">
+    {text}
+  </p>
+  <button
+    id="cookie-notice-dismiss"
+    type="button"
+    class="inline-flex min-h-[44px] items-center px-1 font-sans text-[0.72rem] uppercase tracking-[0.14em] text-[var(--fg-subtle)] transition-colors hover:text-[var(--accent)]"
+    aria-label={dismiss}
+  >
+    {dismiss}
+  </button>
+</div>
+
+<script is:inline>
+  (() => {
+    const KEY = 'cookie-notice-dismissed';
+    const init = () => {
+      const el = document.getElementById('cookie-notice');
+      if (!el) return;
+      try {
+        if (localStorage.getItem(KEY) === '1') {
+          el.remove();
+          return;
+        }
+      } catch {}
+      el.hidden = false;
+      const btn = document.getElementById('cookie-notice-dismiss');
+      if (btn && btn.dataset.bound !== '1') {
+        btn.dataset.bound = '1';
+        btn.addEventListener('click', () => {
+          try {
+            localStorage.setItem(KEY, '1');
+          } catch {}
+          el.remove();
+        });
+      }
+    };
+    init();
+    if (!window.__cookieNoticeBound) {
+      window.__cookieNoticeBound = true;
+      document.addEventListener('astro:page-load', init);
+    }
+  })();
+</script>

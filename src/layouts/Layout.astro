@@ -3,6 +3,7 @@ import '~/styles/global.css';
 import { ClientRouter } from 'astro:transitions';
 import Header from '~/components/Header.astro';
 import Footer from '~/components/Footer.astro';
+import CookieNotice from '~/components/CookieNotice.astro';
 import {
   getLocaleFromUrl,
   useTranslations,
@@ -28,6 +29,13 @@ const altPath = switchLocalePath(Astro.url.pathname, altLocale);
 const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin).toString();
 const altUrl = new URL(altPath, Astro.site ?? Astro.url.origin).toString();
 const socialImage = new URL('/og.png', Astro.site ?? Astro.url.origin).toString();
+
+const umamiWebsiteId =
+  import.meta.env.PUBLIC_UMAMI_WEBSITE_ID ??
+  'a11125a1-f9f6-4a9d-810a-8eff1cb9691b';
+const umamiSrc =
+  import.meta.env.PUBLIC_UMAMI_SRC ?? 'https://analytics.centrolabs.ch/script.js';
+const umamiEnabled = Boolean(umamiWebsiteId && umamiSrc);
 
 const personJsonLd = {
   '@context': 'https://schema.org',
@@ -91,6 +99,28 @@ const personJsonLd = {
 
     <script type="application/ld+json" set:html={JSON.stringify(personJsonLd)} />
 
+    {
+      umamiEnabled && (
+        <>
+          <script
+            defer
+            src={umamiSrc}
+            data-website-id={umamiWebsiteId}
+            data-auto-track="false"
+          />
+          <script is:inline>
+            {`(() => {
+              const track = () => { if (window.umami) window.umami.track(); };
+              if (!window.__umamiBound) {
+                window.__umamiBound = true;
+                document.addEventListener('astro:page-load', track);
+              }
+            })();`}
+          </script>
+        </>
+      )
+    }
+
     <ClientRouter />
 
     <script is:inline>
@@ -122,5 +152,6 @@ const personJsonLd = {
       <slot />
     </main>
     <Footer />
+    <CookieNotice />
   </body>
 </html>
