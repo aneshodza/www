@@ -34,6 +34,9 @@ jobs:
         env:
           PUBLIC_UMAMI_WEBSITE_ID: ${{ vars.PUBLIC_UMAMI_WEBSITE_ID }}
           PUBLIC_UMAMI_SRC: ${{ vars.PUBLIC_UMAMI_SRC }}
+          PUBLIC_FORMBRICKS_APP_URL: ${{ vars.PUBLIC_FORMBRICKS_APP_URL }}
+          PUBLIC_FORMBRICKS_ENVIRONMENT_ID: ${{ vars.PUBLIC_FORMBRICKS_ENVIRONMENT_ID }}
+          PUBLIC_FORMBRICKS_SURVEY_ID: ${{ vars.PUBLIC_FORMBRICKS_SURVEY_ID }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

@@ -4,6 +4,16 @@ import { getLocaleFromUrl, useTranslations } from '~/i18n/utils';
 const locale = getLocaleFromUrl(Astro.url);
 const t = useTranslations(locale);
 
+// Formbricks (self-hosted) — public client API, called from the browser.
+// All three must be set via PUBLIC_FORMBRICKS_* env vars (see .env.example).
+// The survey needs four open-text questions whose "Question ID" (advanced
+// settings) is set to: name, email, subject, message.
+const formbricks = {
+  appUrl: import.meta.env.PUBLIC_FORMBRICKS_APP_URL,
+  environmentId: import.meta.env.PUBLIC_FORMBRICKS_ENVIRONMENT_ID,
+  surveyId: import.meta.env.PUBLIC_FORMBRICKS_SURVEY_ID,
+};
+
 const channels = [
   {
     label: locale === 'de' ? 'E-Mail' : 'Email',
@@ -74,6 +84,52 @@ const channels = [
     {t('contact.intro')}
   </p>
 
+  <form
+    id="contact-form"
+    class="mt-12 md:mt-14 max-w-[40rem]"
+    data-app-url={formbricks.appUrl}
+    data-environment-id={formbricks.environmentId}
+    data-survey-id={formbricks.surveyId}
+    data-error-required={t('contact.form.error.required')}
+    data-error-email={t('contact.form.error.email')}
+    data-error-submit={t('contact.form.error.submit')}
+    data-sending={t('contact.form.sending')}
+    data-success={t('contact.form.success')}
+    novalidate
+  >
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-9">
+      <div class="flex flex-col gap-2.5">
+        <label class="label" for="cf-name">{t('contact.form.name')}</label>
+        <input id="cf-name" name="name" type="text" class="contact-field" aria-describedby="cf-name-error" />
+        <p id="cf-name-error" class="contact-error" aria-live="polite"></p>
+      </div>
+      <div class="flex flex-col gap-2.5">
+        <label class="label" for="cf-email">{t('contact.form.email')}</label>
+        <input id="cf-email" name="email" type="email" class="contact-field" aria-describedby="cf-email-error" />
+        <p id="cf-email-error" class="contact-error" aria-live="polite"></p>
+      </div>
+    </div>
+
+    <div class="mt-9 flex flex-col gap-2.5">
+      <label class="label" for="cf-title">{t('contact.form.title')}</label>
+      <input id="cf-title" name="title" type="text" class="contact-field" aria-describedby="cf-title-error" />
+      <p id="cf-title-error" class="contact-error" aria-live="polite"></p>
+    </div>
+
+    <div class="mt-9 flex flex-col gap-2.5">
+      <label class="label" for="cf-body">{t('contact.form.message')}</label>
+      <textarea id="cf-body" name="body" rows="5" class="contact-field resize-y" aria-describedby="cf-body-error"></textarea>
+      <p id="cf-body-error" class="contact-error" aria-live="polite"></p>
+    </div>
+
+    <div class="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3">
+      <button type="submit" id="cf-submit" class="btn-text" data-label={t('contact.form.send')}>
+        {t('contact.form.send')}
+      </button>
+      <p id="cf-status" class="contact-status" role="status" aria-live="polite"></p>
+    </div>
+  </form>
+
   <dl class="mt-14 md:mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-10 border-t border-[var(--rule)] pt-10">
     {
       channels.map((c) => (
@@ -96,3 +152,182 @@ const channels = [
     }
   </dl>
 </section>
+
+<style>
+  .contact-field {
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid var(--rule);
+    padding: 0.25rem 0 0.5rem;
+    font-family: var(--font-serif);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    color: var(--fg);
+    transition: border-color 0.2s ease;
+  }
+
+  .contact-field:hover {
+    border-bottom-color: var(--fg-subtle);
+  }
+
+  .contact-field:focus {
+    outline: none;
+    border-bottom-color: var(--accent);
+  }
+
+  .contact-field[aria-invalid='true'] {
+    border-bottom-color: var(--accent);
+  }
+
+  .contact-error {
+    font-family: var(--font-sans);
+    font-size: 0.78rem;
+    line-height: 1.4;
+    color: var(--accent);
+    min-height: 0;
+  }
+
+  .contact-error:empty {
+    display: none;
+  }
+
+  .contact-status {
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    line-height: 1.4;
+    color: var(--fg-muted);
+  }
+
+  .contact-status[data-state='error'] {
+    color: var(--accent);
+  }
+
+  .contact-status:empty {
+    display: none;
+  }
+</style>
+
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement | null;
+
+  if (form) {
+    const requiredMsg = form.dataset.errorRequired ?? '';
+    const emailMsg = form.dataset.errorEmail ?? '';
+
+    const fields = ['name', 'email', 'title', 'body'] as const;
+    const inputs = Object.fromEntries(
+      fields.map((name) => [
+        name,
+        form.elements.namedItem(name) as HTMLInputElement | HTMLTextAreaElement,
+      ]),
+    ) as Record<(typeof fields)[number], HTMLInputElement | HTMLTextAreaElement>;
+
+    const errorFor = (name: string) =>
+      document.getElementById(`cf-${name}-error`) as HTMLElement | null;
+
+    const setError = (
+      el: HTMLInputElement | HTMLTextAreaElement,
+      message: string,
+    ) => {
+      const slot = errorFor(el.name);
+      if (slot) slot.textContent = message;
+      if (message) el.setAttribute('aria-invalid', 'true');
+      else el.removeAttribute('aria-invalid');
+    };
+
+    const validateField = (name: (typeof fields)[number]): boolean => {
+      const el = inputs[name];
+      const value = el.value.trim();
+
+      if (!value) {
+        setError(el, requiredMsg);
+        return false;
+      }
+      if (name === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+        setError(el, emailMsg);
+        return false;
+      }
+      setError(el, '');
+      return true;
+    };
+
+    // Clear an error as soon as the user fixes the field.
+    fields.forEach((name) => {
+      inputs[name].addEventListener('input', () => {
+        if (inputs[name].getAttribute('aria-invalid') === 'true') {
+          validateField(name);
+        }
+      });
+    });
+
+    const submitBtn = document.getElementById('cf-submit') as HTMLButtonElement;
+    const status = document.getElementById('cf-status') as HTMLElement;
+    const sendLabel = submitBtn.dataset.label ?? submitBtn.textContent ?? '';
+
+    const setStatus = (message: string, state: 'info' | 'error') => {
+      status.textContent = message;
+      status.dataset.state = state;
+    };
+
+    const submitToFormbricks = async (): Promise<void> => {
+      const { appUrl, environmentId, surveyId } = form.dataset;
+
+      const res = await fetch(
+        `${appUrl}/api/v1/client/${environmentId}/responses`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            surveyId,
+            finished: true,
+            data: {
+              name: inputs.name.value.trim(),
+              email: inputs.email.value.trim(),
+              subject: inputs.title.value.trim(),
+              message: inputs.body.value.trim(),
+            },
+            meta: { source: 'portfolio-contact-form', url: window.location.href },
+          }),
+        },
+      );
+
+      if (!res.ok) throw new Error(`Formbricks responded with ${res.status}`);
+    };
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      let firstInvalid: HTMLElement | null = null;
+      for (const name of fields) {
+        if (!validateField(name) && !firstInvalid) {
+          firstInvalid = inputs[name];
+        }
+      }
+
+      if (firstInvalid) {
+        firstInvalid.focus();
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = form.dataset.sending ?? sendLabel;
+      setStatus('', 'info');
+
+      try {
+        await submitToFormbricks();
+        // Success: replace the form with a confirmation message.
+        const note = document.createElement('p');
+        note.className = 'contact-status';
+        note.setAttribute('role', 'status');
+        note.textContent = form.dataset.success ?? '';
+        form.replaceWith(note);
+      } catch (error) {
+        console.error(error);
+        submitBtn.disabled = false;
+        submitBtn.textContent = sendLabel;
+        setStatus(form.dataset.errorSubmit ?? '', 'error');
+      }
+    });
+  }
+</script>
