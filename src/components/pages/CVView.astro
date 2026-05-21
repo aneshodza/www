@@ -30,6 +30,55 @@ const educationRendered = await Promise.all(
   }),
 );
 
+const achievements =
+  locale === 'de'
+    ? [
+        {
+          title: 'Gewinner des Hack Winterthur 2026',
+          detail: 'Erster Platz beim Hackathon der ZHAW.',
+          period: '2026',
+          href: 'https://www.zhaw.ch/de/ueber-uns/aktuell/news/detailansicht-news/event-news/zugang-fuer-alle-ist-uns-ein-persoenliches-anliegen',
+          external: true,
+        },
+        {
+          title: 'EFZ mit Bestnote (5.5) und Abschluss im Rang',
+          detail: 'Lehrabschluss als Informatiker mit Auszeichnung.',
+          period: '2024',
+          href: '/abschluss-im-rang.pdf',
+          external: false,
+        },
+        {
+          title: '3. Rang Regionalmeisterschaft Zürich, 8. der Schweiz',
+          detail: 'Berufsmeisterschaften im Bereich Informatik.',
+          period: '2024',
+          href: '/regionalmeisterschaft.pdf',
+          external: false,
+        },
+      ]
+    : [
+        {
+          title: 'Winner of Hack Winterthur 2026',
+          detail: 'First place at the ZHAW hackathon.',
+          period: '2026',
+          href: 'https://www.zhaw.ch/de/ueber-uns/aktuell/news/detailansicht-news/event-news/zugang-fuer-alle-ist-uns-ein-persoenliches-anliegen',
+          external: true,
+        },
+        {
+          title: 'EFZ completed with an outstanding grade (5.5) and honours',
+          detail: 'Vocational diploma in computer science, graduated with distinction.',
+          period: '2024',
+          href: '/abschluss-im-rang.pdf',
+          external: false,
+        },
+        {
+          title: '3rd at the Zürich regional championships, 8th in Switzerland',
+          detail: 'National skills competition in computer science.',
+          period: '2024',
+          href: '/regionalmeisterschaft.pdf',
+          external: false,
+        },
+      ];
+
 const skills = [
   {
     key: 'skills.languages' as const,
@@ -188,6 +237,39 @@ const contact = [
   </section>
 
   <section class="mx-auto max-w-[68rem] px-5 md:px-10 py-12">
+    <h2 class="font-serif text-[1.5rem] md:text-[1.75rem] font-semibold tracking-tight border-b border-[var(--rule)] pb-2 mb-2">
+      {t('sections.achievements')}
+    </h2>
+    <ul>
+      {
+        achievements.map((item) => (
+          <li class="grid grid-cols-1 md:grid-cols-[14rem_1fr] gap-1 md:gap-10 py-6 border-t border-[var(--rule)] first:border-t-0">
+            <p class="font-sans text-[0.72rem] uppercase tracking-[0.14em] text-[var(--fg-subtle)] md:pt-1">
+              {item.period}
+            </p>
+            <div>
+              <h3 class="font-serif text-[1.2rem] md:text-[1.25rem] font-semibold tracking-tight">
+                <a
+                  href={item.href}
+                  class="link-inline"
+                  {...(item.external
+                    ? { target: '_blank', rel: 'noopener noreferrer' }
+                    : { target: '_blank', rel: 'noopener' })}
+                >
+                  {item.title}
+                </a>
+              </h3>
+              <p class="font-serif italic text-[0.98rem] text-[var(--fg-muted)] mt-1">
+                {item.detail}
+              </p>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section class="mx-auto max-w-[68rem] px-5 md:px-10 py-12">
     <h2 class="font-serif text-[1.5rem] md:text-[1.75rem] font-semibold tracking-tight border-b border-[var(--rule)] pb-2 mb-6">
       {t('sections.skills')}
     </h2>
@@ -324,6 +406,23 @@ const contact = [
         </article>
       ))}
     </section>
+
+    <section class="cv-doc__section">
+      <h2 class="cv-doc__heading">{t('sections.achievements')}</h2>
+      {achievements.map((item) => (
+        <article class="cv-doc__entry">
+          <div class="cv-doc__entry-meta">
+            <p class="cv-doc__period">{item.period}</p>
+          </div>
+          <div class="cv-doc__entry-body">
+            <h3>{item.title}</h3>
+            <div class="cv-doc__desc">
+              <p>{item.detail}</p>
+            </div>
+          </div>
+        </article>
+      ))}
+    </section>
   </main>
 </div>
 
@@ -346,7 +445,7 @@ const contact = [
       color: #111;
       font-family: var(--font-serif);
       font-size: 8.4pt;
-      line-height: 1.38;
+      line-height: 1.32;
       box-sizing: border-box;
       -webkit-print-color-adjust: exact;
       print-color-adjust: exact;
@@ -481,7 +580,7 @@ const contact = [
 
     /* Main column */
     .cv-doc__head {
-      margin-bottom: 5mm;
+      margin-bottom: 4mm;
     }
     .cv-doc__head h1 {
       font-family: var(--font-serif);
@@ -499,11 +598,11 @@ const contact = [
     }
 
     .cv-doc__section {
-      margin-bottom: 5mm;
+      margin-bottom: 3.5mm;
     }
     .cv-doc__heading {
       padding-bottom: 1mm;
-      margin-bottom: 3mm;
+      margin-bottom: 2.2mm;
       border-bottom: 0.5pt solid #bbb;
     }
 
@@ -511,7 +610,7 @@ const contact = [
       display: grid;
       grid-template-columns: 26mm 1fr;
       gap: 4mm;
-      margin-bottom: 3.6mm;
+      margin-bottom: 2.6mm;
       break-inside: avoid;
     }
     .cv-doc__entry-meta {
