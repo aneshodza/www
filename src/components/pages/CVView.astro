@@ -124,6 +124,8 @@ const languages =
 
 const cefr = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'] as const;
 
+const printFilename = locale === 'de' ? 'Lebenslauf_Anes_Hodza' : 'CV_Anes_Hodza';
+
 const contact = [
   { label: locale === 'de' ? 'Ort' : 'Location', value: t('meta.location') },
   { label: t('contact.email'), value: t('meta.email') },
@@ -139,7 +141,7 @@ const contact = [
       <p class="label">{t('nav.cv')}</p>
       <button
         type="button"
-        onclick="window.print()"
+        data-print-cv
         class="no-print font-sans text-[0.72rem] uppercase tracking-[0.14em] text-[var(--fg-subtle)] hover:text-[var(--accent)] inline-flex items-center min-h-[44px] md:min-h-0 px-1"
       >
         {t('cv.print')}
@@ -426,6 +428,43 @@ const contact = [
   </main>
 </div>
 
+<script is:inline define:vars={{ printFilename }}>
+  (() => {
+    let savedTitle = null;
+    const onBefore = () => {
+      savedTitle = document.title;
+      document.title = printFilename;
+    };
+    const onAfter = () => {
+      if (savedTitle !== null) {
+        document.title = savedTitle;
+        savedTitle = null;
+      }
+    };
+
+    window.addEventListener('beforeprint', onBefore);
+    window.addEventListener('afterprint', onAfter);
+
+    const btn = document.querySelector('[data-print-cv]');
+    const onClick = () => window.print();
+    if (btn) btn.addEventListener('click', onClick);
+
+    document.addEventListener(
+      'astro:before-preparation',
+      () => {
+        window.removeEventListener('beforeprint', onBefore);
+        window.removeEventListener('afterprint', onAfter);
+        if (btn) btn.removeEventListener('click', onClick);
+        if (savedTitle !== null) {
+          document.title = savedTitle;
+          savedTitle = null;
+        }
+      },
+      { once: true },
+    );
+  })();
+</script>
+
 <style>
   /* Print document is invisible on screen; only the browser print path shows it. */
   .cv-doc {
@@ -433,6 +472,18 @@ const contact = [
   }
 
   @media print {
+    /* Pin the print viewport to A4 so layout is computed against paper width,
+       not the device viewport. Without this, mobile prints the 54mm + 1fr grid
+       against a ~375px viewport and overflows onto a second page. */
+    :global(html),
+    :global(body) {
+      width: 210mm !important;
+      min-width: 210mm !important;
+      max-width: 210mm !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
     .cv-screen {
       display: none !important;
     }
@@ -441,12 +492,16 @@ const contact = [
       display: grid;
       grid-template-columns: 54mm 1fr;
       gap: 8mm;
-      padding: 0.5in;
+      width: 210mm;
+      min-height: 297mm;
+      padding: 12mm;
+      margin: 0;
       color: #111;
       font-family: var(--font-serif);
       font-size: 8.4pt;
       line-height: 1.32;
       box-sizing: border-box;
+      overflow: hidden;
       -webkit-print-color-adjust: exact;
       print-color-adjust: exact;
     }
@@ -474,7 +529,7 @@ const contact = [
 
     /* Sidebar */
     .cv-doc__side {
-      border-right: 0.5pt solid #ccc;
+      border-right: 1pt solid #888;
       padding-right: 7mm;
     }
 
