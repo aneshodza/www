@@ -275,17 +275,13 @@ const contact = [
     <h2 class="font-serif text-[1.5rem] md:text-[1.75rem] font-semibold tracking-tight border-b border-[var(--rule)] pb-2 mb-6">
       {t('sections.skills')}
     </h2>
-    <dl class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-x-8 gap-y-8">
+    <dl class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6">
       {
         skills.map((group) => (
-          <div>
-            <dt class="label mb-2">{t(group.key)}</dt>
-            <dd>
-              <ul class="space-y-1">
-                {group.items.map((item) => (
-                  <li class="font-serif text-[0.98rem]">{item}</li>
-                ))}
-              </ul>
+          <div class="grid grid-cols-1 sm:grid-cols-[10rem_1fr] gap-1 sm:gap-6 border-t border-[var(--rule)] pt-4">
+            <dt class="label sm:pt-0.5">{t(group.key)}</dt>
+            <dd class="font-serif text-[0.98rem] leading-relaxed">
+              {group.items.join(' · ')}
             </dd>
           </div>
         ))

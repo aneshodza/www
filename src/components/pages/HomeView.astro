@@ -22,11 +22,8 @@ const remaining = Math.max(projects.length - 1, 0);
 {
   featured && (
     <section class="mx-auto max-w-[68rem] px-5 md:px-10 py-16 md:py-20 border-t border-[var(--rule)]">
-      <div class="flex items-baseline justify-between border-b border-[var(--rule)] pb-3 mb-10">
+      <div class="border-b border-[var(--rule)] pb-3 mb-10">
         <h2 class="label">{t('sections.featured')}</h2>
-        <p class="font-sans text-[0.72rem] uppercase tracking-[0.14em] text-[var(--fg-subtle)]">
-          {locale === 'de' ? 'Nr. 01' : 'No. 01'}
-        </p>
       </div>
       <ProjectCard entry={featured} featured />
 
@@ -45,68 +42,3 @@ const remaining = Math.max(projects.length - 1, 0);
     </section>
   )
 }
-
-<section class="mx-auto max-w-[68rem] px-5 md:px-10 py-16 md:py-20 border-t border-[var(--rule)]">
-  <div class="flex items-baseline justify-between border-b border-[var(--rule)] pb-3 mb-10">
-    <h2 class="label">{t('sections.contact')}</h2>
-    <p class="font-sans text-[0.72rem] uppercase tracking-[0.14em] text-[var(--fg-subtle)]">
-      {locale === 'de' ? 'Erreichbar' : 'Reachable'}
-    </p>
-  </div>
-  <div class="grid grid-cols-1 lg:grid-cols-[2fr_3fr] gap-10 lg:gap-16">
-    <p class="font-serif text-[1.35rem] md:text-[1.85rem] leading-snug text-[var(--fg)]">
-      {locale === 'de'
-        ? 'Offen für Anfragen zu Anstellung, Zusammenarbeit oder Partnerschaften mit Centro Labs.'
-        : 'Open to hiring conversations, collaboration, and Centro Labs partnerships.'}
-    </p>
-    <dl class="grid grid-cols-1 sm:grid-cols-2 gap-6 self-end">
-      <div>
-        <dt class="label mb-1">{t('contact.email')}</dt>
-        <dd>
-          <a href={`mailto:${t('meta.email')}`} class="link-inline font-serif text-[0.98rem] break-all">
-            {t('meta.email')}
-          </a>
-        </dd>
-      </div>
-      <div>
-        <dt class="label mb-1">GitHub</dt>
-        <dd>
-          <a
-            href="https://github.com/aneshodza"
-            target="_blank"
-            rel="noopener noreferrer me"
-            class="link-inline font-serif text-[0.98rem]"
-          >
-            github.com/aneshodza
-          </a>
-        </dd>
-      </div>
-      <div>
-        <dt class="label mb-1">LinkedIn</dt>
-        <dd>
-          <a
-            href="https://www.linkedin.com/in/aneshodza/"
-            target="_blank"
-            rel="noopener noreferrer me"
-            class="link-inline font-serif text-[0.98rem]"
-          >
-            linkedin.com/in/aneshodza
-          </a>
-        </dd>
-      </div>
-      <div>
-        <dt class="label mb-1">dev.to</dt>
-        <dd>
-          <a
-            href="https://dev.to/aneshodza"
-            target="_blank"
-            rel="noopener noreferrer me"
-            class="link-inline font-serif text-[0.98rem]"
-          >
-            dev.to/aneshodza
-          </a>
-        </dd>
-      </div>
-    </dl>
-  </div>
-</section>

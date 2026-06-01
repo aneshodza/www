@@ -67,7 +67,7 @@ const issueLabel =
     </div>
   </div>
 
-  <dl class="mt-12 md:mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-10 border-t border-[var(--rule)] pt-8">
+  <dl class="mt-12 md:mt-16 grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-10 border-t border-[var(--rule)] pt-8">
     <div>
       <dt class="label mb-1">{locale === 'de' ? 'Ort' : 'Location'}</dt>
       <dd class="font-serif text-[0.98rem]">{t('meta.location')}</dd>
@@ -79,12 +79,6 @@ const issueLabel =
     <div>
       <dt class="label mb-1">{locale === 'de' ? 'Auszeichnung' : 'Recognition'}</dt>
       <dd class="font-serif text-[0.98rem]">Hack Winterthur 2026</dd>
-    </div>
-    <div>
-      <dt class="label mb-1">{t('contact.email')}</dt>
-      <dd class="font-serif text-[0.98rem] break-all">
-        <a href={`mailto:${t('meta.email')}`} class="link-inline">{t('meta.email')}</a>
-      </dd>
     </div>
   </dl>
 </section>
