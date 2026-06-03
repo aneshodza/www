@@ -4,7 +4,7 @@ import { getLocaleFromUrl, useTranslations } from '~/i18n/utils';
 const locale = getLocaleFromUrl(Astro.url);
 const t = useTranslations(locale);
 
-// Formbricks (self-hosted) — public client API, called from the browser.
+// Formbricks (self-hosted): public client API, called from the browser.
 // All three must be set via PUBLIC_FORMBRICKS_* env vars (see .env.example).
 // The survey needs four open-text questions whose "Question ID" (advanced
 // settings) is set to: name, email, subject, message.
