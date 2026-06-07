@@ -20,8 +20,6 @@ export const ui = {
     'hero.cta.contact': 'Kontakt',
     'hero.kicker': 'Portfolio',
     'meta.location': 'Kanton Aargau, Schweiz',
-    'meta.role': 'Software-Engineer',
-    'meta.studies': 'BSc Informatik, ZHAW',
     'meta.email': 'anes@centrolabs.ch',
     'sections.featured': 'Ausgewähltes Projekt',
     'sections.projects': 'Projekte',
@@ -81,7 +79,6 @@ export const ui = {
     'languages.spoken': 'Sprachen',
     'languages.spoken.list':
       'Deutsch (Muttersprache), Englisch (fliessend), Bosnisch, Grundkenntnisse Französisch und Niederländisch.',
-    'date.format': 'de-CH',
   },
   en: {
     'nav.home': 'Home',
@@ -100,8 +97,6 @@ export const ui = {
     'hero.cta.contact': 'Get in touch',
     'hero.kicker': 'Portfolio',
     'meta.location': 'Aargau, Switzerland',
-    'meta.role': 'Software engineer',
-    'meta.studies': 'BSc Computer Science, ZHAW',
     'meta.email': 'anes@centrolabs.ch',
     'sections.featured': 'Featured project',
     'sections.projects': 'Projects',
@@ -161,7 +156,6 @@ export const ui = {
     'languages.spoken': 'Languages',
     'languages.spoken.list':
       'German (native), English (fluent), Bosnian, basic French and Dutch.',
-    'date.format': 'en-GB',
   },
 } as const;
 

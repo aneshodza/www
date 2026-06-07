@@ -17,20 +17,7 @@ const number =
   typeof index === 'number' ? String(index + 1).padStart(2, '0') : null;
 ---
 
-<article
-  class={`group ${featured ? 'lg:grid lg:grid-cols-[1fr_2fr] lg:gap-12' : ''}`}
->
-  {
-    featured && (
-      <aside class="hidden lg:block">
-        <p class="label">{t('sections.featured')}</p>
-        <p class="font-serif text-[0.92rem] text-[var(--fg-subtle)] italic mt-3">
-          {entry.data.year}
-        </p>
-      </aside>
-    )
-  }
-
+<article class="group">
   <div>
     <div class="flex items-baseline justify-between gap-4 border-b border-[var(--rule)] pb-3 mb-4">
       <p class="label">

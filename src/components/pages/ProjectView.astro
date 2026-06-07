@@ -32,11 +32,7 @@ const isExternal = (url: string) => /^https?:\/\//.test(url);
   </div>
 
   <header>
-    <p class="label">
-      {entry.data.year} <span class="mx-2 text-[var(--rule)]">/</span>{' '}
-      {entry.data.statusLabel}
-    </p>
-    <h1 class="display text-[2.5rem] md:text-[4.5rem] mt-3 leading-[1.05]">
+    <h1 class="display text-[2.5rem] md:text-[4.5rem] leading-[1.05]">
       {entry.data.title}.
     </h1>
     <p class="mt-6 font-serif italic text-[1.1rem] md:text-[1.35rem] text-[var(--fg-muted)] max-w-[42rem] leading-snug">

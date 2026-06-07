@@ -3,28 +3,14 @@ import { getLocaleFromUrl, useTranslations, localizePath } from '~/i18n/utils';
 
 const locale = getLocaleFromUrl(Astro.url);
 const t = useTranslations(locale);
-
-const dateLabel = new Date().toLocaleDateString(t('date.format'), {
-  day: '2-digit',
-  month: '2-digit',
-  year: 'numeric',
-});
-
-const issueLabel =
-  locale === 'de'
-    ? `Ausgabe · ${dateLabel} · Kanton Aargau`
-    : `Issue · ${dateLabel} · Aargau, Switzerland`;
 ---
 
 <section
   aria-labelledby="hero-name"
   class="mx-auto max-w-[68rem] px-5 md:px-10 pt-8 md:pt-20 pb-14 md:pb-24"
 >
-  <div class="flex items-baseline justify-between gap-4 border-b border-[var(--rule)] pb-3 mb-8 md:mb-14">
+  <div class="border-b border-[var(--rule)] pb-3 mb-8 md:mb-14">
     <p class="label">{t('hero.kicker')}</p>
-    <p class="font-sans text-[0.68rem] md:text-[0.72rem] tracking-[0.14em] uppercase text-[var(--fg-subtle)] text-right">
-      {issueLabel}
-    </p>
   </div>
 
   <div class="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-6 lg:gap-16 items-start">
@@ -44,7 +30,6 @@ const issueLabel =
     </figure>
 
     <div class="max-w-[40rem] lg:col-start-1 lg:row-start-1">
-      <p class="label mb-4">{t('meta.role')}</p>
       <h1
         id="hero-name"
         class="display text-[2.1rem] sm:text-[2.5rem] md:text-[3.5rem] lg:text-[4.25rem]"
@@ -66,19 +51,4 @@ const issueLabel =
       </div>
     </div>
   </div>
-
-  <dl class="mt-12 md:mt-16 grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-10 border-t border-[var(--rule)] pt-8">
-    <div>
-      <dt class="label mb-1">{locale === 'de' ? 'Ort' : 'Location'}</dt>
-      <dd class="font-serif text-[0.98rem]">{t('meta.location')}</dd>
-    </div>
-    <div>
-      <dt class="label mb-1">{locale === 'de' ? 'Studium' : 'Studies'}</dt>
-      <dd class="font-serif text-[0.98rem]">{t('meta.studies')}</dd>
-    </div>
-    <div>
-      <dt class="label mb-1">{locale === 'de' ? 'Auszeichnung' : 'Recognition'}</dt>
-      <dd class="font-serif text-[0.98rem]">Hack Winterthur 2026</dd>
-    </div>
-  </dl>
 </section>
