@@ -14,4 +14,4 @@ tech:
   - PowerShell
 ---
 
-Full-Stack-Entwicklung mit **Ruby on Rails** auf einem hauseigenen Framework, in einer durchgehend **Linux**-basierten Arbeitsumgebung. Manuelle Deployments via **SSH** auf entfernte Server, Skalierung von Anwendungen mit Tabellen im Millionenbereich in **MySQL**. Vollständig **dockerisierte** Entwicklungsumgebung. Eigenverantwortliche Mitarbeit bei **Testing** und **Requirements Engineering**. Gelegentlich **PowerShell**-Automatisierung für entfernte Windows-Systeme.
+Full-Stack-Arbeit auf einem hauseigenen Ruby-on-Rails-Framework. Mein Hauptprojekt war eine Data-Warehousing-Pipeline, die Einkaufspreise der Lieferanten, Konkurrenzpreise und behördliche Preisvorgaben zusammenführte, um wettbewerbsfähige Verkaufspreise zu berechnen; dort habe ich einen Join über rund 750'000 mal 6 Zeilen von mehrtägiger Laufzeit auf etwa eine Stunde gebracht. Zudem habe ich die Software für das einzige Blisterzentrum der Schweiz gebaut, mit direkter Anbindung an dessen Verpackungsmaschinen und Scanner.

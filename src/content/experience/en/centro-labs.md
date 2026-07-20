@@ -16,4 +16,4 @@ tech:
   - MCP
 ---
 
-Building **LocalMate**, an **MCP**-based **agentic AI** assistant for Swiss municipalities and SMEs. Winner of **Hack Winterthur 2026**. Responsible for product, technical architecture, and go-to-market. Stack: **TypeScript**, **LangGraph.js**, **NestJS**, **Angular**, **Qdrant**, **PostgreSQL**.
+Co-founded Centro Labs, where I built LocalMate, an agentic AI assistant that answers questions over an organisation's own documents through the Model Context Protocol. It won Hack Winterthur 2026, handles around 600 queries a week as a live prototype, and is now in talks with larger companies about adoption, alongside an invitation to exhibit at Startup Nights. Product, architecture and go-to-market are all mine.

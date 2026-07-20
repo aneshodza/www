@@ -10,4 +10,4 @@ tech:
   - Teaching
 ---
 
-Preparing and delivering lab sessions on **Turing machines**, **pushdown automata**, and **formal grammars** for the Theoretical Computer Science module (THIN) at **ZHAW**.
+Each week I run small-group tutoring for the Theoretical Computer Science course (THIN), a cohort of about 160, on Turing machines, automata and formal grammars. The students who come tend to do markedly better than average in the final exam.

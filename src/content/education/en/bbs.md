@@ -7,4 +7,4 @@ grade: final grade 5.5
 order: 3
 ---
 
-Four-year **Informatiker EFZ** apprenticeship at **Berufsbildungsschule Winterthur**. Final grade 5.5.
+A four-year apprenticeship as an IT specialist (Informatiker EFZ). Final grade 5.5.

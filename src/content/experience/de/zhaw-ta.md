@@ -10,4 +10,4 @@ tech:
   - Lehre
 ---
 
-Vorbereitung und Durchführung von Übungseinheiten zu **Turing-Maschinen**, **Kellerautomaten** und **formalen Grammatiken** im Modul Theoretische Informatik (THIN) an der **ZHAW**.
+Jede Woche halte ich Übungen in Kleingruppen für die Theoretische Informatik (THIN), einen Jahrgang von etwa 160, zu Turing-Maschinen, Automaten und formalen Grammatiken. Wer kommt, schneidet in der Abschlussprüfung meist deutlich über dem Schnitt ab.

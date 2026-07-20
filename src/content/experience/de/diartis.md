@@ -13,4 +13,4 @@ tech:
   - TDD
 ---
 
-Entwicklung von Software für die **wirtschaftliche Sozialhilfe** in **C#** und **Angular**. Arbeit in einem **Scrum**-Umfeld in einem Team von rund 20 Engineers, mit Fokus auf sauberen, getesteten Code. Mitwirkung daran, den internen Entwicklungsprozess **AI-ready** zu gestalten. Schwerpunkt auch auf **Security-Engineering**.
+Ich entwickle C#- und Angular-Features für Software der wirtschaftlichen Sozialhilfe, die den Sachbearbeitenden Zeit sparen, testgetrieben in einem Team von rund zwanzig. Ich habe AI-assistierte Entwicklung ins Team gebracht, ein Claude-Code-Setup mit wiederverwendbaren Skills, das pro Einsatz fünfzehn bis sechzig Minuten spart, und untersuche CVEs, damit keiner die Produktion erreicht. Mein Schwerpunkt liegt auf Security-Engineering.

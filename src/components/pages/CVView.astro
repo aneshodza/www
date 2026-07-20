@@ -35,7 +35,8 @@ const achievements =
     ? [
         {
           title: 'Gewinner des Hack Winterthur 2026',
-          detail: 'Erster Platz beim Hackathon der ZHAW.',
+          detail:
+            'Erster Platz beim ZHAW-Hackathon, erzielt mit LocalMate, einem agentischen KI-Assistenten auf MCP-Basis.',
           period: '2026',
           href: 'https://www.zhaw.ch/de/ueber-uns/aktuell/news/detailansicht-news/event-news/zugang-fuer-alle-ist-uns-ein-persoenliches-anliegen',
           external: true,
@@ -48,8 +49,8 @@ const achievements =
           external: false,
         },
         {
-          title: '3. Rang Regionalmeisterschaft Zürich, 8. der Schweiz',
-          detail: 'Berufsmeisterschaften im Bereich Informatik.',
+          title: 'Berufsmeisterschaft Informatik: 3. regional, 8. national',
+          detail: 'Schweizer Berufsmeisterschaften, während der Lehre als Informatiker.',
           period: '2024',
           href: '/regionalmeisterschaft.pdf',
           external: false,
@@ -58,7 +59,8 @@ const achievements =
     : [
         {
           title: 'Winner of Hack Winterthur 2026',
-          detail: 'First place at the ZHAW hackathon.',
+          detail:
+            'First place at the ZHAW hackathon with LocalMate, an MCP-based agentic AI assistant.',
           period: '2026',
           href: 'https://www.zhaw.ch/de/ueber-uns/aktuell/news/detailansicht-news/event-news/zugang-fuer-alle-ist-uns-ein-persoenliches-anliegen',
           external: true,
@@ -71,18 +73,137 @@ const achievements =
           external: false,
         },
         {
-          title: '3rd at the Zürich regional championships, 8th in Switzerland',
-          detail: 'National skills competition in computer science.',
+          title: 'Swiss IT skills championship: 3rd regional, 8th national',
+          detail: 'National vocational skills competition, contested during my IT apprenticeship.',
           period: '2024',
           href: '/regionalmeisterschaft.pdf',
           external: false,
         },
       ];
 
+const research =
+  locale === 'de'
+    ? [
+        {
+          period: '2025',
+          title: 'mini-retrieve: Suchmaschine in Rust',
+          detail:
+            'Eine Suchmaschine, die ich von Grund auf in Rust geschrieben habe, ohne die üblichen Bibliotheken: eigener Tokenizer und Stemmer, Stopwort-Filter, invertierter Index und BM25-Ranking, alles hinter einer interaktiven Shell zum Inspizieren des Index. Es war mein tiefster Einstieg in angewandte hardwarenahe und performante Programmierung, und die fertige Engine beantwortet eine Cranfield-Anfrage in rund 70 Mikrosekunden.',
+          short:
+            'Eine Suchmaschine, von Grund auf in Rust geschrieben, vom Tokenizer und Stemmer bis zum invertierten Index und BM25-Ranking. Mein tiefster Einstieg in angewandte hardwarenahe und performante Programmierung, bei rund 70 Mikrosekunden pro Cranfield-Anfrage.',
+          href: 'https://github.com/aneshodza/mini-retrieve',
+          external: true,
+          print: true,
+        },
+        {
+          period: '2026',
+          title: 'LLMs für Text-to-SQL evaluiert',
+          detail:
+            'Eine Kursarbeit über das Übersetzen natürlicher Sprache in SQL. Mit StatBot.Swiss, einem Benchmark auf echten Schweizer Bundesstatistiken, habe ich auf LangChain und LangGraph drei Systeme gebaut und verglichen: eine fixe Grounding-Pipeline, einen ReAct-Agenten, der die Datenbank nach den richtigen Werten abfragt, bevor er eine Query schreibt, und eine Kombination der beiden. Das Interessante ist das Grounding, also die exakten kategorischen Werte, das richtige Jahr und die richtige räumliche Ebene zu treffen, nicht die SQL-Syntax selbst.',
+          short:
+            'Eine Kursarbeit, die drei Wege vergleicht, natürliche Sprache in SQL über echte Bundesstatistiken zu übersetzen: eine fixe Grounding-Pipeline, einen ReAct-Agenten, der die Datenbank abfragt, und eine Kombination, gebaut auf LangChain und LangGraph.',
+          href: 'https://drive.google.com/file/d/1sFv4ktlgIOtf23QgjB73a9o1WpDCtxHl/view',
+          external: true,
+          print: true,
+        },
+        {
+          period: '2026',
+          title: 'MNIST-Ziffernerkennung von Hand',
+          detail:
+            "Ein neuronales Netz für handgeschriebene Ziffern, von Hand in TypeScript geschrieben, ganz ohne Machine-Learning-Framework. Forward-Pass und Backpropagation habe ich selbst implementiert, ein mehrschichtiges Perzeptron mit ReLU-Schichten und einem Softmax über die zehn Ziffern. Trainiert auf 50'000 Bildern und getestet auf 9'000, erreicht es rund 95% Genauigkeit. Dazu gibt es eine kleine Web-Version, in der man eine Ziffer auf ein Canvas zeichnet, die vor der Erkennung an ihrem Schwerpunkt zentriert wird.",
+          short:
+            "Ein neuronales Netz für handgeschriebene Ziffern, von Hand in TypeScript geschrieben, ohne Machine-Learning-Framework. Forward-Pass und Backpropagation selbst implementiert; auf 50'000 Bildern trainiert, erreicht es rund 95% Genauigkeit auf MNIST.",
+          href: 'https://digits.aneshodza.ch',
+          external: true,
+          print: false,
+        },
+        {
+          period: '2025',
+          title: 'Query-Fehler & kognitive Varianz',
+          detail:
+            'Eine kurze Arbeit darüber, wie Eingabefehler die Suche stören und wie günstig sich das beheben lässt. Ich habe drei medizinisch fundierte Fehlertypen simuliert, die Tippfehler einer gesunden Person, die zittrigen Fehler bei Parkinson und die Verwechslungen bei Dyslexie, und die BM25-Suche mit und ohne eine Korrektur gemessen, die jedes Wort über die Levenshtein-Distanz auf den nächsten Treffer abbildet.',
+          short:
+            'Eine kurze Arbeit darüber, wie Tippfehler, Parkinson und Dyslexie die BM25-Suche verschlechtern und wie eine Levenshtein-Korrektur sie wiederherstellt.',
+          href: 'https://drive.google.com/file/d/1Azp9R1ufht2OSDB7ahYeeu1ro6APo-dL/view',
+          external: true,
+          print: true,
+        },
+        {
+          period: '2025',
+          title: 'Numerische Verfahren (HM2)',
+          detail:
+            'Eine Sammlung von rund zwanzig numerischen Verfahren, die ich in Python implementiert habe, während ich für Höhere Mathematik 2 an der ZHAW lernte, gehalten als kleine lauffähige Skripte statt als Notizen. Sie deckt einen guten Teil des Kurses ab: das Newton-Verfahren mit seinen gedämpften und vereinfachten Varianten, kubische Splines, Lagrange-Interpolation und Ausgleichsrechnung, Romberg-Integration, Runge-Kutta und Adams-Bashforth für Differentialgleichungen sowie ein paar angewandte Aufgaben wie ein Pendel und eine Raketenbahn. Das Modul gehört zu den anspruchsvolleren an der Schule, und die Verfahren so auszuschreiben ist, was mir darin eine 6.0 gebracht hat.',
+          short:
+            'Rund zwanzig numerische Verfahren von Grund auf in Python (Splines, Runge-Kutta, Romberg und mehr), für eine perfekte 6.0 in einem ZHAW-Mathematikmodul.',
+          href: 'https://github.com/aneshodza/hm2-scripts',
+          external: true,
+          print: true,
+        },
+      ]
+    : [
+        {
+          period: '2025',
+          title: 'mini-retrieve: a search engine in Rust',
+          detail:
+            "A search engine I wrote from scratch in Rust, with none of the usual libraries doing the work: my own tokeniser and stemmer, stop-word filtering, an inverted index and BM25 ranking, all behind an interactive shell for inspecting the index. It was my deepest dive into applied low-level and high-performance programming, and the finished engine answers a Cranfield query in roughly 70 microseconds.",
+          short:
+            'A search engine written from scratch in Rust, from tokeniser and stemmer to an inverted index and BM25 ranking. My deepest dive into applied low-level and high-performance programming, at roughly 70 microseconds per Cranfield query.',
+          href: 'https://github.com/aneshodza/mini-retrieve',
+          external: true,
+          print: true,
+        },
+        {
+          period: '2026',
+          title: 'Evaluating LLMs on Text-to-SQL',
+          detail:
+            "A course paper on translating plain-language questions into SQL. Using StatBot.Swiss, a benchmark built on real Swiss federal statistics, I built and compared three systems on LangChain and LangGraph: a fixed grounding pipeline, a ReAct agent that probes the database for the right values before it writes a query, and a hybrid of the two. The interesting part is the grounding, getting the exact categorical values, the right year and the right spatial level, rather than the SQL syntax itself.",
+          short:
+            'A course paper comparing three ways to turn plain-language questions into SQL over real Swiss federal statistics: a fixed grounding pipeline, a ReAct agent that probes the database, and a hybrid, built on LangChain and LangGraph.',
+          href: 'https://drive.google.com/file/d/1sFv4ktlgIOtf23QgjB73a9o1WpDCtxHl/view',
+          external: true,
+          print: true,
+        },
+        {
+          period: '2026',
+          title: 'MNIST digit recognition by hand',
+          detail:
+            'A neural network for handwritten digits, written by hand in TypeScript with no machine-learning framework anywhere in it. I implemented the forward pass and back-propagation myself, a multilayer perceptron with ReLU hidden layers and a softmax over the ten digits. Trained on 50,000 images and tested on 9,000, it lands at about 95% accuracy. There is a small web version too, where you draw a digit on a canvas and it gets centred by its centre of mass before the network sees it.',
+          short:
+            'A neural network for handwritten digits, written by hand in TypeScript with no machine-learning framework. I wrote the forward pass and back-propagation myself; trained on 50,000 images, it reaches about 95% accuracy on MNIST.',
+          href: 'https://digits.aneshodza.ch',
+          external: true,
+          print: false,
+        },
+        {
+          period: '2025',
+          title: 'Query Errors & Cognitive Variance',
+          detail:
+            "A short paper on how input errors break search and how cheaply that can be fixed. I simulated three kinds of error grounded in medical research, the typos of a healthy typist, the tremor-driven slips of Parkinson's, and the letter confusions of dyslexia, and measured BM25 retrieval with and without a correction step that maps each word to its nearest match by Levenshtein distance.",
+          short:
+            "A short paper on how typos, Parkinson's and dyslexia degrade BM25 search, and how a Levenshtein correction step recovers it.",
+          href: 'https://drive.google.com/file/d/1Azp9R1ufht2OSDB7ahYeeu1ro6APo-dL/view',
+          external: true,
+          print: true,
+        },
+        {
+          period: '2025',
+          title: 'Numerical methods (HM2)',
+          detail:
+            "About twenty numerical methods I implemented in Python while studying for Higher Mathematics 2 at ZHAW, kept as small runnable scripts rather than notes. It covers a good stretch of the course: Newton's method with its damped and simplified variants, cubic splines, Lagrange interpolation and least-squares fits, Romberg integration, Runge-Kutta and Adams-Bashforth for differential equations, and a few applied problems like a pendulum and a rocket trajectory. It is one of the harder courses at the school, and working the methods out like this is what earned me a 6.0.",
+          short:
+            'Around twenty numerical methods from scratch in Python (splines, Runge-Kutta, Romberg, and more), which earned a perfect 6.0 in a ZHAW maths course.',
+          href: 'https://github.com/aneshodza/hm2-scripts',
+          external: true,
+          print: true,
+        },
+      ];
+
+research.sort((a, b) => Number(b.period) - Number(a.period));
+
 const skills = [
   {
     key: 'skills.languages' as const,
-    items: ['TypeScript', 'C#', 'Ruby', 'Rust', 'C', 'Python', 'SQL', 'PowerShell', 'Bash'],
+    items: ['TypeScript', 'C#', 'Ruby', 'Rust', 'C', 'Python', 'SQL'],
   },
   {
     key: 'skills.frameworks' as const,
@@ -90,7 +211,7 @@ const skills = [
   },
   {
     key: 'skills.data' as const,
-    items: ['PostgreSQL', 'MySQL', 'Qdrant', 'Drizzle', 'ActiveRecord'],
+    items: ['PostgreSQL', 'MySQL', 'Qdrant', 'Drizzle'],
   },
   {
     key: 'skills.infrastructure' as const,
@@ -112,14 +233,12 @@ const languages =
         { label: 'Bosnisch', level: 'C2' as const, note: 'Muttersprache' },
         { label: 'Englisch', level: 'C2' as const },
         { label: 'Französisch', level: 'B2' as const },
-        { label: 'Niederländisch', level: 'A1' as const },
       ]
     : [
         { label: 'German', level: 'C2' as const, note: 'Native' },
         { label: 'Bosnian', level: 'C2' as const, note: 'Native' },
         { label: 'English', level: 'C2' as const },
         { label: 'French', level: 'B2' as const },
-        { label: 'Dutch', level: 'A1' as const },
       ];
 
 const cefr = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'] as const;
@@ -131,7 +250,6 @@ const contact = [
   { label: t('contact.email'), value: t('meta.email') },
   { label: 'GitHub', value: 'github.com/aneshodza' },
   { label: 'LinkedIn', value: 'linkedin.com/in/aneshodza' },
-  { label: 'dev.to', value: 'dev.to/aneshodza' },
 ];
 ---
 
@@ -139,13 +257,13 @@ const contact = [
   <section class="mx-auto max-w-[68rem] px-5 md:px-10 pt-12 md:pt-20 pb-10">
     <div class="flex items-baseline justify-between border-b border-[var(--rule)] pb-3 mb-10">
       <p class="label">{t('nav.cv')}</p>
-      <button
-        type="button"
-        data-print-cv
+      <a
+        href={`/${printFilename}.pdf`}
+        download={`${printFilename}.pdf`}
         class="no-print font-sans text-[0.72rem] uppercase tracking-[0.14em] text-[var(--fg-subtle)] hover:text-[var(--accent)] inline-flex items-center min-h-[44px] md:min-h-0 px-1"
       >
         {t('cv.print')}
-      </button>
+      </a>
     </div>
 
     <h1 class="display text-[2.5rem] md:text-[3.25rem] max-w-[42rem]">
@@ -202,6 +320,38 @@ const contact = [
     <div>
       {experience.map((entry) => <ExperienceItem entry={entry} />)}
     </div>
+  </section>
+
+  <section class="mx-auto max-w-[68rem] px-5 md:px-10 py-12">
+    <h2 class="font-serif text-[1.5rem] md:text-[1.75rem] font-semibold tracking-tight border-b border-[var(--rule)] pb-2 mb-2">
+      {t('sections.research')}
+    </h2>
+    <ul>
+      {
+        research.map((item) => (
+          <li class="grid grid-cols-1 md:grid-cols-[14rem_1fr] gap-1 md:gap-10 py-6 border-t border-[var(--rule)] first:border-t-0">
+            <p class="font-sans text-[0.72rem] uppercase tracking-[0.14em] text-[var(--fg-subtle)] md:pt-1">
+              {item.period}
+            </p>
+            <div>
+              <h3 class="font-serif text-[1.2rem] md:text-[1.25rem] font-semibold tracking-tight">
+                <a
+                  href={item.href}
+                  class="link-inline"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {item.title}
+                </a>
+              </h3>
+              <p class="font-serif text-[0.98rem] text-[var(--fg-muted)] mt-1 leading-relaxed">
+                {item.detail}
+              </p>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
   </section>
 
   <section class="mx-auto max-w-[68rem] px-5 md:px-10 py-12">
@@ -353,6 +503,18 @@ const contact = [
         ))}
       </dl>
     </section>
+
+    <section class="cv-doc__block">
+      <h2 class="cv-doc__label">{t('sections.achievements')}</h2>
+      <ul class="cv-doc__awards">
+        {achievements.map((item) => (
+          <li>
+            <span class="cv-doc__award-title">{item.title}</span>
+            <span class="cv-doc__award-year">{item.period}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
   </aside>
 
   <main class="cv-doc__main">
@@ -387,6 +549,19 @@ const contact = [
     </section>
 
     <section class="cv-doc__section">
+      <h2 class="cv-doc__heading">{t('sections.research')}</h2>
+      <ul class="cv-doc__projects">
+        {research.filter((item) => item.print).map((item) => (
+          <li>
+            <span class="cv-doc__proj-title">{item.title}</span>
+            <span class="cv-doc__proj-year">{item.period}</span>
+            <span class="cv-doc__proj-desc">{item.short}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="cv-doc__section">
       <h2 class="cv-doc__heading">{t('sections.education')}</h2>
       {educationRendered.map(({ entry }) => (
         <article class="cv-doc__entry">
@@ -405,61 +580,8 @@ const contact = [
       ))}
     </section>
 
-    <section class="cv-doc__section">
-      <h2 class="cv-doc__heading">{t('sections.achievements')}</h2>
-      {achievements.map((item) => (
-        <article class="cv-doc__entry">
-          <div class="cv-doc__entry-meta">
-            <p class="cv-doc__period">{item.period}</p>
-          </div>
-          <div class="cv-doc__entry-body">
-            <h3>{item.title}</h3>
-            <div class="cv-doc__desc">
-              <p>{item.detail}</p>
-            </div>
-          </div>
-        </article>
-      ))}
-    </section>
   </main>
 </div>
-
-<script is:inline define:vars={{ printFilename }}>
-  (() => {
-    let savedTitle = null;
-    const onBefore = () => {
-      savedTitle = document.title;
-      document.title = printFilename;
-    };
-    const onAfter = () => {
-      if (savedTitle !== null) {
-        document.title = savedTitle;
-        savedTitle = null;
-      }
-    };
-
-    window.addEventListener('beforeprint', onBefore);
-    window.addEventListener('afterprint', onAfter);
-
-    const btn = document.querySelector('[data-print-cv]');
-    const onClick = () => window.print();
-    if (btn) btn.addEventListener('click', onClick);
-
-    document.addEventListener(
-      'astro:before-preparation',
-      () => {
-        window.removeEventListener('beforeprint', onBefore);
-        window.removeEventListener('afterprint', onAfter);
-        if (btn) btn.removeEventListener('click', onClick);
-        if (savedTitle !== null) {
-          document.title = savedTitle;
-          savedTitle = null;
-        }
-      },
-      { once: true },
-    );
-  })();
-</script>
 
 <style>
   /* Print document is invisible on screen; only the browser print path shows it. */
@@ -468,6 +590,12 @@ const contact = [
   }
 
   @media print {
+    /* Drop the browser's own page margin; the .cv-doc padding is the only border. */
+    @page {
+      size: A4;
+      margin: 0;
+    }
+
     /* Pin the print viewport to A4 so layout is computed against paper width,
        not the device viewport. Without this, mobile prints the 54mm + 1fr grid
        against a ~375px viewport and overflows onto a second page. */
@@ -486,16 +614,16 @@ const contact = [
 
     .cv-doc {
       display: grid;
-      grid-template-columns: 54mm 1fr;
-      gap: 8mm;
+      grid-template-columns: 44mm 1fr;
+      gap: 6mm;
       width: 210mm;
       min-height: 297mm;
-      padding: 12mm;
+      padding: 6mm;
       margin: 0;
       color: #111;
       font-family: var(--font-serif);
-      font-size: 8.4pt;
-      line-height: 1.32;
+      font-size: 9.0pt;
+      line-height: 1.25;
       box-sizing: border-box;
       overflow: hidden;
       -webkit-print-color-adjust: exact;
@@ -516,7 +644,7 @@ const contact = [
     .cv-doc__label,
     .cv-doc__heading {
       font-family: var(--font-sans);
-      font-size: 7pt;
+      font-size: 7.6pt;
       font-weight: 600;
       letter-spacing: 0.13em;
       text-transform: uppercase;
@@ -526,28 +654,31 @@ const contact = [
     /* Sidebar */
     .cv-doc__side {
       border-right: 1pt solid #888;
-      padding-right: 7mm;
+      padding-right: 5mm;
     }
 
     .cv-doc__portrait {
-      margin: 0 0 6mm 0;
+      margin: 0 0 4mm 0;
     }
     .cv-doc__portrait img {
       width: 100%;
       height: auto;
-      aspect-ratio: 4 / 5;
+      aspect-ratio: 1 / 1;
       object-fit: cover;
       border: 0.5pt solid #bbb;
     }
 
     .cv-doc__block {
-      margin-bottom: 5mm;
+      margin-bottom: 2.9mm;
       break-inside: avoid;
     }
     .cv-doc__block .cv-doc__label {
-      padding-bottom: 1mm;
-      margin-bottom: 2mm;
+      padding-top: 2.4mm;
+      padding-bottom: 0.8mm;
+      margin-bottom: 1.2mm;
       border-bottom: 0.5pt solid #ccc;
+      color: #000;
+      font-size: 8.5pt;
     }
 
     .cv-doc__contact {
@@ -556,19 +687,19 @@ const contact = [
       padding: 0;
     }
     .cv-doc__contact li {
-      margin-bottom: 1.6mm;
+      margin-bottom: 1.2mm;
     }
     .cv-doc__contact-key {
       display: block;
       font-family: var(--font-sans);
-      font-size: 6.4pt;
+      font-size: 7pt;
       letter-spacing: 0.1em;
       text-transform: uppercase;
       color: #888;
     }
     .cv-doc__contact-val {
       display: block;
-      font-size: 8.2pt;
+      font-size: 8pt;
       color: #111;
       word-break: break-word;
     }
@@ -579,17 +710,17 @@ const contact = [
       padding: 0;
     }
     .cv-doc__langs li {
-      margin-bottom: 2.2mm;
+      margin-bottom: 1.7mm;
     }
     .cv-doc__lang-top {
       display: flex;
       justify-content: space-between;
       align-items: baseline;
-      font-size: 8pt;
+      font-size: 8.8pt;
     }
     .cv-doc__lang-level {
       font-family: var(--font-sans);
-      font-size: 6.6pt;
+      font-size: 7pt;
       letter-spacing: 0.08em;
       color: #777;
     }
@@ -612,11 +743,11 @@ const contact = [
       margin: 0;
     }
     .cv-doc__skills > div {
-      margin-bottom: 2.6mm;
+      margin-bottom: 2mm;
     }
     .cv-doc__skills dt {
       font-family: var(--font-sans);
-      font-size: 6.6pt;
+      font-size: 7.6pt;
       letter-spacing: 0.08em;
       text-transform: uppercase;
       color: #888;
@@ -624,44 +755,74 @@ const contact = [
     }
     .cv-doc__skills dd {
       margin: 0;
-      font-size: 7.8pt;
+      font-size: 8.9pt;
       line-height: 1.35;
       color: #222;
     }
 
+    .cv-doc__awards {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .cv-doc__awards li {
+      margin-bottom: 1.6mm;
+      break-inside: avoid;
+    }
+    .cv-doc__award-title {
+      display: block;
+      font-family: var(--font-serif);
+      font-weight: 600;
+      font-size: 8.4pt;
+      line-height: 1.22;
+      color: #000;
+    }
+    .cv-doc__award-year {
+      display: block;
+      margin-top: 0.3mm;
+      font-family: var(--font-sans);
+      font-size: 6.8pt;
+      letter-spacing: 0.06em;
+      color: #888;
+    }
+
     /* Main column */
     .cv-doc__head {
-      margin-bottom: 4mm;
+      margin-bottom: 2mm;
     }
     .cv-doc__head h1 {
       font-family: var(--font-serif);
       font-weight: 600;
-      font-size: 22pt;
+      font-size: 19pt;
       line-height: 1;
       letter-spacing: -0.015em;
       color: #000;
     }
     .cv-doc__tagline {
-      margin-top: 1.5mm;
+      margin-top: 1.2mm;
       font-style: italic;
-      font-size: 10pt;
+      font-size: 9pt;
       color: #444;
     }
 
     .cv-doc__section {
-      margin-bottom: 3.5mm;
+      margin-bottom: 0.6mm;
     }
     .cv-doc__heading {
-      padding-bottom: 1mm;
-      margin-bottom: 2.2mm;
+      padding-top: 4mm;
+      padding-bottom: 0.8mm;
+      margin-bottom: 1.4mm;
       border-bottom: 0.5pt solid #bbb;
+      color: #000;
+      font-size: 9.5pt;
+      letter-spacing: 0.1em;
     }
 
     .cv-doc__entry {
       display: grid;
-      grid-template-columns: 26mm 1fr;
-      gap: 4mm;
-      margin-bottom: 2.6mm;
+      grid-template-columns: 19mm 1fr;
+      gap: 3mm;
+      margin-bottom: 1.5mm;
       break-inside: avoid;
     }
     .cv-doc__entry-meta {
@@ -669,22 +830,22 @@ const contact = [
     }
     .cv-doc__period {
       font-family: var(--font-sans);
-      font-size: 6.8pt;
+      font-size: 7.2pt;
       letter-spacing: 0.06em;
       text-transform: uppercase;
       color: #555;
     }
     .cv-doc__loc {
       font-style: italic;
-      font-size: 7.4pt;
+      font-size: 8.2pt;
       color: #777;
       margin-top: 0.6mm;
     }
     .cv-doc__entry-body h3 {
       font-family: var(--font-serif);
       font-weight: 600;
-      font-size: 9.2pt;
-      line-height: 1.2;
+      font-size: 9pt;
+      line-height: 1.18;
       color: #000;
     }
     .cv-doc__entry-body h3 em {
@@ -711,9 +872,38 @@ const contact = [
     .cv-doc__tech {
       margin-top: 1.2mm;
       font-family: var(--font-sans);
-      font-size: 6.8pt;
+      font-size: 8.2pt;
       letter-spacing: 0.02em;
       color: #666;
+    }
+
+    /* Compact projects & research list: title + terse measured result per line. */
+    .cv-doc__projects {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .cv-doc__projects li {
+      margin-bottom: 1.4mm;
+      break-inside: avoid;
+    }
+    .cv-doc__proj-title {
+      font-family: var(--font-serif);
+      font-weight: 600;
+      font-size: 8.7pt;
+      color: #000;
+    }
+    .cv-doc__proj-year {
+      font-family: var(--font-sans);
+      font-size: 6.4pt;
+      letter-spacing: 0.06em;
+      color: #888;
+      margin-left: 1.6mm;
+    }
+    .cv-doc__proj-desc {
+      display: block;
+      margin-top: 0.3mm;
+      color: #222;
     }
   }
 </style>

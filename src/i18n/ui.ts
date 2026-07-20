@@ -25,6 +25,7 @@ export const ui = {
     'sections.projects': 'Projekte',
     'sections.projects.all': 'Alle Projekte',
     'sections.experience': 'Berufserfahrung',
+    'sections.research': 'Projekte & Forschung',
     'sections.education': 'Ausbildung',
     'sections.achievements': 'Auszeichnungen',
     'sections.skills': 'Fähigkeiten',
@@ -37,7 +38,7 @@ export const ui = {
     'project.links': 'Links',
     'project.back': 'Zurück zu allen Projekten',
     'project.view': 'Projekt ansehen',
-    'cv.print': 'Drucken',
+    'cv.print': 'PDF herunterladen',
     'cv.intro':
       'Lebenslauf. Berufliche Stationen und Ausbildung, neueste zuerst.',
     'about.intro': 'Ein längerer Text über meine Arbeit und Interessen.',
@@ -102,6 +103,7 @@ export const ui = {
     'sections.projects': 'Projects',
     'sections.projects.all': 'All projects',
     'sections.experience': 'Work experience',
+    'sections.research': 'Projects & research',
     'sections.education': 'Education',
     'sections.achievements': 'Achievements',
     'sections.skills': 'Skills',
@@ -114,7 +116,7 @@ export const ui = {
     'project.links': 'Links',
     'project.back': 'Back to all projects',
     'project.view': 'View project',
-    'cv.print': 'Print',
+    'cv.print': 'Download PDF',
     'cv.intro':
       'Curriculum vitae. Work history and education, newest first.',
     'about.intro': 'A longer note on my work and interests.',

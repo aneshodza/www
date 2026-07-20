@@ -13,4 +13,4 @@ tech:
   - TDD
 ---
 
-Building software for *wirtschaftliche Sozialhilfe* (means-tested social assistance) in **C#** and **Angular**. Working in a **Scrum** environment within a team of around 20 engineers, writing clean, tested code. Also involved in making the internal development process **AI-ready**. Concentration on **security engineering**.
+I build C# and Angular features for means-tested social-assistance software that shorten the tasks caseworkers do every day, working test-first in a team of about twenty. I brought AI-assisted development to the team, a Claude Code setup with reusable skills that saves fifteen to sixty minutes each time it stands in for plain coding, and I investigate CVEs to make sure none reach production. Most of my focus is security engineering.

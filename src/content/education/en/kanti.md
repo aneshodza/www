@@ -7,4 +7,4 @@ grade: final grade 5.2
 order: 2
 ---
 
-**Wirtschaftsmatur** at **Kantonsschule Büelrain Winterthur**, completed in parallel with the EFZ apprenticeship. Final grade 5.2.
+The Swiss commercial baccalaureate, completed in parallel with the IT apprenticeship. Final grade 5.2.
