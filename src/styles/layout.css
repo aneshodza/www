@@ -1,0 +1,127 @@
+/* ---------------------------------------------------------------------------
+   Structure. The page frame, the grid, and the repeating section shapes that
+   every view builds on.
+   --------------------------------------------------------------------------- */
+
+@layer components {
+  .frame {
+    width: 100%;
+    max-width: var(--frame);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+
+  /* 12 columns. Content is placed asymmetrically off this grid, never centred
+     by default; the display type is allowed to break out of it. */
+  .grid12 {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--gutter);
+  }
+
+  .shell {
+    position: relative;
+    z-index: 1;
+    flex: 1;
+  }
+
+  .skip {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    z-index: 100;
+  }
+
+  .skip:focus {
+    left: 1rem;
+    top: 1rem;
+    padding: 0.65rem 1rem;
+    border-radius: 8px;
+    background: var(--ink);
+    color: var(--field);
+    font-family: var(--font-sans);
+    font-size: var(--t--1);
+    font-weight: 560;
+  }
+
+  .hairline {
+    border-top: 1px solid var(--edge);
+  }
+
+  /* ---- Page head ---------------------------------------------------------
+     Every view opens the same way: a stack that clears the fixed bar. Views
+     that want a different opening depth set --head-top / --head-bottom rather
+     than restating the block.
+     --------------------------------------------------------------------- */
+
+  .page-head {
+    display: grid;
+    gap: var(--head-gap, clamp(1rem, 2.5vh, 1.75rem));
+    padding-block:
+      max(var(--head-top, clamp(6.5rem, 15vh, 10rem)), var(--hud-clear))
+      var(--head-bottom, clamp(1.5rem, 4vh, 2.5rem));
+  }
+
+  /* ---- Kicker ------------------------------------------------------------
+     The small dotted label that opens a section. Carries instrument type
+     itself, so it never needs pairing with .instrument.
+     --------------------------------------------------------------------- */
+
+  .kicker {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-family: var(--font-sans);
+    font-size: var(--t--2);
+    font-weight: 500;
+    letter-spacing: 0.005em;
+    line-height: 1.3;
+    color: var(--ink-3);
+    font-variant-numeric: tabular-nums lining-nums;
+    font-feature-settings: "cv11";
+  }
+
+  .kicker::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex: none;
+  }
+
+  /* ---- Rule list ---------------------------------------------------------
+     A list whose items are marked by a short accent hairline rather than a
+     bullet: tech stacks, skill tags, and body-copy lists in .prose. The dash
+     geometry is one definition driven by --dash-* so the em-based variant
+     inside prose and the rem-based variant in the chrome stay in step.
+     --------------------------------------------------------------------- */
+
+  .rule-list {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .rule-list > li {
+    position: relative;
+    padding-inline-start: 0.9rem;
+    padding-block: 0.25rem;
+    font-family: var(--font-sans);
+    font-size: var(--t--2);
+    font-weight: 450;
+    letter-spacing: 0.002em;
+    color: var(--ink-3);
+  }
+
+  .rule-list > li::before,
+  .prose ul > li::before {
+    content: "";
+    position: absolute;
+    inset-inline-start: var(--dash-x, 0);
+    top: calc(50% - var(--hairline) / 2);
+    width: var(--dash-w, 0.45rem);
+    height: var(--hairline);
+    background: var(--accent);
+    opacity: var(--dash-opacity, 0.65);
+  }
+}

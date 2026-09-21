@@ -11,36 +11,69 @@ const levels = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'] as const;
 const filled = levels.indexOf(level) + 1;
 ---
 
-<div class="language-row grid grid-cols-[1fr_auto] gap-x-4 items-baseline py-3 border-b border-[var(--rule)] last:border-b-0">
-  <div class="flex items-baseline gap-3 flex-wrap">
-    <span class="font-serif text-[1.05rem]">{label}</span>
-    {note && (
-      <span class="font-serif italic text-[0.92rem] text-[var(--fg-subtle)]">
-        {note}
-      </span>
-    )}
-  </div>
-  <div class="flex items-baseline gap-3">
-    <span
-      class="font-sans text-[0.72rem] text-[var(--fg-muted)] tabular-nums"
-    >
-      {level}
-    </span>
-    <div
-      class="flex gap-[3px]"
-      role="img"
-      aria-label={`${label}: ${level}`}
-    >
-      {
-        levels.map((_, i) => (
-          <span
-            class={`h-[10px] w-[14px] border border-[var(--rule)] ${
-              i < filled ? 'bg-[var(--accent)] border-[var(--accent)]' : ''
-            }`}
-            aria-hidden="true"
-          />
-        ))
-      }
+<div class="lang-row">
+  <p class="lang-name">
+    {label}
+    {note && <span class="lang-note">{note}</span>}
+  </p>
+
+  <div class="lang-level">
+    <span class="instrument">{level}</span>
+    <div class="lang-meter" role="img" aria-label={`${label}: ${level}`}>
+      {levels.map((_, i) => <span class:list={[{ 'is-on': i < filled }]} aria-hidden="true" />)}
     </div>
   </div>
 </div>
+
+<style>
+  .lang-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: baseline;
+    gap: 0 1rem;
+    padding-block: 0.75rem;
+    border-bottom: 1px solid var(--edge);
+  }
+
+  .lang-row:last-child {
+    border-bottom: 0;
+  }
+
+  .lang-name {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.75rem;
+    font-size: var(--t-0);
+  }
+
+  .lang-note {
+    font-style: italic;
+    font-size: 0.92em;
+    color: var(--ink-3);
+  }
+
+  .lang-level {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+  }
+
+  /* Six cells, filled to the CEFR level. Outlined rather than tinted so an
+     unfilled cell still reads as part of the scale. */
+  .lang-meter {
+    display: flex;
+    gap: 3px;
+  }
+
+  .lang-meter span {
+    width: 14px;
+    height: 10px;
+    border: 1px solid var(--edge);
+  }
+
+  .lang-meter span.is-on {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+</style>

@@ -13,38 +13,15 @@ const t = useTranslations(locale);
 ---
 
 <nav class="lang" aria-label={t('lang.switch')}>
-  <a class="chip" href={href} hreflang={target}>
+  <a class="chip chip-lang" href={href} hreflang={target}>
     {target === 'en' ? 'EN' : 'DE'}
   </a>
 </nav>
 
 <style>
+  /* The switcher is a landmark for assistive tech only; the HUD lays the chip
+     out directly. */
   .lang {
     display: contents;
-  }
-
-  .chip {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 44px;
-    min-width: 44px;
-    padding-inline: 0.35rem;
-    font-family: var(--font-sans);
-    font-size: 0.75rem;
-    font-weight: 560;
-    letter-spacing: 0.02em;
-    color: var(--ink-3);
-    font-variant-numeric: tabular-nums;
-    transition: color 0.4s var(--ease-out);
-  }
-
-  @media (max-width: 47.99rem) {
-    .chip { min-width: 40px; padding-inline: 0.3rem; }
-  }
-
-  .chip:hover,
-  .chip:focus-visible {
-    color: var(--accent-text);
   }
 </style>

@@ -160,6 +160,8 @@ function isActive(itemPath: string): boolean {
     display: inline-flex;
     align-items: center;
     min-height: 44px;
+    /* Room to the left for the caret to open into. */
+    padding-inline-start: 1.15rem;
     font-family: var(--font-sans);
     font-size: 0.8125rem;
     font-weight: 500;
@@ -167,13 +169,6 @@ function isActive(itemPath: string): boolean {
     color: var(--ink-2);
     white-space: nowrap;
     transition: color 0.4s var(--ease-out);
-  }
-
-
-  .hud-link {
-    color: var(--ink-2);
-    /* Room to the left for the caret to open into. */
-    padding-inline-start: 1.15rem;
   }
 
   /* A caret drawn from two borders, the same shape as the back link's. It

@@ -47,8 +47,8 @@ const channels = [
   },
 ];
 ---
-<section class="head frame">
-  <p class="kicker instrument">{t('nav.contact')}</p>
+<section class="page-head frame">
+  <p class="kicker">{t('nav.contact')}</p>
 
   <h1 class="head-title display">
     {locale === 'de' ? 'Reden wir.' : 'Let us talk.'}
@@ -129,35 +129,11 @@ const channels = [
 </div>
 
 <style>
-  .head {
-    padding-block: max(clamp(6.5rem, 15vh, 10rem), var(--hud-clear)) clamp(1.5rem, 4vh, 2.5rem);
-    display: grid;
-    gap: clamp(1rem, 2.5vh, 1.75rem);
-  }
-
-  .kicker {
-    margin: 0;
-    display: flex;
-    align-items: center;
-    gap: 0.7rem;
-  }
-
-  .kicker::before {
-    content: '';
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--accent);
-    flex: none;
-  }
-
   .head-title {
-    margin: 0;
     font-size: var(--t-5);
   }
 
   .head-lede {
-    margin: 0;
     max-width: 52ch;
   }
 
@@ -167,21 +143,18 @@ const channels = [
     padding-block: clamp(2rem, 6vh, 3.5rem) clamp(2rem, 6vh, 4rem);
   }
 
-  .form {
-    display: grid;
-    gap: clamp(1.35rem, 3vh, 1.9rem);
-  }
+  /* ---- Form -------------------------------------------------------------- */
 
+  .form,
   .pair {
     display: grid;
     gap: clamp(1.35rem, 3vh, 1.9rem);
   }
 
   .field {
+    position: relative;
     display: grid;
     gap: 0.55rem;
-    margin: 0;
-    position: relative;
   }
 
   .field label {
@@ -192,23 +165,19 @@ const channels = [
     color: var(--accent-text);
   }
 
-  /* The rule under a field is the instrument: it fills from the leading edge
-     on focus, on the same spring as every other control on the site. */
-  /* A real container, not a floating rule: over a lit field an invisible
-     input reads as unfinished. */
+  /* Ruled underneath rather than boxed: the bottom border is the field, and the
+     rest of the frame is just enough to place it. */
   .input {
     display: block;
     width: 100%;
     background: color-mix(in srgb, var(--shelf) 62%, transparent);
     border: 1px solid var(--edge);
     border-bottom: 1px solid var(--ink-3);
-    border-radius: 8px 8px 2px 2px;
     padding: 0.6rem 0.75rem 0.65rem;
     font-family: var(--font-serif);
     font-size: var(--t-0);
     line-height: 1.6;
     color: var(--ink);
-    border-radius: 0;
   }
 
   .input:hover {
@@ -221,6 +190,18 @@ const channels = [
     outline-offset: 2px;
   }
 
+  .input[aria-invalid='true'] {
+    border-color: var(--alarm);
+    border-bottom-width: 2px;
+    padding-bottom: calc(0.65rem - 1px);
+  }
+
+  .area {
+    min-height: 9rem;
+  }
+
+  /* An accent rule that wipes in under the focused field, the same gesture the
+     links make on hover. */
   .control {
     position: relative;
     display: block;
@@ -231,9 +212,8 @@ const channels = [
     position: absolute;
     inset-inline-start: 0;
     bottom: 0;
-    height: 2px;
-    border-radius: 0 0 2px 2px;
     width: 100%;
+    height: 2px;
     background: var(--accent);
     transform: scaleX(0);
     transform-origin: left;
@@ -245,31 +225,12 @@ const channels = [
     transform: scaleX(1);
   }
 
-  .area {
-    resize: vertical;
-    min-height: 9rem;
-  }
-
-  /* Alarm, not accent: on this page --accent is the same amber as the kicker
-     dot, the list ticks and the field behind the form. */
   .err {
     font-family: var(--font-sans);
     font-size: var(--t--2);
     font-weight: 500;
     line-height: 1.4;
     color: var(--alarm);
-  }
-
-  .err:empty {
-    display: none;
-  }
-
-  /* Two channels, and both persist: colour plus a heavier rule, so an invalid
-     field still reads as invalid once focus moves on. */
-  .input[aria-invalid='true'] {
-    border-color: var(--alarm);
-    border-bottom-width: 2px;
-    padding-bottom: calc(0.65rem - 1px);
   }
 
   .submit {
@@ -280,7 +241,6 @@ const channels = [
   }
 
   .status {
-    margin: 0;
     font-family: var(--font-sans);
     font-size: var(--t--1);
     line-height: 1.45;
@@ -291,24 +251,24 @@ const channels = [
     color: var(--alarm);
   }
 
+  .err:empty,
   .status:empty {
     display: none;
   }
 
-  /* Replaces the whole form once the message is away; created in script, so
-     it is styled globally. */
+  /* Replaces the whole form on success, so it is injected rather than rendered
+     and has to be reachable from outside this component's scope. */
   :global(.contact-sent) {
-    margin: 0;
     font-size: var(--t-1);
     line-height: 1.5;
     color: var(--ink);
     max-width: 44ch;
   }
 
+  /* ---- Channels ---------------------------------------------------------- */
+
   .channel-list {
     display: grid;
-    gap: 0;
-    margin: 0;
     border-top: 1px solid var(--edge);
   }
 
@@ -319,24 +279,6 @@ const channels = [
     border-bottom: 1px solid var(--edge-soft);
   }
 
-  .channel dt,
-  .channel dd {
-    margin: 0;
-  }
-
-  /* The rule belongs under the text; hanging it off the bottom of a 44px
-     inline-flex box is what made these look mismatched. */
-  .channel-val {
-    --rule-y: 13px;
-    display: inline-flex;
-    align-items: center;
-    min-height: 44px;
-    font-size: var(--t--1);
-    font-family: var(--font-sans);
-    font-weight: 450;
-    word-break: break-word;
-  }
-
   @media (min-width: 40rem) {
     .pair {
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -345,7 +287,9 @@ const channels = [
   }
 
   @media (min-width: 64rem) {
-    .head-title { font-size: var(--t-display); }
+    .head-title {
+      font-size: var(--t-display);
+    }
 
     .body {
       grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);

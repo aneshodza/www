@@ -53,7 +53,7 @@ const personJsonLd = {
   url: 'https://aneshodza.ch',
   image: new URL('/portrait.jpg', Astro.site ?? Astro.url.origin).toString(),
   jobTitle: t('hero.tagline'),
-  email: 'mailto:anes@centrolabs.ch',
+  email: 'mailto:me@aneshodza.ch',
   sameAs: [
     'https://github.com/aneshodza',
     'https://www.linkedin.com/in/aneshodza/',
@@ -162,41 +162,5 @@ const personJsonLd = {
 
     <Footer />
     <CookieNotice />
-
-    <style is:global>
-      body {
-        min-height: 100dvh;
-        display: flex;
-        flex-direction: column;
-        background: var(--field);
-      }
-
-      /* Everything readable rides above the field. */
-      .shell {
-        position: relative;
-        z-index: 1;
-        flex: 1;
-      }
-
-
-      .skip {
-        position: absolute;
-        left: -9999px;
-        top: 0;
-        z-index: 100;
-      }
-
-      .skip:focus {
-        left: 1rem;
-        top: 1rem;
-        padding: 0.65rem 1rem;
-        border-radius: 8px;
-        background: var(--ink);
-        color: var(--field);
-        font-family: var(--font-sans);
-        font-size: 0.8125rem;
-        font-weight: 560;
-      }
-    </style>
   </body>
 </html>

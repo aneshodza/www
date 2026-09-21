@@ -14,14 +14,14 @@ const featured = projects[0];
 const rest = projects.slice(1);
 ---
 
-<section class="head frame">
-  <p class="kicker instrument">{t('nav.projects')}</p>
+<section class="head page-head frame">
+  <p class="kicker">{t('nav.projects')}</p>
 
   <h1 class="head-title display">
     {locale === 'de' ? 'Projekte und Veröffentlichungen.' : 'Projects and releases.'}
   </h1>
 
-  <p class="head-lede lede">
+  <p class="lede">
     {locale === 'de'
       ? 'Eine Auswahl von Projekten, an welchen ich gearbeitet habe.'
       : 'A selection of projects I have worked on.'}
@@ -62,58 +62,33 @@ const rest = projects.slice(1);
 
 <style>
   .head {
-    padding-block: max(clamp(7rem, 16vh, 11rem), var(--hud-clear)) clamp(2rem, 5vh, 3.5rem);
-    display: grid;
-    gap: clamp(1rem, 2.5vh, 1.75rem);
-  }
-
-  .kicker {
-    margin: 0;
-    display: flex;
-    align-items: center;
-    gap: 0.7rem;
-  }
-
-  .kicker::before {
-    content: '';
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--accent);
-    flex: none;
+    --head-top: clamp(7rem, 16vh, 11rem);
+    --head-bottom: clamp(2rem, 5vh, 3.5rem);
   }
 
   .head-title {
-    margin: 0;
     font-size: var(--t-4);
     max-width: 16ch;
   }
 
-  @media (min-width: 60rem) {
-    .head-title { max-width: none; }
-  }
-
-  .head-lede {
-    margin: 0;
-  }
-
   .strata {
-    padding-block: clamp(2rem, 6vh, 4rem) clamp(2rem, 6vh, 4rem);
+    padding-block: clamp(2rem, 6vh, 4rem);
   }
 
   .strata-head {
-    margin: 1.25rem 0 0;
-    font-weight: 500;
+    margin-top: 1.25rem;
   }
 
+  /* ---- The rail --------------------------------------------------------
+     A numbered list of everything past the featured project. The vertical
+     rule behind it fades at both ends so it reads as a continuing spine
+     rather than a bounded box.
+     ------------------------------------------------------------------- */
+
   .rail {
-    list-style: none;
-    margin: 0;
-    padding: 0;
     position: relative;
   }
 
-  /* The axis itself. */
   .rail::before {
     content: '';
     position: absolute;
@@ -135,7 +110,6 @@ const rest = projects.slice(1);
     align-items: start;
     gap: 0 clamp(1rem, 3vw, 2.25rem);
     padding-block: clamp(1.25rem, 3vh, 2rem);
-    padding-inline-start: 0;
     border-bottom: 1px solid var(--edge-soft);
     transition: transform 0.75s var(--spring-soft);
   }
@@ -147,16 +121,16 @@ const rest = projects.slice(1);
   .layer-index {
     position: relative;
     padding-inline-start: 1.5rem;
+    padding-block-start: 0.45em;
     font-family: var(--font-sans);
     font-size: var(--t--2);
     font-weight: 560;
     font-variant-numeric: tabular-nums lining-nums;
     color: var(--ink-3);
-    padding-block-start: 0.45em;
     transition: color 0.45s var(--ease-out);
   }
 
-  /* The tick that pins this project to the axis. */
+  /* A tick off the rail, drawn short and extending to full width on hover. */
   .layer-index::before {
     content: '';
     position: absolute;
@@ -179,14 +153,12 @@ const rest = projects.slice(1);
 
   .layer-title {
     font-size: var(--t-2);
-    /* Room for the rule to clear the descenders on a wrapped title. */
     line-height: 1.16;
     color: var(--ink);
   }
 
-  /* The rule lives on an inline child: the title is a grid item, and a grid
-     item is blockified, so a background drawn on it spans the whole column
-     even when the text wraps short. */
+  /* The rule belongs to the text, not the heading box, so it is drawn on an
+     inner span with room under the baseline for it. */
   .layer-title-text {
     --rule-y: 0.02em;
     padding-block-end: 0.18em;
@@ -194,8 +166,6 @@ const rest = projects.slice(1);
     color: inherit;
   }
 
-  /* Body copy, so it sits on the body step rather than the instrumentation
-     one: at --t--1 the serif strokes were too fine to read at this weight. */
   .layer-summary {
     font-size: var(--t-0);
     line-height: 1.6;
@@ -203,6 +173,8 @@ const rest = projects.slice(1);
     max-width: 52ch;
   }
 
+  /* The whole row is the target: it steps in, the tick extends, the title
+     takes its rule and the accent. */
   @media (hover: hover) {
     .layer-link:hover,
     .layer-link:focus-visible {
@@ -233,7 +205,10 @@ const rest = projects.slice(1);
   }
 
   @media (min-width: 60rem) {
-    .head-title { font-size: var(--t-5); }
+    .head-title {
+      font-size: var(--t-5);
+      max-width: none;
+    }
 
     .layer-link {
       grid-template-columns: 5rem minmax(0, 1fr);

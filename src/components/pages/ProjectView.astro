@@ -18,9 +18,9 @@ const isExternal = (url: string) => /^https?:\/\//.test(url);
 ---
 
 <article>
-  <header class="top frame">
+  <header class="top page-head frame">
     <div class="top-bar">
-      <p class="kicker instrument">{t('nav.projects')}</p>
+      <p class="kicker">{t('nav.projects')}</p>
       <a class="back link-nav" href={back}>{t('project.back')}</a>
     </div>
 
@@ -41,7 +41,7 @@ const isExternal = (url: string) => /^https?:\/\//.test(url);
       </div>
       <div class="cell">
         <dt class="instrument">{t('project.year')}</dt>
-        <dd class="num">{entry.data.year}</dd>
+        <dd class="readout">{entry.data.year}</dd>
       </div>
       <div class="cell">
         <dt class="instrument">{t('project.links')}</dt>
@@ -75,7 +75,7 @@ const isExternal = (url: string) => /^https?:\/\//.test(url);
 
     <aside class="aside">
       <p class="instrument aside-head">{t('project.tech')}</p>
-      <ul class="stack">
+      <ul class="stack rule-list">
         {entry.data.tech.map((tech) => <li>{tech}</li>)}
       </ul>
     </aside>
@@ -84,7 +84,7 @@ const isExternal = (url: string) => /^https?:\/\//.test(url);
   <nav class="tail frame" aria-label={t('nav.projects')}>
     <hr class="hairline" />
     <div class="tail-row">
-      <a class="back back-lg link-nav" href={back}>{t('project.back')}</a>
+      <a class="back is-strong link-nav" href={back}>{t('project.back')}</a>
       <a class="action" href={localizePath('/contact', locale)}>{t('hero.cta.contact')}</a>
     </div>
   </nav>
@@ -92,9 +92,7 @@ const isExternal = (url: string) => /^https?:\/\//.test(url);
 
 <style>
   .top {
-    padding-block: max(clamp(6.5rem, 15vh, 10rem), var(--hud-clear)) clamp(1.5rem, 4vh, 2.5rem);
-    display: grid;
-    gap: clamp(1rem, 2.5vh, 1.75rem);
+    --head-bottom: clamp(1.5rem, 4vh, 2.5rem);
   }
 
   .top-bar {
@@ -105,69 +103,28 @@ const isExternal = (url: string) => /^https?:\/\//.test(url);
     gap: 0.5rem 1.5rem;
   }
 
-  .kicker {
-    margin: 0;
-    display: flex;
-    align-items: center;
-    gap: 0.7rem;
-  }
-
-  .kicker::before {
-    content: '';
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--accent);
-    flex: none;
-  }
-
-  /* A drawn chevron, so the affordance is a shape rather than a character
-     pasted onto the label. */
-  .back {
-    --rule-y: 12px;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6rem;
-    min-height: 44px;
-    font-family: var(--font-sans);
-    font-size: var(--t--1);
-    font-weight: 500;
-    color: var(--ink-3);
-  }
-
-  .back::before {
-    content: '';
-    width: 0.44rem;
-    height: 0.44rem;
-    border-left: 1.5px solid currentColor;
-    border-bottom: 1.5px solid currentColor;
-    transform: rotate(45deg);
-    transition: transform 0.55s var(--spring-snap);
-  }
-
-  .back:hover::before,
-  .back:focus-visible::before {
-    transform: rotate(45deg) translate(-2px, 2px);
-  }
-
-  .back-lg {
-    font-size: var(--t--1);
+  /* The tail copy of the back link carries more weight than the header one,
+     since by then it is the primary way out. */
+  .back.is-strong {
     color: var(--ink-2);
   }
 
   .top-title {
-    margin: 0;
     font-size: var(--t-5);
   }
 
   .top-summary {
-    margin: 0;
     font-size: var(--t-1);
     line-height: 1.5;
     font-style: italic;
     color: var(--ink-2);
     max-width: 48ch;
   }
+
+  /* ---- Fact panel ------------------------------------------------------
+     Role / status / year / links, as cells separated by their own gap over a
+     tinted backing, so the dividers are the background showing through.
+     ------------------------------------------------------------------- */
 
   .panel {
     padding-block: clamp(1.5rem, 4vh, 2.5rem);
@@ -177,7 +134,6 @@ const isExternal = (url: string) => /^https?:\/\//.test(url);
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1px;
-    margin: 0;
     padding: 1px;
     border-radius: 14px;
     border: 1px solid var(--edge-soft);
@@ -193,27 +149,13 @@ const isExternal = (url: string) => /^https?:\/\//.test(url);
     background: color-mix(in srgb, var(--field) 88%, transparent);
   }
 
-  .cell dt {
-    margin: 0;
-  }
-
   .cell dd {
-    margin: 0;
     font-size: var(--t--1);
     line-height: 1.45;
     color: var(--ink);
   }
 
-  .cell dd.num {
-    font-family: var(--font-sans);
-    font-variant-numeric: tabular-nums lining-nums;
-    font-weight: 500;
-  }
-
   .links {
-    list-style: none;
-    margin: 0;
-    padding: 0;
     display: grid;
     gap: 0.35rem;
   }
@@ -222,6 +164,8 @@ const isExternal = (url: string) => /^https?:\/\//.test(url);
     word-break: break-word;
   }
 
+  /* ---- Reading ---------------------------------------------------------- */
+
   .read {
     padding-block: clamp(2rem, 6vh, 4rem);
     display: grid;
@@ -229,39 +173,13 @@ const isExternal = (url: string) => /^https?:\/\//.test(url);
   }
 
   .aside-head {
-    margin: 0 0 0.75rem;
+    margin-bottom: 0.75rem;
     padding-block-end: 0.6rem;
     border-bottom: 1px solid var(--edge);
   }
 
   .stack {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-wrap: wrap;
     gap: 0 1.25rem;
-  }
-
-  .stack li {
-    position: relative;
-    padding-inline-start: 0.9rem;
-    padding-block: 0.28rem;
-    font-family: var(--font-sans);
-    font-size: var(--t--2);
-    font-weight: 450;
-    color: var(--ink-3);
-  }
-
-  .stack li::before {
-    content: '';
-    position: absolute;
-    inset-inline-start: 0;
-    top: calc(50% - var(--hairline) / 2);
-    width: 0.45rem;
-    height: var(--hairline);
-    background: var(--accent);
-    opacity: 0.65;
   }
 
   .tail {
@@ -283,6 +201,7 @@ const isExternal = (url: string) => /^https?:\/\//.test(url);
     }
   }
 
+  /* Wide enough for the tech list to sit beside the copy and stay put. */
   @media (min-width: 64rem) {
     .read {
       grid-template-columns: minmax(0, 1fr) 17rem;

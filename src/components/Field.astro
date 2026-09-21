@@ -38,9 +38,8 @@ const { depth } = Astro.props;
     opacity: calc(var(--field-strength, 1) * var(--field-tone, 1));
   }
 
-  /* Every page sets its type on the left, so the field is quietened there and
-     left loud on the right. The asymmetry is the point: the reading column is
-     calm, the machine is visible beside it. */
+  /* Holds the field back from the reading column: opaque at the leading edge,
+     clearing towards the trailing one. */
   .field-wash {
     position: fixed;
     inset: 0;
@@ -61,10 +60,8 @@ const { depth } = Astro.props;
       );
   }
 
-  /* A phone has no room for a quiet reading column beside a loud one, so it
-     gets the loud side: only a light veil, strongest at the very top and
-     bottom where the bar and the notice sit, and near-clear through the
-     middle. Veiling the whole screen made the field read as absent. */
+  /* On a phone there is no side column to protect, so the wash runs vertically
+     and stays much thinner through the middle. */
   @media (max-width: 47.99rem) {
     .field-wash {
       background:
@@ -76,10 +73,6 @@ const { depth } = Astro.props;
           color-mix(in srgb, var(--field) 48%, transparent) 100%
         );
     }
-  }
-
-  @media print {
-    .field-wash { display: none; }
   }
 </style>
 

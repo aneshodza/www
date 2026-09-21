@@ -32,12 +32,12 @@ const facts = [entry.data.year, entry.data.statusLabel, entry.data.role];
 
       <p class="feature-summary">{entry.data.summary}</p>
 
-      <p class="feature-go">
+      <p>
         <a class="action" href={href}>{t('project.view')}</a>
       </p>
     </div>
 
-    <ul class="stack">
+    <ul class="stack rule-list">
       {entry.data.tech.slice(0, 8).map((tech) => <li>{tech}</li>)}
     </ul>
   </div>
@@ -56,20 +56,15 @@ const facts = [entry.data.year, entry.data.statusLabel, entry.data.role];
 
   .feature-eyebrow {
     grid-column: 1 / -1;
-    margin: 0;
   }
 
-  /* Three values, no labels and no middle dots: hairlines carry the division
-     and the numerals are set tabular so they hold a column. */
+  /* Year / status / role, divided by rules rather than punctuation. */
   .facts {
     grid-column: 1 / -1;
     display: flex;
     flex-wrap: wrap;
     align-items: baseline;
     gap: 0.35rem 1.15rem;
-    list-style: none;
-    margin: 0;
-    padding: 0;
     font-family: var(--font-sans);
     font-size: var(--t--2);
     font-weight: 500;
@@ -85,6 +80,7 @@ const facts = [entry.data.year, entry.data.statusLabel, entry.data.role];
     }
   }
 
+  /* Too narrow to divide: stack them instead of wrapping mid-rule. */
   @media (max-width: 29.99rem) {
     .facts {
       flex-direction: column;
@@ -99,7 +95,6 @@ const facts = [entry.data.year, entry.data.statusLabel, entry.data.role];
   }
 
   .feature-title {
-    margin: 0;
     font-size: var(--t-5);
   }
 
@@ -108,57 +103,24 @@ const facts = [entry.data.year, entry.data.statusLabel, entry.data.role];
   }
 
   .feature-summary {
-    margin: 0;
     font-size: var(--t-1);
     line-height: 1.5;
     color: var(--ink-2);
     max-width: 46ch;
   }
 
-  .feature-go {
-    margin: 0;
-  }
-
-  /* The layer's composition, read top to bottom like a bill of materials. */
   .stack {
     grid-column: 1 / -1;
-    display: flex;
-    flex-wrap: wrap;
     gap: 0.1rem 1.4rem;
-    list-style: none;
-    margin: 0;
-    padding: 0;
   }
 
-  .stack li {
-    position: relative;
-    padding-inline-start: 0.9rem;
-    padding-block: 0.22rem;
-    font-family: var(--font-sans);
-    font-size: var(--t--2);
-    font-weight: 450;
-    letter-spacing: 0.002em;
-    color: var(--ink-3);
-  }
-
-  .stack li::before {
-    content: '';
-    position: absolute;
-    inset-inline-start: 0;
-    top: calc(50% - var(--hairline) / 2);
-    width: 0.45rem;
-    height: var(--hairline);
-    background: var(--accent);
-    opacity: 0.65;
-  }
-
+  /* Wide: eyebrow and facts share a row above, body and stack split the grid,
+     and the stack becomes a boxed column beside the copy. */
   @media (min-width: 60rem) {
     .feature-eyebrow { grid-column: 1 / span 3; }
     .facts { grid-column: 4 / -1; justify-content: flex-start; }
     .feature-body { grid-column: 1 / span 7; }
 
-    /* An instrument panel: real material, so the list stays readable where
-       the field is at its loudest. */
     .stack {
       grid-column: 8 / -1;
       flex-direction: column;

@@ -13,7 +13,7 @@ const l = labels[locale];
 <button
   id="theme-toggle"
   type="button"
-  class="chip"
+  class="chip chip-theme"
   aria-label={t('theme.toggle')}
   aria-pressed="false"
 >
@@ -25,30 +25,6 @@ const l = labels[locale];
 </button>
 
 <style>
-  .chip {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    min-height: 44px;
-    padding-inline: 0.35rem;
-    font-family: var(--font-sans);
-    font-size: 0.75rem;
-    font-weight: 500;
-    letter-spacing: -0.004em;
-    color: var(--ink-3);
-    transition: color 0.4s var(--ease-out);
-  }
-
-  @media (max-width: 23.5rem) {
-    .chip { min-width: 34px; padding-inline: 0.25rem; }
-  }
-
-  .chip:hover,
-  .chip:focus-visible {
-    color: var(--accent-text);
-  }
-
-  /* Reads the current state rather than naming it: filled is dark. */
   .dot {
     flex: none;
     width: 7px;
@@ -66,6 +42,7 @@ const l = labels[locale];
     transform: scale(0.82);
   }
 
+  /* Reserved width, so swapping "Light" for "Dark" does not shift the HUD. */
   .cap {
     display: inline-block;
     min-width: 3.4em;
@@ -73,8 +50,9 @@ const l = labels[locale];
   }
 
   @media (max-width: 47.99rem) {
-    .chip { gap: 0.35rem; padding-inline: 0.3rem; }
-    .cap { min-width: 0; }
+    .cap {
+      min-width: 0;
+    }
   }
 </style>
 

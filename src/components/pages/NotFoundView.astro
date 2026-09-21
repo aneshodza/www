@@ -5,8 +5,8 @@ const locale = getLocaleFromUrl(Astro.url);
 const t = useTranslations(locale);
 ---
 
-<section class="void frame">
-  <p class="kicker instrument">404</p>
+<section class="void page-head frame">
+  <p class="kicker">404</p>
   <h1 class="void-title display">{t('404.title')}.</h1>
   <p class="void-body lede">{t('404.body')}</p>
   <p class="void-go">
@@ -16,42 +16,23 @@ const t = useTranslations(locale);
 
 <style>
   .void {
+    --head-top: clamp(7rem, 16vh, 11rem);
+    --head-bottom: clamp(3rem, 8vh, 5rem);
+    --head-gap: clamp(1rem, 3vh, 1.85rem);
     min-height: 60svh;
-    display: grid;
     align-content: center;
-    gap: clamp(1rem, 3vh, 1.85rem);
-    padding-block: max(clamp(7rem, 16vh, 11rem), var(--hud-clear)) clamp(3rem, 8vh, 5rem);
-  }
-
-  .kicker {
-    margin: 0;
-    display: flex;
-    align-items: center;
-    gap: 0.7rem;
-    font-variant-numeric: tabular-nums lining-nums;
-  }
-
-  .kicker::before {
-    content: '';
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--accent);
-    flex: none;
   }
 
   .void-title {
-    margin: 0;
     font-size: var(--t-4);
     max-width: 14ch;
   }
 
   .void-body {
-    margin: 0;
     max-width: 46ch;
   }
 
   .void-go {
-    margin: 0.5rem 0 0;
+    margin-top: 0.5rem;
   }
 </style>

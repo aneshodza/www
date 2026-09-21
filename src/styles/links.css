@@ -1,0 +1,74 @@
+/* ---------------------------------------------------------------------------
+   The two link styles. Everything clickable is one of these two.
+
+   A -- .link: always ruled, and the text takes the accent on hover. Content
+        links and text calls to action, where the rule is part of reading the
+        page. .prose a and .action are style A.
+   B -- .link-nav: no rule at rest; an accent rule grows from the leading edge
+        on hover. Navigation, back links and heading links, where a permanent
+        rule would be noise.
+
+   Both draw their rules as backgrounds, because that is the only way to grow a
+   rule horizontally — and clone them per line box, so a link that wraps is
+   ruled line by line rather than across its whole box.
+   --------------------------------------------------------------------------- */
+
+@layer components {
+  .prose a,
+  .link,
+  .action,
+  .link-nav {
+    color: var(--ink);
+    background-repeat: no-repeat;
+    background-position: 0 calc(100% - var(--rule-y, 0px));
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+    transition:
+      color 0.4s var(--ease-out),
+      background-size 0.55s var(--spring-snap);
+  }
+
+  /* Style A: two rules stacked — a quiet one that is always there, and an
+     accent one that wipes across it from the leading edge on hover. */
+  .prose a,
+  .link,
+  .action {
+    background-image:
+      linear-gradient(var(--accent-text), var(--accent-text)),
+      linear-gradient(
+        color-mix(in srgb, currentColor 42%, transparent),
+        color-mix(in srgb, currentColor 42%, transparent)
+      );
+    background-position:
+      0 calc(100% - var(--rule-y, 0px)),
+      0 calc(100% - var(--rule-y, 0px));
+    background-size: 0% 1px, 100% 1px;
+  }
+
+  .prose a:hover,
+  .prose a:focus-visible,
+  .link:hover,
+  .link:focus-visible,
+  .action:hover,
+  .action:focus-visible {
+    color: var(--accent-text);
+    background-size: 100% 2px, 100% 1px;
+  }
+
+  /* Style B: nothing at rest, one accent rule on hover. */
+  .link-nav {
+    background-image: linear-gradient(var(--accent), var(--accent));
+    background-size: 0% 1px;
+  }
+
+  .link-nav:hover,
+  .link-nav:focus-visible,
+  .link-nav[aria-current="page"] {
+    background-size: 100% 1px;
+  }
+
+  .link-nav:hover,
+  .link-nav:focus-visible {
+    color: var(--accent-text);
+  }
+}

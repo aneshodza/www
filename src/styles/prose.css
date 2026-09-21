@@ -1,0 +1,58 @@
+/* ---------------------------------------------------------------------------
+   Reading. The one body-copy context; rendered markdown lands here.
+   --------------------------------------------------------------------------- */
+
+@layer components {
+  .prose {
+    max-width: var(--measure);
+    color: var(--ink-2);
+    font-size: var(--t-0);
+    line-height: 1.72;
+  }
+
+  .prose > :first-child {
+    margin-top: 0;
+  }
+
+  .prose > :last-child {
+    margin-bottom: 0;
+  }
+
+  .prose p {
+    margin-block: 1.15em;
+  }
+
+  .prose strong {
+    font-weight: 640;
+    color: var(--ink);
+  }
+
+  .prose em {
+    font-style: italic;
+  }
+
+  .prose h2 {
+    font-size: var(--t-2);
+    margin-block: 2.2em 0.5em;
+  }
+
+  .prose h3 {
+    font-size: var(--t-1);
+    margin-block: 1.8em 0.4em;
+  }
+
+  .prose ul {
+    margin-block: 1.15em;
+  }
+
+  /* Body-copy lists mark with the same accent hairline as .rule-list, at em
+     scale so the dash tracks the type size. The dash itself is defined once,
+     in layout.css. */
+  .prose ul > li {
+    position: relative;
+    padding-left: 1.4em;
+    --dash-x: 0.15em;
+    --dash-w: 0.5em;
+    --dash-opacity: 0.6;
+  }
+}
