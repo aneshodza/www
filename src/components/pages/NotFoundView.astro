@@ -5,17 +5,53 @@ const locale = getLocaleFromUrl(Astro.url);
 const t = useTranslations(locale);
 ---
 
-<section class="mx-auto max-w-[68rem] px-6 md:px-10 pt-20 pb-24 min-h-[60vh]">
-  <p class="label">404</p>
-  <h1 class="display text-[3rem] md:text-[4.5rem] mt-6 max-w-[40rem]">
-    {t('404.title')}.
-  </h1>
-  <p class="mt-8 max-w-[36rem] text-[var(--fg-muted)] text-[1.125rem] leading-relaxed">
-    {t('404.body')}
-  </p>
-  <p class="mt-10">
-    <a href={localizePath('/', locale)} class="btn-text">
-      {t('404.home')} &nbsp;&rarr;
-    </a>
+<section class="void frame">
+  <p class="kicker instrument">404</p>
+  <h1 class="void-title display">{t('404.title')}.</h1>
+  <p class="void-body lede">{t('404.body')}</p>
+  <p class="void-go">
+    <a class="action-solid" href={localizePath('/', locale)}>{t('404.home')}</a>
   </p>
 </section>
+
+<style>
+  .void {
+    min-height: 60svh;
+    display: grid;
+    align-content: center;
+    gap: clamp(1rem, 3vh, 1.85rem);
+    padding-block: max(clamp(7rem, 16vh, 11rem), var(--hud-clear)) clamp(3rem, 8vh, 5rem);
+  }
+
+  .kicker {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-variant-numeric: tabular-nums lining-nums;
+  }
+
+  .kicker::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex: none;
+  }
+
+  .void-title {
+    margin: 0;
+    font-size: var(--t-4);
+    max-width: 14ch;
+  }
+
+  .void-body {
+    margin: 0;
+    max-width: 46ch;
+  }
+
+  .void-go {
+    margin: 0.5rem 0 0;
+  }
+</style>

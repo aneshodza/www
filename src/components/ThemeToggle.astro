@@ -1,5 +1,6 @@
 ---
 import { getLocaleFromUrl, useTranslations } from '~/i18n/utils';
+
 const locale = getLocaleFromUrl(Astro.url);
 const t = useTranslations(locale);
 const labels = {
@@ -12,13 +13,70 @@ const l = labels[locale];
 <button
   id="theme-toggle"
   type="button"
-  class="theme-toggle inline-flex items-center min-h-[44px] md:min-h-0 px-1 font-sans text-[0.72rem] uppercase tracking-[0.14em] text-[var(--fg-subtle)] hover:text-[var(--accent)] transition-colors"
+  class="chip"
   aria-label={t('theme.toggle')}
   aria-pressed="false"
 >
-  <span data-theme-label-light>{l.light}</span>
-  <span data-theme-label-dark class="hidden">{l.dark}</span>
+  <span class="dot" aria-hidden="true"></span>
+  <span class="cap">
+    <span data-theme-label-light>{l.light}</span>
+    <span data-theme-label-dark hidden>{l.dark}</span>
+  </span>
 </button>
+
+<style>
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    min-height: 44px;
+    padding-inline: 0.35rem;
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: -0.004em;
+    color: var(--ink-3);
+    transition: color 0.4s var(--ease-out);
+  }
+
+  @media (max-width: 23.5rem) {
+    .chip { min-width: 34px; padding-inline: 0.25rem; }
+  }
+
+  .chip:hover,
+  .chip:focus-visible {
+    color: var(--accent-text);
+  }
+
+  /* Reads the current state rather than naming it: filled is dark. */
+  .dot {
+    flex: none;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    border: 1.5px solid currentColor;
+    background: transparent;
+    transition:
+      background-color 0.5s var(--ease-out),
+      transform 0.55s var(--spring-snap);
+  }
+
+  :global(.dark) .dot {
+    background: currentColor;
+    transform: scale(0.82);
+  }
+
+  .cap {
+    display: inline-block;
+    min-width: 3.4em;
+    text-align: start;
+  }
+
+  @media (max-width: 47.99rem) {
+    .chip { gap: 0.35rem; padding-inline: 0.3rem; }
+    .cap { min-width: 0; }
+  }
+</style>
 
 <script is:inline>
   (() => {
@@ -29,10 +87,10 @@ const l = labels[locale];
       const update = () => {
         const isDark = document.documentElement.classList.contains('dark');
         btn.setAttribute('aria-pressed', String(isDark));
-        const lightLabel = btn.querySelector('[data-theme-label-light]');
-        const darkLabel = btn.querySelector('[data-theme-label-dark]');
-        if (lightLabel) lightLabel.classList.toggle('hidden', isDark);
-        if (darkLabel) darkLabel.classList.toggle('hidden', !isDark);
+        const light = btn.querySelector('[data-theme-label-light]');
+        const dark = btn.querySelector('[data-theme-label-dark]');
+        if (light) light.hidden = isDark;
+        if (dark) dark.hidden = !isDark;
       };
       btn.addEventListener('click', () => {
         const isDark = document.documentElement.classList.toggle('dark');

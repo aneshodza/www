@@ -22,18 +22,18 @@ const filled = levels.indexOf(level) + 1;
   </div>
   <div class="flex items-baseline gap-3">
     <span
-      class="font-sans text-[0.72rem] uppercase tracking-[0.14em] text-[var(--fg-muted)] tabular-nums"
+      class="font-sans text-[0.72rem] text-[var(--fg-muted)] tabular-nums"
     >
       {level}
     </span>
-    <ul
+    <div
       class="flex gap-[3px]"
       role="img"
       aria-label={`${label}: ${level}`}
     >
       {
         levels.map((_, i) => (
-          <li
+          <span
             class={`h-[10px] w-[14px] border border-[var(--rule)] ${
               i < filled ? 'bg-[var(--accent)] border-[var(--accent)]' : ''
             }`}
@@ -41,6 +41,6 @@ const filled = levels.indexOf(level) + 1;
           />
         ))
       }
-    </ul>
+    </div>
   </div>
 </div>

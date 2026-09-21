@@ -1,0 +1,178 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { getLocaleFromUrl, useTranslations, localizePath } from '~/i18n/utils';
+
+interface Props {
+  entry: CollectionEntry<'projects'>;
+  eyebrow: string;
+}
+
+const { entry, eyebrow } = Astro.props;
+const locale = getLocaleFromUrl(Astro.url);
+const t = useTranslations(locale);
+const href = localizePath(`/projects/${entry.data.slug}`, locale);
+
+const facts = [entry.data.year, entry.data.statusLabel, entry.data.role];
+---
+
+<section class="feature frame" aria-labelledby={`feature-${entry.data.slug}`}>
+  <hr class="hairline" />
+
+  <div class="feature-grid grid12">
+    <p class="feature-eyebrow instrument">{eyebrow}</p>
+
+    <ul class="facts">
+      {facts.map((f) => <li>{f}</li>)}
+    </ul>
+
+    <div class="feature-body">
+      <h2 id={`feature-${entry.data.slug}`} class="feature-title display">
+        <a class="link-nav" href={href}>{entry.data.title}</a>
+      </h2>
+
+      <p class="feature-summary">{entry.data.summary}</p>
+
+      <p class="feature-go">
+        <a class="action" href={href}>{t('project.view')}</a>
+      </p>
+    </div>
+
+    <ul class="stack">
+      {entry.data.tech.slice(0, 8).map((tech) => <li>{tech}</li>)}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .feature {
+    position: relative;
+    padding-block: clamp(3rem, 9vh, 6rem) clamp(2rem, 6vh, 4rem);
+  }
+
+  .feature-grid {
+    row-gap: clamp(1.75rem, 4vh, 3rem);
+    padding-block-start: 1.25rem;
+  }
+
+  .feature-eyebrow {
+    grid-column: 1 / -1;
+    margin: 0;
+  }
+
+  /* Three values, no labels and no middle dots: hairlines carry the division
+     and the numerals are set tabular so they hold a column. */
+  .facts {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.35rem 1.15rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-sans);
+    font-size: var(--t--2);
+    font-weight: 500;
+    letter-spacing: 0.004em;
+    color: var(--ink-2);
+    font-variant-numeric: tabular-nums lining-nums;
+  }
+
+  @media (min-width: 30rem) {
+    .facts li + li {
+      padding-inline-start: 1.15rem;
+      border-inline-start: 1px solid var(--edge);
+    }
+  }
+
+  @media (max-width: 29.99rem) {
+    .facts {
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+  }
+
+  .feature-body {
+    grid-column: 1 / -1;
+    display: grid;
+    gap: clamp(1.1rem, 2.5vh, 1.75rem);
+  }
+
+  .feature-title {
+    margin: 0;
+    font-size: var(--t-5);
+  }
+
+  .feature-title a {
+    --rule-y: 0.02em;
+  }
+
+  .feature-summary {
+    margin: 0;
+    font-size: var(--t-1);
+    line-height: 1.5;
+    color: var(--ink-2);
+    max-width: 46ch;
+  }
+
+  .feature-go {
+    margin: 0;
+  }
+
+  /* The layer's composition, read top to bottom like a bill of materials. */
+  .stack {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.1rem 1.4rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .stack li {
+    position: relative;
+    padding-inline-start: 0.9rem;
+    padding-block: 0.22rem;
+    font-family: var(--font-sans);
+    font-size: var(--t--2);
+    font-weight: 450;
+    letter-spacing: 0.002em;
+    color: var(--ink-3);
+  }
+
+  .stack li::before {
+    content: '';
+    position: absolute;
+    inset-inline-start: 0;
+    top: calc(50% - var(--hairline) / 2);
+    width: 0.45rem;
+    height: var(--hairline);
+    background: var(--accent);
+    opacity: 0.65;
+  }
+
+  @media (min-width: 60rem) {
+    .feature-eyebrow { grid-column: 1 / span 3; }
+    .facts { grid-column: 4 / -1; justify-content: flex-start; }
+    .feature-body { grid-column: 1 / span 7; }
+
+    /* An instrument panel: real material, so the list stays readable where
+       the field is at its loudest. */
+    .stack {
+      grid-column: 8 / -1;
+      flex-direction: column;
+      gap: 0;
+      align-content: start;
+      align-self: start;
+      padding: 0.9rem 1.1rem;
+      border: 1px solid var(--edge-soft);
+      border-radius: 12px;
+      background: color-mix(in srgb, var(--field) 86%, transparent);
+    }
+
+    .stack li {
+      padding-block: 0.3rem;
+    }
+  }
+</style>

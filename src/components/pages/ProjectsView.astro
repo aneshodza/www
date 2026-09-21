@@ -1,6 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
-import ProjectCard from '~/components/ProjectCard.astro';
+import Feature from '~/components/Feature.astro';
 import { getLocaleFromUrl, useTranslations, localizePath } from '~/i18n/utils';
 
 const locale = getLocaleFromUrl(Astro.url);
@@ -14,59 +14,239 @@ const featured = projects[0];
 const rest = projects.slice(1);
 ---
 
-<section class="mx-auto max-w-[68rem] px-5 md:px-10 pt-12 md:pt-20 pb-10">
-  <div class="border-b border-[var(--rule)] pb-3 mb-10">
-    <p class="label">{t('nav.projects')}</p>
-  </div>
+<section class="head frame">
+  <p class="kicker instrument">{t('nav.projects')}</p>
 
-  <h1 class="display text-[2.25rem] sm:text-[2.5rem] md:text-[3.25rem] max-w-[40rem] leading-[1.05]">
+  <h1 class="head-title display">
     {locale === 'de' ? 'Projekte und Veröffentlichungen.' : 'Projects and releases.'}
   </h1>
-  <p class="mt-6 max-w-[36rem] text-[var(--fg-muted)] text-[1.0625rem] md:text-[1.125rem] leading-relaxed">
+
+  <p class="head-lede lede">
     {locale === 'de'
       ? 'Eine Auswahl von Projekten, an welchen ich gearbeitet habe.'
       : 'A selection of projects I have worked on.'}
   </p>
 </section>
 
-{featured && (
-  <section class="mx-auto max-w-[68rem] px-5 md:px-10 py-12 md:py-16 border-t border-[var(--rule)]">
-    <div class="border-b border-[var(--rule)] pb-3 mb-10">
-      <h2 class="label">{t('sections.featured')}</h2>
-    </div>
-    <ProjectCard entry={featured} featured />
-  </section>
-)}
+{featured && <Feature entry={featured} eyebrow={t('sections.featured')} />}
 
-{rest.length > 0 && (
-  <section class="mx-auto max-w-[68rem] px-5 md:px-10 py-12 md:py-16 border-t border-[var(--rule)]">
-    <div class="border-b border-[var(--rule)] pb-3 mb-10">
-      <h2 class="label">{locale === 'de' ? 'Weitere Projekte' : 'More projects'}</h2>
-    </div>
-    <ul class="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-3">
-      {rest.map((entry, i) => {
-        const href = localizePath(`/projects/${entry.data.slug}`, locale);
-        return (
-          <li class="flex items-baseline gap-4 border-b border-[var(--rule)] py-5">
-            <span class="font-sans text-[0.72rem] tracking-[0.14em] uppercase text-[var(--fg-subtle)] tabular-nums">
-              {String(i + 2).padStart(2, '0')}
-            </span>
-            <div class="flex-1">
-              <h3 class="font-serif text-[1.1rem] md:text-[1.2rem] font-semibold tracking-tight">
-                <a
-                  href={href}
-                  class="hover:text-[var(--accent)] transition-colors"
-                >
-                  {entry.data.title}
-                </a>
-              </h3>
-              <p class="font-serif italic text-[0.95rem] text-[var(--fg-muted)] mt-1 max-w-[34rem] leading-snug">
-                {entry.data.summary}
-              </p>
-            </div>
-          </li>
-        );
-      })}
-    </ul>
-  </section>
-)}
+{
+  rest.length > 0 && (
+    <section class="strata frame">
+      <hr class="hairline" />
+      <h2 class="strata-head instrument">
+        {locale === 'de' ? 'Weitere Projekte' : 'More projects'}
+      </h2>
+
+      {/* A section drawing. The ordinals are the depth scale, and each project
+          is pinned at the layer it was built at. */}
+      <ol class="rail">
+        {rest.map((entry, i) => {
+          const href = localizePath(`/projects/${entry.data.slug}`, locale);
+          return (
+            <li class="layer">
+              <a class="layer-link" href={href}>
+                <span class="layer-index">{String(i + 2).padStart(2, '0')}</span>
+                <span class="layer-body">
+                  <span class="layer-title display-sm"><span class="layer-title-text link-nav">{entry.data.title}</span></span>
+                  <span class="layer-summary">{entry.data.summary}</span>
+                </span>
+              </a>
+            </li>
+          );
+        })}
+      </ol>
+    </section>
+  )
+}
+
+<style>
+  .head {
+    padding-block: max(clamp(7rem, 16vh, 11rem), var(--hud-clear)) clamp(2rem, 5vh, 3.5rem);
+    display: grid;
+    gap: clamp(1rem, 2.5vh, 1.75rem);
+  }
+
+  .kicker {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+  }
+
+  .kicker::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex: none;
+  }
+
+  .head-title {
+    margin: 0;
+    font-size: var(--t-4);
+    max-width: 16ch;
+  }
+
+  @media (min-width: 60rem) {
+    .head-title { max-width: none; }
+  }
+
+  .head-lede {
+    margin: 0;
+  }
+
+  .strata {
+    padding-block: clamp(2rem, 6vh, 4rem) clamp(2rem, 6vh, 4rem);
+  }
+
+  .strata-head {
+    margin: 1.25rem 0 0;
+    font-weight: 500;
+  }
+
+  .rail {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+  }
+
+  /* The axis itself. */
+  .rail::before {
+    content: '';
+    position: absolute;
+    inset-block: 1.6rem;
+    inset-inline-start: 0;
+    width: 1px;
+    background: linear-gradient(
+      180deg,
+      transparent,
+      var(--edge) 8%,
+      var(--edge) 92%,
+      transparent
+    );
+  }
+
+  .layer-link {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: start;
+    gap: 0 clamp(1rem, 3vw, 2.25rem);
+    padding-block: clamp(1.25rem, 3vh, 2rem);
+    padding-inline-start: 0;
+    border-bottom: 1px solid var(--edge-soft);
+    transition: transform 0.75s var(--spring-soft);
+  }
+
+  .layer:last-child .layer-link {
+    border-bottom: 0;
+  }
+
+  .layer-index {
+    position: relative;
+    padding-inline-start: 1.5rem;
+    font-family: var(--font-sans);
+    font-size: var(--t--2);
+    font-weight: 560;
+    font-variant-numeric: tabular-nums lining-nums;
+    color: var(--ink-3);
+    padding-block-start: 0.45em;
+    transition: color 0.45s var(--ease-out);
+  }
+
+  /* The tick that pins this project to the axis. */
+  .layer-index::before {
+    content: '';
+    position: absolute;
+    inset-inline-start: 0;
+    top: 0.95em;
+    width: 1.15rem;
+    height: 1px;
+    background: var(--edge);
+    transform: scaleX(0.74);
+    transform-origin: left;
+    transition:
+      background-color 0.45s var(--ease-out),
+      transform 0.6s var(--spring-snap);
+  }
+
+  .layer-body {
+    display: grid;
+    gap: 0.4rem;
+  }
+
+  .layer-title {
+    font-size: var(--t-2);
+    /* Room for the rule to clear the descenders on a wrapped title. */
+    line-height: 1.16;
+    color: var(--ink);
+  }
+
+  /* The rule lives on an inline child: the title is a grid item, and a grid
+     item is blockified, so a background drawn on it spans the whole column
+     even when the text wraps short. */
+  .layer-title-text {
+    --rule-y: 0.02em;
+    padding-block-end: 0.18em;
+    line-height: 1.4;
+    color: inherit;
+  }
+
+  /* Body copy, so it sits on the body step rather than the instrumentation
+     one: at --t--1 the serif strokes were too fine to read at this weight. */
+  .layer-summary {
+    font-size: var(--t-0);
+    line-height: 1.6;
+    color: var(--ink-3);
+    max-width: 52ch;
+  }
+
+  @media (hover: hover) {
+    .layer-link:hover,
+    .layer-link:focus-visible {
+      transform: translateX(0.5rem);
+    }
+  }
+
+  .layer-link:hover .layer-title,
+  .layer-link:focus-visible .layer-title,
+  .layer-link:hover .layer-index,
+  .layer-link:focus-visible .layer-index {
+    color: var(--accent-text);
+  }
+
+  .layer-link:hover .layer-title-text,
+  .layer-link:focus-visible .layer-title-text {
+    background-size: 100% 1px;
+  }
+
+  .layer-link:hover .layer-index::before,
+  .layer-link:focus-visible .layer-index::before {
+    background: var(--accent);
+    transform: scaleX(1);
+  }
+
+  .layer-link:focus-visible {
+    outline-offset: 6px;
+  }
+
+  @media (min-width: 60rem) {
+    .head-title { font-size: var(--t-5); }
+
+    .layer-link {
+      grid-template-columns: 5rem minmax(0, 1fr);
+    }
+
+    .layer-body {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+      align-items: baseline;
+      gap: 0 var(--gutter);
+    }
+
+    .layer-summary {
+      padding-block-start: 0.35em;
+    }
+  }
+</style>

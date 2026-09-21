@@ -1,9 +1,12 @@
 ---
 import '~/styles/global.css';
 import { ClientRouter } from 'astro:transitions';
-import Header from '~/components/Header.astro';
+import Hud from '~/components/Hud.astro';
 import Footer from '~/components/Footer.astro';
+import Field from '~/components/Field.astro';
 import CookieNotice from '~/components/CookieNotice.astro';
+import type { Depth } from '~/lib/depth';
+import { pageDepth } from '~/lib/depth';
 import {
   getLocaleFromUrl,
   useTranslations,
@@ -14,12 +17,21 @@ interface Props {
   title?: string;
   description?: string;
   ogType?: string;
+  depth?: Depth;
+  /** The CV is a document, not a scene: it opts out of the field. */
+  bare?: boolean;
 }
 
 const locale = getLocaleFromUrl(Astro.url);
 const t = useTranslations(locale);
 
-const { title, description, ogType = 'website' } = Astro.props;
+const {
+  title,
+  description,
+  ogType = 'website',
+  depth = pageDepth.home,
+  bare = false,
+} = Astro.props;
 
 const pageTitle = `${title ?? t('nav.home')} | Anes`;
 const metaDescription = description ?? t('site.description');
@@ -65,16 +77,20 @@ const personJsonLd = {
 ---
 
 <!doctype html>
-<html lang={locale}>
+<html lang={locale} style={`--depth:${depth.base}`}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="color-scheme" content="light dark" />
-    <meta name="theme-color" content="#fbfaf7" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#14110d" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#eef0f5" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#06070b" media="(prefers-color-scheme: dark)" />
     <title>{pageTitle}</title>
     <meta name="description" content={metaDescription} />
     <meta name="author" content="Anes Hodza" />
+
+    <link rel="preload" href="/fonts/serif.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/sans.woff2" as="font" type="font/woff2" crossorigin />
+
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="alternate icon" href="/favicon.ico" />
     <link rel="canonical" href={canonical} />
@@ -98,23 +114,7 @@ const personJsonLd = {
 
     {
       umamiEnabled && (
-        <>
-          <script
-            defer
-            src={umamiSrc}
-            data-website-id={umamiWebsiteId}
-            data-auto-track="false"
-          />
-          <script is:inline>
-            {`(() => {
-              const track = () => { if (window.umami) window.umami.track(); };
-              if (!window.__umamiBound) {
-                window.__umamiBound = true;
-                document.addEventListener('astro:page-load', track);
-              }
-            })();`}
-          </script>
-        </>
+        <script defer src={umamiSrc} data-website-id={umamiWebsiteId} />
       )
     }
 
@@ -123,32 +123,80 @@ const personJsonLd = {
     <script is:inline>
       (() => {
         const apply = () => {
+          const root = document.documentElement;
           try {
             const stored = localStorage.getItem('theme');
             const prefersDark =
               window.matchMedia &&
               window.matchMedia('(prefers-color-scheme: dark)').matches;
-            const isDark = stored ? stored === 'dark' : prefersDark;
-            document.documentElement.classList.toggle('dark', isDark);
+            root.classList.toggle('dark', stored ? stored === 'dark' : prefersDark);
           } catch {}
+          try {
+            // Decided before first paint: the notice reserves space at the
+            // bottom of the page, and discovering that after paint moves
+            // anything anchored down there.
+            root.classList.toggle(
+              'has-notice',
+              localStorage.getItem('cookie-notice-dismissed') !== '1',
+            );
+          } catch {
+            root.classList.add('has-notice');
+          }
         };
         apply();
         document.addEventListener('astro:after-swap', apply);
       })();
     </script>
   </head>
-  <body class="min-h-dvh flex flex-col">
-    <a
-      href="#main"
-      class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:bg-[var(--bg)] focus:text-[var(--fg)] focus:px-3 focus:py-2 focus:border focus:border-[var(--rule)]"
-    >
-      Skip to content
-    </a>
-    <Header />
-    <main id="main" class="flex-1">
+
+  <body>
+    <a href="#main" class="skip">Skip to content</a>
+
+    {!bare && <Field depth={depth} />}
+
+    <Hud />
+
+    <main id="main" class="shell">
       <slot />
     </main>
+
     <Footer />
     <CookieNotice />
+
+    <style is:global>
+      body {
+        min-height: 100dvh;
+        display: flex;
+        flex-direction: column;
+        background: var(--field);
+      }
+
+      /* Everything readable rides above the field. */
+      .shell {
+        position: relative;
+        z-index: 1;
+        flex: 1;
+      }
+
+
+      .skip {
+        position: absolute;
+        left: -9999px;
+        top: 0;
+        z-index: 100;
+      }
+
+      .skip:focus {
+        left: 1rem;
+        top: 1rem;
+        padding: 0.65rem 1rem;
+        border-radius: 8px;
+        background: var(--ink);
+        color: var(--field);
+        font-family: var(--font-sans);
+        font-size: 0.8125rem;
+        font-weight: 560;
+      }
+    </style>
   </body>
 </html>

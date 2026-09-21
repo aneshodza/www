@@ -2,9 +2,10 @@
 import Layout from '~/layouts/Layout.astro';
 import ContactView from '~/components/pages/ContactView.astro';
 import { useTranslations } from '~/i18n/utils';
+import { pageDepth } from '~/lib/depth';
 const t = useTranslations('de');
 ---
 
-<Layout title={t('nav.contact')}>
+<Layout title={t('nav.contact')} depth={pageDepth.contact}>
   <ContactView />
 </Layout>
