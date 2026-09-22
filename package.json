@@ -13,7 +13,8 @@
     "cv:pdf": "node scripts/generate-cv-pdf.mjs",
     "fonts": "node scripts/sync-fonts.mjs",
     "text": "node scripts/extract-text.mjs dist text.json",
-    "og": "node scripts/generate-og.mjs"
+    "og": "node scripts/generate-og.mjs",
+    "og:check": "node scripts/check-og.mjs"
   },
   "dependencies": {
     "@astrojs/check": "0.9.4",
