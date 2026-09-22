@@ -10,8 +10,7 @@ export const ui = {
     'nav.about': 'Über mich',
     'nav.contact': 'Kontakt',
     'site.title': 'Anes Hodza',
-    'site.description':
-      'Anes Hodza. Full-Stack Software- und Security-Engineer. Mitgründer von Centro Labs. BSc Informatik an der ZHAW.',
+    'site.description': 'Anes Hodza. Full-Stack, Security & AI-Engineer.',
     'hero.name': 'Anes Hodza',
     'hero.tagline': 'Full-Stack, Security & AI-Engineer',
     'hero.support':
@@ -88,8 +87,7 @@ export const ui = {
     'nav.about': 'About',
     'nav.contact': 'Contact',
     'site.title': 'Anes Hodza',
-    'site.description':
-      'Anes Hodza. Full-stack software and security engineer. Co-founder of Centro Labs. BSc Computer Science at ZHAW.',
+    'site.description': 'Anes Hodza. Full-Stack, Security & AI-Engineer.',
     'hero.name': 'Anes Hodza',
     'hero.tagline': 'Full-Stack, Security & AI-Engineer',
     'hero.support':
