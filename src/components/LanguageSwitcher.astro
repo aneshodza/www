@@ -12,11 +12,16 @@ const href = switchLocalePath(Astro.url.pathname, target);
 const t = useTranslations(locale);
 ---
 
-<a
-  href={href}
-  class="inline-flex items-center min-h-[44px] md:min-h-0 px-1 font-sans text-[0.72rem] uppercase tracking-[0.14em] text-[var(--fg-subtle)] hover:text-[var(--accent)] transition-colors"
-  aria-label={t('lang.switch')}
-  hreflang={target}
->
-  {target === 'en' ? 'EN' : 'DE'}
-</a>
+<nav class="lang" aria-label={t('lang.switch')}>
+  <a class="chip chip-lang" href={href} hreflang={target}>
+    {target === 'en' ? 'EN' : 'DE'}
+  </a>
+</nav>
+
+<style>
+  /* The switcher is a landmark for assistive tech only; the HUD lays the chip
+     out directly. */
+  .lang {
+    display: contents;
+  }
+</style>

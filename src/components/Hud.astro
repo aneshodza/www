@@ -1,0 +1,288 @@
+---
+import { getLocaleFromUrl, useTranslations, localizePath } from '~/i18n/utils';
+import ThemeToggle from './ThemeToggle.astro';
+import LanguageSwitcher from './LanguageSwitcher.astro';
+
+const locale = getLocaleFromUrl(Astro.url);
+const t = useTranslations(locale);
+
+const nav = [
+  { key: 'nav.projects' as const, path: '/projects' },
+  { key: 'nav.cv' as const, path: '/cv' },
+  { key: 'nav.contact' as const, path: '/contact' },
+];
+
+const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
+
+function isActive(itemPath: string): boolean {
+  const target = localizePath(itemPath, locale).replace(/\/$/, '') || '/';
+  return currentPath === target || currentPath.startsWith(`${target}/`);
+}
+---
+
+<header class="hud no-print">
+  <div class="hud-bar">
+    <a class="hud-mark" href={localizePath('/', locale)} aria-label={t('hero.name')}>
+      Anes Hodza
+    </a>
+
+    <nav class="hud-nav" aria-label={t('nav.projects')}>
+      {
+        nav.map(({ key, path }) => {
+          const active = isActive(path);
+          return (
+            <a
+              href={localizePath(path, locale)}
+              class:list={['hud-link', { 'is-active': active }]}
+              aria-current={active ? 'page' : undefined}
+            >
+              {t(key)}
+            </a>
+          );
+        })
+      }
+    </nav>
+
+    <div class="hud-controls">
+      <LanguageSwitcher />
+      <ThemeToggle />
+    </div>
+  </div>
+
+  {/* How far down you are. The site is about position; something had to say
+      so without adding a word. */}
+  <div class="sounding" aria-hidden="true"><span></span></div>
+</header>
+
+<style>
+  .hud {
+    position: fixed;
+    inset-block-start: 0;
+    inset-inline: 0;
+    z-index: 60;
+    isolation: isolate;
+  }
+
+  .hud-bar {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    width: 100%;
+    max-width: var(--frame);
+    margin-inline: auto;
+    padding: 0.55rem var(--gutter);
+    min-height: 56px;
+  }
+
+  /* The material only engages once you have left the surface. On the surface
+     the bar is glass with nothing behind it. */
+  .hud::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: var(--veil);
+    opacity: 0;
+  }
+
+  /* Dissolved at both ends and along the bottom, so the material has no edge
+     to stop at. */
+  @media (min-width: 48rem) {
+    .hud::before {
+      -webkit-mask-image:
+        linear-gradient(90deg, transparent 0%, #000 9%, #000 91%, transparent 100%),
+        linear-gradient(180deg, #000 55%, transparent 100%);
+      mask-image:
+        linear-gradient(90deg, transparent 0%, #000 9%, #000 91%, transparent 100%),
+        linear-gradient(180deg, #000 55%, transparent 100%);
+      -webkit-mask-composite: source-in;
+      mask-composite: intersect;
+    }
+  }
+
+  @media (max-width: 47.99rem) {
+    .hud::before {
+      -webkit-mask-image: linear-gradient(180deg, #000 68%, transparent 100%);
+      mask-image: linear-gradient(180deg, #000 68%, transparent 100%);
+    }
+  }
+
+  @supports (animation-timeline: scroll()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .hud::before {
+        animation: hud-engage linear both;
+        animation-timeline: scroll(root block);
+        animation-range: 0 120px;
+      }
+    }
+  }
+
+  @supports not (animation-timeline: scroll()) {
+    .hud::before { opacity: 1; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hud::before { opacity: 1; }
+  }
+
+  @keyframes hud-engage {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .hud-mark {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-family: var(--font-serif);
+    font-size: 0.9375rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    white-space: nowrap;
+    transition: color 0.4s var(--ease-out);
+  }
+
+  .hud-mark:hover {
+    color: var(--accent-text);
+  }
+
+  .hud-nav {
+    display: flex;
+    align-items: center;
+    gap: clamp(0.4rem, 1.4vw, 1.15rem);
+  }
+
+  .hud-link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    /* Room to the left for the caret to open into. */
+    padding-inline-start: 1.15rem;
+    font-family: var(--font-sans);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: -0.006em;
+    color: var(--ink-2);
+    white-space: nowrap;
+    transition: color 0.4s var(--ease-out);
+  }
+
+  /* A caret drawn from two borders, the same shape as the back link's. It
+     pops open from the left on hover in a neutral tone, then steps in close
+     and takes the accent on the page you are actually on. */
+  .hud-link::before {
+    content: '';
+    position: absolute;
+    inset-inline-start: 0;
+    top: 50%;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-top: 1.5px solid currentColor;
+    border-right: 1.5px solid currentColor;
+    color: var(--ink-3);
+    transform: translate(-0.5rem, -50%) rotate(45deg);
+    opacity: 0;
+    transition:
+      transform 0.55s var(--spring-snap),
+      opacity 0.3s var(--ease-out),
+      color 0.35s var(--ease-out);
+  }
+
+  .hud-link:hover,
+  .hud-link:focus-visible {
+    color: var(--ink);
+  }
+
+  .hud-link:hover::before,
+  .hud-link:focus-visible::before {
+    opacity: 0.62;
+    color: var(--ink-2);
+    transform: translate(0.17rem, -50%) rotate(45deg);
+  }
+
+  .hud-link.is-active {
+    color: var(--ink);
+  }
+
+  .hud-link.is-active::before {
+    opacity: 1;
+    color: var(--accent);
+    transform: translate(0.17rem, -50%) rotate(45deg);
+  }
+
+  .hud-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+    flex: none;
+  }
+
+  /* Everything fits one row at 360px once the type steps down and the theme
+     toggle shows its state instead of naming it. */
+  @media (max-width: 47.99rem) {
+    .hud-bar {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      grid-template-areas:
+        'mark controls'
+        'nav  nav';
+      align-items: center;
+      column-gap: 0.75rem;
+      row-gap: 0;
+      padding-block: 0 0.2rem;
+      min-height: 0;
+    }
+
+    .hud-mark {
+      grid-area: mark;
+      min-height: 44px;
+      font-size: 0.9375rem;
+    }
+
+    .hud-controls {
+      grid-area: controls;
+      justify-self: end;
+    }
+
+    .hud-nav {
+      grid-area: nav;
+      margin-inline-start: 0;
+      justify-content: flex-start;
+      gap: clamp(0.5rem, 3vw, 1.1rem);
+      padding-block-end: 0.15rem;
+    }
+
+    .hud-link {
+      font-size: 0.8125rem;
+      min-height: 44px;
+      min-width: 0;
+    }
+  }
+
+  @media (max-width: 23.5rem) {
+    .hud-bar { padding-inline: 0.9rem; }
+    .hud-link { font-size: 0.75rem; }
+  }
+
+
+  @media (min-width: 48rem) {
+    .hud-bar {
+      padding-block: 0.75rem;
+      min-height: 64px;
+    }
+
+    .hud-nav {
+      margin-inline-start: auto;
+    }
+
+    .hud-controls {
+      margin-inline-start: clamp(1.25rem, 3vw, 2.5rem);
+      padding-inline-start: clamp(1.25rem, 3vw, 2.5rem);
+      border-inline-start: 1px solid var(--edge);
+    }
+  }
+</style>

@@ -1,0 +1,160 @@
+---
+import type { Depth } from '~/lib/depth';
+
+interface Props {
+  depth: Depth;
+}
+
+const { depth } = Astro.props;
+---
+
+{/* The canvas survives navigation, so the camera keeps descending into the
+    next page instead of restarting. */}
+<canvas id="field" class="field-canvas no-print" aria-hidden="true" transition:persist="field"
+></canvas>
+
+<div
+  class="field-wash no-print"
+  aria-hidden="true"
+  data-base={depth.base}
+  data-range={depth.range}
+  data-strength={depth.strength}
+></div>
+
+<style>
+  .field-canvas {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 1.4s var(--ease-out);
+    contain: strict;
+  }
+
+  .field-canvas[data-ready='1'] {
+    opacity: calc(var(--field-strength, 1) * var(--field-tone, 1));
+  }
+
+  /* Holds the field back from the reading column: opaque at the leading edge,
+     clearing towards the trailing one. */
+  .field-wash {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(
+        90deg,
+        color-mix(in srgb, var(--field) 82%, transparent) 0%,
+        color-mix(in srgb, var(--field) 70%, transparent) 34%,
+        color-mix(in srgb, var(--field) 30%, transparent) 62%,
+        transparent 84%
+      ),
+      radial-gradient(
+        130% 90% at 50% 50%,
+        transparent 34%,
+        color-mix(in srgb, var(--field) 45%, transparent) 100%
+      );
+  }
+
+  /* On a phone there is no side column to protect, so the wash runs vertically
+     and stays much thinner through the middle. */
+  @media (max-width: 47.99rem) {
+    .field-wash {
+      background:
+        linear-gradient(
+          180deg,
+          color-mix(in srgb, var(--field) 62%, transparent) 0%,
+          color-mix(in srgb, var(--field) 22%, transparent) 18%,
+          color-mix(in srgb, var(--field) 14%, transparent) 62%,
+          color-mix(in srgb, var(--field) 48%, transparent) 100%
+        );
+    }
+  }
+</style>
+
+<script>
+  import { mountField, type FieldHandle } from '~/scripts/field';
+
+  declare global {
+    interface Window {
+      __field?: FieldHandle | null;
+      __fieldMounting?: boolean;
+    }
+  }
+
+  // The wash is re-rendered on every navigation, so it is the authority on
+  // where this page sits. Reading the persisted canvas would give the previous
+  // page's depth.
+  function read() {
+    const wash = document.querySelector<HTMLElement>('.field-wash');
+    return {
+      base: Number(wash?.dataset.base ?? 0),
+      range: Number(wash?.dataset.range ?? 1),
+      strength: Number(wash?.dataset.strength ?? 1),
+    };
+  }
+
+  function carryStrength() {
+    const wash = document.querySelector<HTMLElement>('.field-wash');
+    document.documentElement.style.setProperty(
+      '--field-strength',
+      wash?.dataset.strength ?? '1',
+    );
+  }
+
+  function boot() {
+    carryStrength();
+    const canvas = document.getElementById('field') as HTMLCanvasElement | null;
+
+    // The CV has no field. Tear the renderer down rather than leaving it
+    // drawing into a detached canvas.
+    if (!canvas) {
+      window.__field?.destroy();
+      window.__field = null;
+      window.__fieldMounting = false;
+      return;
+    }
+
+    // A persisted canvas keeps its ready flag; a freshly created one does not,
+    // which is how we tell a continued descent from a restarted one.
+    if (window.__field && canvas.dataset.ready === '1') {
+      window.__field.configure(read());
+      return;
+    }
+
+    if (window.__field) {
+      window.__field.destroy();
+      window.__field = null;
+    }
+
+    // Deferred past load and then past idle: the page is readable and
+    // interactive long before the field arrives.
+    if (window.__fieldMounting) return;
+    window.__fieldMounting = true;
+
+    const idle = window.requestIdleCallback ?? ((cb: () => void) => setTimeout(cb, 300));
+    const begin = () =>
+      idle(async () => {
+        const el = document.getElementById('field') as HTMLCanvasElement | null;
+        if (!el || window.__field) {
+          window.__fieldMounting = false;
+          return;
+        }
+        const handle = await mountField(el, read());
+        window.__field = handle;
+        window.__fieldMounting = false;
+        if (handle) el.dataset.ready = '1';
+        else el.remove();
+      });
+
+    if (document.readyState === 'complete') begin();
+    else addEventListener('load', begin, { once: true });
+  }
+
+  boot();
+  document.addEventListener('astro:page-load', boot);
+</script>

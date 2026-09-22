@@ -47,23 +47,20 @@ const channels = [
   },
 ];
 ---
+<section class="page-head frame">
+  <p class="kicker">{t('nav.contact')}</p>
 
-<section class="mx-auto max-w-[68rem] px-5 md:px-10 pt-12 md:pt-20 pb-24">
-  <div class="border-b border-[var(--rule)] pb-3 mb-10">
-    <p class="label">{t('nav.contact')}</p>
-  </div>
-
-  <h1 class="display text-[2.25rem] md:text-[3.5rem] max-w-[40rem] leading-[1.05]">
+  <h1 class="head-title display">
     {locale === 'de' ? 'Reden wir.' : 'Let us talk.'}
   </h1>
 
-  <p class="mt-8 max-w-[36rem] text-[var(--fg-muted)] text-[1.0625rem] md:text-[1.125rem] leading-relaxed">
-    {t('contact.intro')}
-  </p>
+  <p class="head-lede lede">{t('contact.intro')}</p>
+</section>
 
+<div class="body frame">
   <form
     id="contact-form"
-    class="mt-12 md:mt-14 max-w-[40rem]"
+    class="form"
     data-app-url={formbricks.appUrl}
     data-environment-id={formbricks.environmentId}
     data-survey-id={formbricks.surveyId}
@@ -74,113 +71,236 @@ const channels = [
     data-success={t('contact.form.success')}
     novalidate
   >
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-9">
-      <div class="flex flex-col gap-2.5">
-        <label class="label" for="cf-name">{t('contact.form.name')}</label>
-        <input id="cf-name" name="name" type="text" class="contact-field" aria-describedby="cf-name-error" />
-        <p id="cf-name-error" class="contact-error" aria-live="polite"></p>
-      </div>
-      <div class="flex flex-col gap-2.5">
-        <label class="label" for="cf-email">{t('contact.form.email')}</label>
-        <input id="cf-email" name="email" type="email" class="contact-field" aria-describedby="cf-email-error" />
-        <p id="cf-email-error" class="contact-error" aria-live="polite"></p>
-      </div>
+    <div class="pair">
+      <p class="field">
+        <label class="instrument" for="cf-name">{t('contact.form.name')}</label>
+        <span class="control"><input id="cf-name" name="name" type="text" class="input" aria-describedby="cf-name-error" /></span>
+        <span id="cf-name-error" class="err" aria-live="polite"></span>
+      </p>
+      <p class="field">
+        <label class="instrument" for="cf-email">{t('contact.form.email')}</label>
+        <span class="control"><input id="cf-email" name="email" type="email" class="input" aria-describedby="cf-email-error" /></span>
+        <span id="cf-email-error" class="err" aria-live="polite"></span>
+      </p>
     </div>
 
-    <div class="mt-9 flex flex-col gap-2.5">
-      <label class="label" for="cf-title">{t('contact.form.title')}</label>
-      <input id="cf-title" name="title" type="text" class="contact-field" aria-describedby="cf-title-error" />
-      <p id="cf-title-error" class="contact-error" aria-live="polite"></p>
-    </div>
+    <p class="field">
+      <label class="instrument" for="cf-title">{t('contact.form.title')}</label>
+      <span class="control"><input id="cf-title" name="title" type="text" class="input" aria-describedby="cf-title-error" /></span>
+      <span id="cf-title-error" class="err" aria-live="polite"></span>
+    </p>
 
-    <div class="mt-9 flex flex-col gap-2.5">
-      <label class="label" for="cf-body">{t('contact.form.message')}</label>
-      <textarea id="cf-body" name="body" rows="5" class="contact-field resize-y" aria-describedby="cf-body-error"></textarea>
-      <p id="cf-body-error" class="contact-error" aria-live="polite"></p>
-    </div>
+    <p class="field">
+      <label class="instrument" for="cf-body">{t('contact.form.message')}</label>
+      <span class="control"><textarea id="cf-body" name="body" rows="5" class="input area" aria-describedby="cf-body-error"></textarea></span>
+      <span id="cf-body-error" class="err" aria-live="polite"></span>
+    </p>
 
-    <div class="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3">
-      <button type="submit" id="cf-submit" class="btn-text" data-label={t('contact.form.send')}>
+    <div class="submit">
+      <button type="submit" id="cf-submit" class="action-solid" data-label={t('contact.form.send')}>
         {t('contact.form.send')}
       </button>
-      <p id="cf-status" class="contact-status" role="status" aria-live="polite"></p>
+      <p id="cf-status" class="status" role="status" aria-live="polite"></p>
     </div>
   </form>
 
-  <dl class="mt-14 md:mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-10 border-t border-[var(--rule)] pt-10">
-    {
-      channels.map((c) => (
-        <div>
-          <dt class="label mb-2">{c.label}</dt>
-          <dd>
-            <a
-              href={c.href}
-              class="link-inline font-serif text-[1.1rem] md:text-[1.25rem] break-all"
-              {...(c.external
-                ? { target: '_blank', rel: 'noopener noreferrer me' }
-                : {})}
-            >
-              {c.value}
-            </a>
-          </dd>
-        </div>
-      ))
-    }
-  </dl>
-</section>
+  <aside class="channels">
+    <dl class="channel-list">
+      {
+        channels.map((c) => (
+          <div class="channel">
+            <dt class="instrument">{c.label}</dt>
+            <dd>
+              <a
+                class="link channel-val"
+                href={c.href}
+                {...(c.external
+                  ? { target: '_blank', rel: 'noopener noreferrer me' }
+                  : {})}
+              >
+                {c.value}
+              </a>
+            </dd>
+          </div>
+        ))
+      }
+    </dl>
+  </aside>
+</div>
 
 <style>
-  .contact-field {
+  .head-title {
+    font-size: var(--t-5);
+  }
+
+  .head-lede {
+    max-width: 52ch;
+  }
+
+  .body {
+    display: grid;
+    gap: clamp(3rem, 8vh, 5rem);
+    padding-block: clamp(2rem, 6vh, 3.5rem) clamp(2rem, 6vh, 4rem);
+  }
+
+  /* ---- Form -------------------------------------------------------------- */
+
+  .form,
+  .pair {
+    display: grid;
+    gap: clamp(1.35rem, 3vh, 1.9rem);
+  }
+
+  .field {
+    position: relative;
+    display: grid;
+    gap: 0.55rem;
+  }
+
+  .field label {
+    transition: color 0.4s var(--ease-out);
+  }
+
+  .field:focus-within label {
+    color: var(--accent-text);
+  }
+
+  /* Ruled underneath rather than boxed: the bottom border is the field, and the
+     rest of the frame is just enough to place it. */
+  .input {
+    display: block;
     width: 100%;
-    background-color: transparent;
-    border: none;
-    border-bottom: 1px solid var(--rule);
-    padding: 0.25rem 0 0.5rem;
+    background: color-mix(in srgb, var(--shelf) 62%, transparent);
+    border: 1px solid var(--edge);
+    border-bottom: 1px solid var(--ink-3);
+    padding: 0.6rem 0.75rem 0.65rem;
     font-family: var(--font-serif);
-    font-size: 1.0625rem;
+    font-size: var(--t-0);
     line-height: 1.6;
-    color: var(--fg);
-    transition: border-color 0.2s ease;
+    color: var(--ink);
   }
 
-  .contact-field:hover {
-    border-bottom-color: var(--fg-subtle);
+  .input:hover {
+    border-bottom-color: var(--ink-2);
+    background: color-mix(in srgb, var(--shelf) 78%, transparent);
   }
 
-  .contact-field:focus {
-    outline: none;
-    border-bottom-color: var(--accent);
+  .input:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
   }
 
-  .contact-field[aria-invalid='true'] {
-    border-bottom-color: var(--accent);
+  .input[aria-invalid='true'] {
+    border-color: var(--alarm);
+    border-bottom-width: 2px;
+    padding-bottom: calc(0.65rem - 1px);
   }
 
-  .contact-error {
+  .area {
+    min-height: 9rem;
+  }
+
+  /* An accent rule that wipes in under the focused field, the same gesture the
+     links make on hover. */
+  .control {
+    position: relative;
+    display: block;
+  }
+
+  .control::after {
+    content: '';
+    position: absolute;
+    inset-inline-start: 0;
+    bottom: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.6s var(--spring-snap);
+    pointer-events: none;
+  }
+
+  .control:focus-within::after {
+    transform: scaleX(1);
+  }
+
+  .err {
     font-family: var(--font-sans);
-    font-size: 0.78rem;
+    font-size: var(--t--2);
+    font-weight: 500;
     line-height: 1.4;
-    color: var(--accent);
-    min-height: 0;
+    color: var(--alarm);
   }
 
-  .contact-error:empty {
+  .submit {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem 1.5rem;
+  }
+
+  .status {
+    font-family: var(--font-sans);
+    font-size: var(--t--1);
+    line-height: 1.45;
+    color: var(--ink-2);
+  }
+
+  .status[data-state='error'] {
+    color: var(--alarm);
+  }
+
+  .err:empty,
+  .status:empty {
     display: none;
   }
 
-  .contact-status {
-    font-family: var(--font-sans);
-    font-size: 0.85rem;
-    line-height: 1.4;
-    color: var(--fg-muted);
+  /* Replaces the whole form on success, so it is injected rather than rendered
+     and has to be reachable from outside this component's scope. */
+  :global(.contact-sent) {
+    font-size: var(--t-1);
+    line-height: 1.5;
+    color: var(--ink);
+    max-width: 44ch;
   }
 
-  .contact-status[data-state='error'] {
-    color: var(--accent);
+  /* ---- Channels ---------------------------------------------------------- */
+
+  .channel-list {
+    display: grid;
+    border-top: 1px solid var(--edge);
   }
 
-  .contact-status:empty {
-    display: none;
+  .channel {
+    display: grid;
+    gap: 0.3rem;
+    padding-block: 0.4rem 0.55rem;
+    border-bottom: 1px solid var(--edge-soft);
+  }
+
+  @media (min-width: 40rem) {
+    .pair {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: clamp(1.5rem, 4vw, 2.5rem);
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .head-title {
+      font-size: var(--t-display);
+    }
+
+    .body {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
+      gap: clamp(3rem, 8vw, 7rem);
+      align-items: start;
+    }
+
+    .channels {
+      position: sticky;
+      top: 6rem;
+    }
   }
 </style>
 
@@ -294,7 +414,7 @@ const channels = [
         await submitToFormbricks();
         // Success: replace the form with a confirmation message.
         const note = document.createElement('p');
-        note.className = 'contact-status';
+        note.className = 'contact-sent';
         note.setAttribute('role', 'status');
         note.textContent = form.dataset.success ?? '';
         form.replaceWith(note);

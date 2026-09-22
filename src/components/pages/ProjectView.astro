@@ -1,11 +1,7 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import { render } from 'astro:content';
-import {
-  getLocaleFromUrl,
-  useTranslations,
-  localizePath,
-} from '~/i18n/utils';
+import { getLocaleFromUrl, useTranslations, localizePath } from '~/i18n/utils';
 
 interface Props {
   entry: CollectionEntry<'projects'>;
@@ -16,86 +12,211 @@ const { Content } = await render(entry);
 
 const locale = getLocaleFromUrl(Astro.url);
 const t = useTranslations(locale);
+const back = localizePath('/projects', locale);
 
 const isExternal = (url: string) => /^https?:\/\//.test(url);
 ---
 
-<article class="mx-auto max-w-[68rem] px-5 md:px-10 pt-12 md:pt-20 pb-20">
-  <div class="flex items-baseline justify-between border-b border-[var(--rule)] pb-3 mb-10">
-    <p class="label">{t('nav.projects')}</p>
-    <a
-      href={localizePath('/projects', locale)}
-      class="font-sans text-[0.72rem] uppercase tracking-[0.14em] text-[var(--fg-subtle)] hover:text-[var(--accent)] inline-flex items-center min-h-[44px] md:min-h-0"
-    >
-      &larr; &nbsp;{t('project.back')}
-    </a>
-  </div>
+<article>
+  <header class="top page-head frame">
+    <div class="top-bar">
+      <p class="kicker">{t('nav.projects')}</p>
+      <a class="back link-nav" href={back}>{t('project.back')}</a>
+    </div>
 
-  <header>
-    <h1 class="display text-[2.5rem] md:text-[4.5rem] leading-[1.05]">
-      {entry.data.title}.
-    </h1>
-    <p class="mt-6 font-serif italic text-[1.1rem] md:text-[1.35rem] text-[var(--fg-muted)] max-w-[42rem] leading-snug">
-      {entry.data.summary}
-    </p>
+    <h1 class="top-title display">{entry.data.title}.</h1>
+    <p class="top-summary">{entry.data.summary}</p>
   </header>
 
-  <dl class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-6 border-t border-[var(--rule)] pt-6">
-    <div>
-      <dt class="label mb-1">{t('project.role')}</dt>
-      <dd class="font-serif text-[0.98rem]">{entry.data.role}</dd>
-    </div>
-    <div>
-      <dt class="label mb-1">{t('project.status')}</dt>
-      <dd class="font-serif text-[0.98rem]">{entry.data.statusLabel}</dd>
-    </div>
-    <div>
-      <dt class="label mb-1">{t('project.year')}</dt>
-      <dd class="font-serif text-[0.98rem]">{entry.data.year}</dd>
-    </div>
-    <div>
-      <dt class="label mb-1">{t('project.links')}</dt>
-      <dd>
-        <ul class="space-y-1">
-          {
-            entry.data.links.map((l) => (
-              <li>
-                <a
-                  class="link-inline font-serif text-[0.95rem] break-all"
-                  href={l.url}
-                  {...(isExternal(l.url)
-                    ? { target: '_blank', rel: 'noopener noreferrer' }
-                    : {})}
-                >
-                  {l.label}
-                </a>
-              </li>
-            ))
-          }
-        </ul>
-      </dd>
-    </div>
-  </dl>
+  {/* The instrument panel for this layer. */}
+  <section class="panel frame">
+    <dl class="panel-grid">
+      <div class="cell">
+        <dt class="instrument">{t('project.role')}</dt>
+        <dd>{entry.data.role}</dd>
+      </div>
+      <div class="cell">
+        <dt class="instrument">{t('project.status')}</dt>
+        <dd>{entry.data.statusLabel}</dd>
+      </div>
+      <div class="cell">
+        <dt class="instrument">{t('project.year')}</dt>
+        <dd class="readout">{entry.data.year}</dd>
+      </div>
+      <div class="cell">
+        <dt class="instrument">{t('project.links')}</dt>
+        <dd>
+          <ul class="links">
+            {
+              entry.data.links.map((l) => (
+                <li>
+                  <a
+                    class="link"
+                    href={l.url}
+                    {...(isExternal(l.url)
+                      ? { target: '_blank', rel: 'noopener noreferrer' }
+                      : {})}
+                  >
+                    {l.label}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </dd>
+      </div>
+    </dl>
+  </section>
 
-  <section class="mt-16 grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-12 lg:gap-20">
-    <div class="prose-editorial max-w-[40rem]">
+  <section class="read frame">
+    <div class="prose">
       <Content />
     </div>
 
-    <aside class="lg:sticky lg:top-10 self-start">
-      <p class="label mb-3">{t('project.tech')}</p>
-      <ul class="flex flex-wrap gap-x-3 gap-y-2 border-t border-[var(--rule)] pt-3">
-        {entry.data.tech.map((tag) => <li class="tag">{tag}</li>)}
+    <aside class="aside">
+      <p class="instrument aside-head">{t('project.tech')}</p>
+      <ul class="stack rule-list">
+        {entry.data.tech.map((tech) => <li>{tech}</li>)}
       </ul>
     </aside>
   </section>
 
-  <nav class="mt-20 border-t border-[var(--rule)] pt-6 flex items-baseline justify-between">
-    <a href={localizePath('/projects', locale)} class="btn-text">
-      &larr; {t('project.back')}
-    </a>
-    <a href={localizePath('/contact', locale)} class="btn-text">
-      {t('hero.cta.contact')} &nbsp;&rarr;
-    </a>
+  <nav class="tail frame" aria-label={t('nav.projects')}>
+    <hr class="hairline" />
+    <div class="tail-row">
+      <a class="back is-strong link-nav" href={back}>{t('project.back')}</a>
+      <a class="action" href={localizePath('/contact', locale)}>{t('hero.cta.contact')}</a>
+    </div>
   </nav>
 </article>
+
+<style>
+  .top {
+    --head-bottom: clamp(1.5rem, 4vh, 2.5rem);
+  }
+
+  .top-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem 1.5rem;
+  }
+
+  /* The tail copy of the back link carries more weight than the header one,
+     since by then it is the primary way out. */
+  .back.is-strong {
+    color: var(--ink-2);
+  }
+
+  .top-title {
+    font-size: var(--t-5);
+  }
+
+  .top-summary {
+    font-size: var(--t-1);
+    line-height: 1.5;
+    font-style: italic;
+    color: var(--ink-2);
+    max-width: 48ch;
+  }
+
+  /* ---- Fact panel ------------------------------------------------------
+     Role / status / year / links, as cells separated by their own gap over a
+     tinted backing, so the dividers are the background showing through.
+     ------------------------------------------------------------------- */
+
+  .panel {
+    padding-block: clamp(1.5rem, 4vh, 2.5rem);
+  }
+
+  .panel-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1px;
+    padding: 1px;
+    border-radius: 14px;
+    border: 1px solid var(--edge-soft);
+    background: var(--edge-soft);
+    overflow: hidden;
+  }
+
+  .cell {
+    display: grid;
+    gap: 0.4rem;
+    align-content: start;
+    padding: 1rem 1.1rem 1.15rem;
+    background: color-mix(in srgb, var(--field) 88%, transparent);
+  }
+
+  .cell dd {
+    font-size: var(--t--1);
+    line-height: 1.45;
+    color: var(--ink);
+  }
+
+  .links {
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .links a {
+    word-break: break-word;
+  }
+
+  /* ---- Reading ---------------------------------------------------------- */
+
+  .read {
+    padding-block: clamp(2rem, 6vh, 4rem);
+    display: grid;
+    gap: clamp(2.5rem, 6vh, 4rem);
+  }
+
+  .aside-head {
+    margin-bottom: 0.75rem;
+    padding-block-end: 0.6rem;
+    border-bottom: 1px solid var(--edge);
+  }
+
+  .stack {
+    gap: 0 1.25rem;
+  }
+
+  .tail {
+    padding-block: clamp(2rem, 5vh, 3rem) 0;
+  }
+
+  .tail-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem 2rem;
+    padding-block-start: 1rem;
+  }
+
+  @media (min-width: 48rem) {
+    .panel-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  /* Wide enough for the tech list to sit beside the copy and stay put. */
+  @media (min-width: 64rem) {
+    .read {
+      grid-template-columns: minmax(0, 1fr) 17rem;
+      gap: clamp(3rem, 7vw, 6rem);
+      align-items: start;
+    }
+
+    .aside {
+      position: sticky;
+      top: 6rem;
+    }
+
+    .stack {
+      flex-direction: column;
+      gap: 0;
+    }
+  }
+</style>

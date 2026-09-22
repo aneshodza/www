@@ -1,55 +1,93 @@
 ---
 import { getLocaleFromUrl, useTranslations } from '~/i18n/utils';
+
 const locale = getLocaleFromUrl(Astro.url);
 const t = useTranslations(locale);
 const year = new Date().getFullYear();
+
+const links = [
+  { label: t('contact.email'), href: `mailto:${t('meta.email')}`, me: false },
+  { label: 'GitHub', href: 'https://github.com/aneshodza', me: true },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/aneshodza/', me: true },
+  { label: 'dev.to', href: 'https://dev.to/aneshodza', me: true },
+];
 ---
 
-<footer class="no-print mt-24 border-t border-[var(--rule)]">
-  <div
-    class="mx-auto max-w-[68rem] px-5 md:px-10 py-8 flex flex-col md:flex-row md:items-baseline md:justify-between gap-4"
-  >
-    <p class="font-sans text-[0.78rem] text-[var(--fg-muted)] tracking-tight">
-      &copy; {year} {t('footer.copyright')}.&nbsp;{t('meta.location')}.
-    </p>
-    <ul
-      class="flex flex-wrap items-baseline gap-x-5 gap-y-2 font-sans text-[0.78rem] text-[var(--fg-muted)]"
-    >
-      <li>
-        <a class="link-inline" href={`mailto:${t('meta.email')}`}>
-          {t('contact.email')}
-        </a>
-      </li>
-      <li>
-        <a
-          class="link-inline"
-          href="https://github.com/aneshodza"
-          target="_blank"
-          rel="noopener noreferrer me"
-        >
-          GitHub
-        </a>
-      </li>
-      <li>
-        <a
-          class="link-inline"
-          href="https://www.linkedin.com/in/aneshodza/"
-          target="_blank"
-          rel="noopener noreferrer me"
-        >
-          LinkedIn
-        </a>
-      </li>
-      <li>
-        <a
-          class="link-inline"
-          href="https://dev.to/aneshodza"
-          target="_blank"
-          rel="noopener noreferrer me"
-        >
-          dev.to
-        </a>
-      </li>
-    </ul>
+<footer class="foot no-print">
+  <div class="frame">
+    <hr class="hairline" />
+    <div class="foot-row">
+      <p class="foot-sig">
+        <span class="foot-year">{year}</span>
+        <span>{t('footer.copyright')}.</span>
+        <span class="foot-place">{t('meta.location')}.</span>
+      </p>
+
+      <ul class="foot-links">
+        {
+          links.map((l) => (
+            <li>
+              <a
+                class="foot-link link-nav"
+                href={l.href}
+                {...(l.href.startsWith('http')
+                  ? { target: '_blank', rel: l.me ? 'noopener noreferrer me' : 'noopener noreferrer' }
+                  : {})}
+              >
+                {l.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
   </div>
 </footer>
+
+<style>
+  .foot {
+    position: relative;
+    z-index: 1;
+    margin-block-start: clamp(3.25rem, 7vw, 6.5rem);
+    padding-block-end: clamp(2rem, 4vw, 3rem);
+  }
+
+  .foot-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1.5rem 2.5rem;
+    padding-block-start: 1.75rem;
+  }
+
+  .foot-sig {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.5rem;
+    font-size: var(--t--1);
+    color: var(--ink-3);
+  }
+
+  .foot-year {
+    font-family: var(--font-sans);
+    font-size: var(--t--2);
+    font-weight: 560;
+    font-variant-numeric: tabular-nums lining-nums;
+    color: var(--ink-2);
+    padding-inline-end: 0.55rem;
+    border-inline-end: 1px solid var(--edge);
+  }
+
+  .foot-place {
+    font-style: italic;
+  }
+
+  .foot-links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.4rem 1.6rem;
+  }
+</style>

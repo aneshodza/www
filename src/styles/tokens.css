@@ -1,0 +1,232 @@
+/* ---------------------------------------------------------------------------
+   Faces. Two families, both variable, latin only, self-hosted at stable paths
+   so the display face can be preloaded. Synced by `npm run fonts`.
+   --------------------------------------------------------------------------- */
+
+@font-face {
+  font-family: "Source Serif 4 Variable";
+  font-style: normal;
+  font-weight: 200 900;
+  font-display: swap;
+  src: url("/fonts/serif.woff2") format("woff2-variations");
+}
+
+@font-face {
+  font-family: "Source Serif 4 Variable";
+  font-style: italic;
+  font-weight: 200 900;
+  font-display: swap;
+  src: url("/fonts/serif-italic.woff2") format("woff2-variations");
+}
+
+@font-face {
+  font-family: "Inter Variable";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/fonts/sans.woff2") format("woff2-variations");
+}
+
+/* Georgia, re-metricked to Source Serif 4 (upem 1000, asc 1036, desc -335,
+   avg advance 513). Holding the same line boxes and roughly the same advance
+   means the swap does not reflow the page. */
+@font-face {
+  font-family: "Serif Fallback";
+  src: local("Georgia"), local("Times New Roman"), local("Times");
+  size-adjust: 93%;
+  ascent-override: 103.6%;
+  descent-override: 33.5%;
+  line-gap-override: 0%;
+}
+
+@layer base {
+  :root {
+    --font-serif: "Source Serif 4 Variable", "Serif Fallback", Georgia, serif;
+    --font-sans: "Inter Variable", Inter, system-ui, sans-serif;
+
+    /* ---- Palette ---------------------------------------------------------
+       Cold at the surface, warm at depth: `signal` belongs to the interface
+       layers, `ember` to the layers underneath. Pages set --depth (0 =
+       surface, 1 = silicon) and --accent interpolates between the two, so
+       colour temperature carries position rather than decorating.
+       -------------------------------------------------------------------- */
+    color-scheme: light;
+
+    --field: #eef0f5;
+    --shelf: #ffffff;
+    --sunk: #e4e7ef;
+
+    /* Secondary ink carries a lot of body copy, and in light mode it sits over
+       the dot field rather than flat paper, so the nominal contrast ratio
+       overstates how readable it is. Kept a clear three-step hierarchy under
+       --ink but pushed both steps well past AA on the field. */
+    --ink: #0a0c12;
+    --ink-2: #0e1117;
+    --ink-3: #13171f;
+
+    --edge: rgb(10 12 18 / 0.14);
+    --edge-soft: rgb(10 12 18 / 0.07);
+
+    /* The field paints these onto porcelain rather than glowing with them
+       (see field.ts readTheme), so light mode needs the ramp a step darker or
+       the dots wash out. Darkened by ~0.04 OKLab L, hue and chroma held. */
+    --signal: #1a2ebd;
+    --signal-text: #1a2ebd;
+    --mid: #7b1bab;
+    --mid-text: #6b1796;
+    --ember: #a35009;
+    --ember-text: #7f3b03;
+    --alarm: #b3201a;
+
+    --depth: 0;
+
+    /* Dot darkness is governed by this, not by the accent hue: in light mode
+       the field is alpha-composited onto porcelain, so even a near-navy
+       --signal barely moves the dots while this does. */
+    --field-tone: 0.85;
+
+    /* Translucent material for the HUD. */
+    --veil: rgb(238 240 245 / 0.86);
+
+    /* ---- Type scale ------------------------------------------------------
+       Fluid, built on a 1.28 ratio at the small end opening to 1.5 at display
+       sizes. Source Serif carries every size above the lede; Inter is
+       instrumentation only and never exceeds --t-1.
+       -------------------------------------------------------------------- */
+    --t--2: 0.75rem;
+    --t--1: 0.8125rem;
+    --t-0: 1.0625rem;
+    --t-1: clamp(1.125rem, 1.02rem + 0.45vw, 1.4rem);
+    --t-2: clamp(1.35rem, 1.13rem + 0.95vw, 1.95rem);
+    --t-3: clamp(1.55rem, 1.16rem + 1.95vw, 3rem);
+    --t-4: clamp(2.35rem, 1.45rem + 3.9vw, 4.75rem);
+    --t-5: clamp(3rem, 1.5rem + 6.5vw, 7rem);
+    --t-display: clamp(3.6rem, 1.1rem + 11.8vw, 10.5rem);
+
+    /* ---- Metrics --------------------------------------------------------- */
+
+    --measure: 64ch;
+    --gutter: clamp(1.25rem, 0.6rem + 2.8vw, 3.5rem);
+    --frame: 82rem;
+
+    /* Height of the fixed bar. Two rows on phones, one above 48rem. */
+    --hud-h: 94px;
+    /* The least a page-top may start at, so nothing sits under the bar. */
+    --hud-clear: calc(var(--hud-h) + 1.5rem);
+
+    /* A hairline is 1px, except where 1px would be thinner than one device
+       pixel — see the max-resolution query below. */
+    --hairline: 1px;
+
+    /* ---- Motion ---------------------------------------------------------- */
+
+    --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+    --spring-soft: linear(
+      0,
+      0.095 4.5%,
+      0.295 9.1%,
+      0.513 13.6%,
+      0.703 18.2%,
+      0.847 22.7%,
+      0.944 27.3%,
+      1.001 31.8%,
+      1.029 36.4%,
+      1.038 40.9%,
+      1.036 45.5%,
+      1.029 50%,
+      1.021 54.5%,
+      1.013 59.1%,
+      1.007 63.6%,
+      1.003 68.2%,
+      1
+    );
+    --spring-snap: linear(
+      0,
+      0.132 5.6%,
+      0.367 11.1%,
+      0.583 16.7%,
+      0.744 22.2%,
+      0.853 27.8%,
+      0.92 33.3%,
+      0.959 38.9%,
+      0.981 44.4%,
+      0.992 50%,
+      0.997 55.6%,
+      1
+    );
+  }
+
+  .dark {
+    color-scheme: dark;
+
+    --field: #06070b;
+    --shelf: #0c0e15;
+    --sunk: #04050a;
+
+    --ink: #edeff5;
+    --ink-2: #9aa1b4;
+    --ink-3: #767e92;
+
+    --edge: rgb(255 255 255 / 0.11);
+    --edge-soft: rgb(255 255 255 / 0.055);
+
+    --signal: #3a5bff;
+    --signal-text: #8b9bff;
+    --mid: #b45be8;
+    --mid-text: #c77bf2;
+    --ember: #ff9a2e;
+    --ember-text: #ffa64a;
+    --alarm: #ff6b6b;
+
+    --field-tone: 1;
+    --veil: rgb(6 7 11 / 0.84);
+  }
+
+  /* Two segments, so the ramp never passes through grey: signal -> mid over
+     the first half of the descent, mid -> ember over the second. */
+  :root,
+  .dark {
+    --seg-a: calc(min(var(--depth) * 2, 1) * 100%);
+    --seg-b: calc(max(var(--depth) * 2 - 1, 0) * 100%);
+
+    --accent: color-mix(
+      in oklab,
+      color-mix(in oklab, var(--mid) var(--seg-a), var(--signal))
+        calc(100% - var(--seg-b)),
+      var(--ember)
+    );
+    --accent-text: color-mix(
+      in oklab,
+      color-mix(in oklab, var(--mid-text) var(--seg-a), var(--signal-text))
+        calc(100% - var(--seg-b)),
+      var(--ember-text)
+    );
+  }
+
+  /* Zoomed out below 100%, a 1px rule rounds away to nothing on some rows and
+     survives on others, which reads as "half the dashes are missing". Below
+     1dppx a hairline gets a second pixel so it can never vanish. */
+  @media (max-resolution: 0.999dppx) {
+    :root {
+      --hairline: 2px;
+    }
+  }
+
+  @media (min-width: 48rem) {
+    :root {
+      --hud-h: 68px;
+    }
+  }
+
+  /* Set from a pre-paint inline script, not from the notice's own state, so
+     the reservation exists on the first frame. */
+  .has-notice body {
+    --notice-space: 4.25rem;
+  }
+
+  @media (min-width: 48rem) {
+    .has-notice body {
+      --notice-space: 6rem;
+    }
+  }
+}

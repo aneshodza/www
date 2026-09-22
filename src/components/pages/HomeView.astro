@@ -1,44 +1,59 @@
 ---
 import { getCollection } from 'astro:content';
-import Hero from '~/components/Hero.astro';
-import ProjectCard from '~/components/ProjectCard.astro';
-import {
-  getLocaleFromUrl,
-  useTranslations,
-  localizePath,
-} from '~/i18n/utils';
+import Surface from '~/components/Surface.astro';
+import Feature from '~/components/Feature.astro';
+import { getLocaleFromUrl, useTranslations, localizePath } from '~/i18n/utils';
 
 const locale = getLocaleFromUrl(Astro.url);
 const t = useTranslations(locale);
 
-const allProjects = await getCollection('projects', (e) => e.data.locale === locale);
-const projects = allProjects.sort((a, b) => a.data.order - b.data.order);
+const projects = (
+  await getCollection('projects', (e) => e.data.locale === locale)
+).sort((a, b) => a.data.order - b.data.order);
+
 const featured = projects[0];
 const remaining = Math.max(projects.length - 1, 0);
 ---
 
-<Hero />
+<Surface />
+
+{featured && <Feature entry={featured} eyebrow={t('sections.featured')} />}
 
 {
-  featured && (
-    <section class="mx-auto max-w-[68rem] px-5 md:px-10 py-16 md:py-20 border-t border-[var(--rule)]">
-      <div class="border-b border-[var(--rule)] pb-3 mb-10">
-        <h2 class="label">{t('sections.featured')}</h2>
+  remaining > 0 && (
+    <section class="outro frame">
+      <hr class="hairline" />
+      <div class="outro-row">
+        <p class="outro-count">
+          {locale === 'de' ? `${remaining} weitere Projekte` : `${remaining} more projects`}
+        </p>
+        <a class="action" href={localizePath('/projects', locale)}>
+          {t('sections.projects.all')}
+        </a>
       </div>
-      <ProjectCard entry={featured} featured />
-
-      {remaining > 0 && (
-        <div class="mt-12 md:mt-16 border-t border-[var(--rule)] pt-6 flex flex-wrap items-baseline justify-between gap-4">
-          <p class="font-serif italic text-[1rem] text-[var(--fg-muted)]">
-            {locale === 'de'
-              ? `${remaining} weitere Projekte`
-              : `${remaining} more projects`}
-          </p>
-          <a href={localizePath('/projects', locale)} class="btn-text">
-            {t('sections.projects.all')} &nbsp;&rarr;
-          </a>
-        </div>
-      )}
     </section>
   )
 }
+
+<style>
+  .outro {
+    padding-block: clamp(3rem, 9vh, 6rem) clamp(2rem, 6vh, 4rem);
+  }
+
+  .outro-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem 2.5rem;
+    padding-block-start: clamp(1.5rem, 4vh, 2.5rem);
+  }
+
+  .outro-count {
+    font-size: var(--t-2);
+    font-weight: 380;
+    letter-spacing: -0.02em;
+    color: var(--ink-3);
+    font-variant-numeric: lining-nums;
+  }
+</style>

@@ -1,0 +1,191 @@
+---
+import { Picture } from 'astro:assets';
+import portrait from '~/assets/portrait.jpg';
+import { getLocaleFromUrl, useTranslations, localizePath } from '~/i18n/utils';
+
+const locale = getLocaleFromUrl(Astro.url);
+const t = useTranslations(locale);
+---
+
+{/* The surface. The lattice behind is viewed from directly overhead, so it
+    collapses into a flat grid; the first scroll tilts the camera and the flat
+    surface opens into depth. */}
+<section class="stage" aria-labelledby="hero-name">
+  <div class="stage-inner frame">
+      <p class="kicker">{t('hero.kicker')}</p>
+
+      <h1 id="hero-name" class="title">
+        <span class="title-name display">{t('hero.name')}</span>
+        <span class="title-role">{t('hero.tagline')}.</span>
+      </h1>
+
+      <div class="stage-foot">
+        <p class="support">{t('hero.support')}</p>
+
+        <div class="stage-cta">
+          <a class="action-solid" href={localizePath('/projects', locale)}>
+            {t('hero.cta.projects')}
+          </a>
+          <a class="action" href={localizePath('/contact', locale)}>
+            {t('hero.cta.contact')}
+          </a>
+        </div>
+      </div>
+
+      <figure class="plate">
+        <Picture
+          src={portrait}
+          formats={['avif', 'webp']}
+          widths={[260, 336, 480, 672]}
+          sizes="(min-width: 48rem) 21rem, 34vw"
+          alt="Portrait of Anes Hodza"
+          loading="eager"
+          decoding="async"
+          fetchpriority="high"
+        />
+      </figure>
+  </div>
+</section>
+
+<style>
+  .stage {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    min-height: 100svh;
+    overflow: clip;
+  }
+
+  .stage-inner {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto 1fr auto;
+    align-items: stretch;
+    width: 100%;
+    row-gap: clamp(1rem, 2.5vh, 2rem);
+    padding-block: max(clamp(3.75rem, 9vh, 6.5rem), var(--hud-clear))
+      calc(clamp(1.5rem, 4vh, 3.5rem) + var(--notice-space, 0rem));
+  }
+
+  .title {
+    display: grid;
+    align-content: center;
+    gap: clamp(0.35rem, 1.2vh, 0.9rem);
+  }
+
+  .title-name {
+    display: block;
+    font-size: var(--t-display);
+    color: var(--ink);
+  }
+
+  /* The one place a serif sits this light: it has to read as a caption to the
+     name above it, not as a second headline. */
+  .title-role {
+    display: block;
+    font-family: var(--font-serif);
+    font-size: var(--t-3);
+    font-weight: 370;
+    line-height: 1.06;
+    letter-spacing: -0.022em;
+    color: var(--ink-2);
+    text-wrap: balance;
+  }
+
+  .stage-foot {
+    display: grid;
+    gap: clamp(1rem, 2.4vh, 1.6rem);
+    padding-block-start: clamp(1rem, 2.6vh, 1.75rem);
+    border-top: 1px solid var(--edge);
+    max-width: 46rem;
+    align-self: end;
+  }
+
+  .support {
+    font-size: var(--t-0);
+    line-height: 1.55;
+    color: var(--ink-2);
+    max-width: 46ch;
+  }
+
+  .stage-cta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem 2rem;
+  }
+
+  .plate {
+    position: relative;
+    width: clamp(8rem, 26vw, 10.5rem);
+    aspect-ratio: 4 / 5;
+    justify-self: end;
+    overflow: hidden;
+    border-radius: 10px;
+    border: 1px solid var(--edge);
+    background: var(--shelf);
+    box-shadow: 0 24px 60px -30px rgb(0 0 0 / 0.55);
+  }
+
+  /* Desaturated at rest so it reads as part of the page rather than a photo
+     dropped onto it; full colour on hover. */
+  .plate img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 22%;
+    filter: saturate(0.74) contrast(1.03);
+    transition:
+      filter 0.7s var(--ease-out),
+      transform 0.9s var(--ease-out);
+  }
+
+  :global(.dark) .plate img {
+    filter: saturate(0.58) brightness(0.78) contrast(1.06);
+  }
+
+  .plate:hover img {
+    filter: none;
+    transform: scale(1.04);
+  }
+
+  /* Wide: portrait to the side of the name, vertically centred against it. */
+  @media (min-width: 48rem) {
+    .stage-inner {
+      grid-template-columns: minmax(0, 1fr) auto;
+      column-gap: clamp(2rem, 5vw, 5rem);
+    }
+
+    .kicker { grid-column: 1 / -1; }
+    .title  { grid-column: 1; grid-row: 2; }
+    .stage-foot { grid-column: 1; grid-row: 3; }
+
+    .plate {
+      grid-column: 2;
+      grid-row: 2;
+      align-self: center;
+      width: clamp(11rem, 20vw, 21rem);
+    }
+  }
+
+  /* Narrow: portrait above the name, in the reading order. */
+  @media (max-width: 47.99rem) {
+    .stage-inner {
+      grid-template-rows: auto auto auto 1fr;
+    }
+
+    .plate {
+      position: static;
+      grid-row: 2;
+      justify-self: start;
+      width: clamp(5rem, min(26vw, 13.5vh), 9.5rem);
+      margin-block: clamp(0.5rem, 1.5vh, 1.1rem) clamp(0.7rem, 2vh, 1.4rem);
+    }
+
+    .title { grid-row: 3; align-content: start; }
+    .stage-foot { grid-row: 4; align-self: end; }
+
+    .title-role { max-width: none; }
+  }
+</style>

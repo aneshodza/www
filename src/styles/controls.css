@@ -1,0 +1,153 @@
+/* ---------------------------------------------------------------------------
+   Controls. Every control on the site is 44px tall, set in Inter, and takes
+   the accent on hover — that base is declared once here, and each variant adds
+   only what makes it different.
+   --------------------------------------------------------------------------- */
+
+@layer components {
+  .action,
+  .action-solid,
+  .chip,
+  .back,
+  .foot-link,
+  .channel-val,
+  .cv-download {
+    --rule-y: 13px;
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-family: var(--font-sans);
+    font-size: var(--t--1);
+    font-weight: 560;
+    letter-spacing: -0.006em;
+  }
+
+  /* A text call to action is style A at a control's size. */
+  .action {
+    color: var(--ink);
+  }
+
+  /* A filled action for the single primary moment per page. */
+  .action-solid {
+    min-height: 46px;
+    padding: 0.4rem 1.35rem;
+    border-radius: 999px;
+    background: var(--ink);
+    color: var(--field);
+    transition:
+      transform 0.6s var(--spring-soft),
+      box-shadow 0.4s var(--ease-out);
+  }
+
+  .action-solid:hover,
+  .action-solid:focus-visible {
+    transform: translateY(-2px);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 42%, transparent);
+  }
+
+  .action-solid:active {
+    transform: translateY(0) scale(0.98);
+    transition-duration: 0.12s;
+  }
+
+  /* An outlined action, for a secondary download or export. */
+  .cv-download {
+    padding: 0.3rem 1rem;
+    border: 1px solid var(--edge);
+    border-radius: 999px;
+    color: var(--ink);
+    transition:
+      color 0.4s var(--ease-out),
+      border-color 0.4s var(--ease-out),
+      transform 0.6s var(--spring-soft);
+  }
+
+  .cv-download:hover,
+  .cv-download:focus-visible {
+    color: var(--accent-text);
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+
+  /* A back link, with a chevron that nudges against the direction of travel. */
+  .back {
+    gap: 0.6rem;
+    font-weight: 500;
+    color: var(--ink-3);
+  }
+
+  .back::before {
+    content: "";
+    width: 0.44rem;
+    height: 0.44rem;
+    border-left: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
+    transform: rotate(45deg);
+    transition: transform 0.55s var(--spring-snap);
+  }
+
+  .back:hover::before,
+  .back:focus-visible::before {
+    transform: rotate(45deg) translate(-2px, 2px);
+  }
+
+  .foot-link {
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    color: var(--ink-2);
+  }
+
+  .channel-val {
+    font-weight: 450;
+    word-break: break-word;
+  }
+
+  /* ---- Chips -------------------------------------------------------------
+     The two bare controls in the HUD. Smaller than a full action, no rule, and
+     they only ever change colour.
+     --------------------------------------------------------------------- */
+
+  .chip {
+    padding-inline: 0.35rem;
+    font-size: 0.75rem;
+    color: var(--ink-3);
+    transition: color 0.4s var(--ease-out);
+  }
+
+  .chip:hover,
+  .chip:focus-visible {
+    color: var(--accent-text);
+  }
+
+  .chip-lang {
+    justify-content: center;
+    min-width: 44px;
+    letter-spacing: 0.02em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .chip-theme {
+    gap: 0.4rem;
+    font-weight: 500;
+    letter-spacing: -0.004em;
+  }
+
+  @media (max-width: 47.99rem) {
+    .chip-lang {
+      min-width: 40px;
+      padding-inline: 0.3rem;
+    }
+
+    .chip-theme {
+      gap: 0.35rem;
+      padding-inline: 0.3rem;
+    }
+  }
+
+  @media (max-width: 23.5rem) {
+    .chip-theme {
+      min-width: 34px;
+      padding-inline: 0.25rem;
+    }
+  }
+}
