@@ -312,6 +312,9 @@ export async function mountField(
     depth: false,
     premultipliedAlpha: true,
     powerPreference: 'low-power',
+    // No GPU means software rendering (SwiftShader), where every frame costs
+    // hundreds of milliseconds of main thread. Better no field than that.
+    failIfMajorPerformanceCaveat: true,
   });
   if (!gl) return null;
 
@@ -377,7 +380,7 @@ export async function mountField(
   const view = new Float32Array(16);
   const viewProj = new Float32Array(16);
 
-  const still = !matchMedia('(prefers-reduced-motion: no-preference)').matches;
+  let still = !matchMedia('(prefers-reduced-motion: no-preference)').matches;
 
   // Camera state. Every one of these is a spring, so scroll, pointer and
   // theme changes interrupt each other cleanly instead of fighting.
@@ -525,7 +528,20 @@ export async function mountField(
     }
   }
 
+  // Frames this far apart mean the machine cannot carry the field (typically
+  // no GPU compositing, where every frame's commit blocks the main thread).
+  // A few in a row and the field settles into the still frame for good.
+  let slowFrames = 0;
+
   function frame(now: number) {
+    slowFrames = now - last > 40 ? slowFrames + 1 : Math.max(0, slowFrames - 1);
+    if (slowFrames >= 3) {
+      stop();
+      still = true;
+      sDescent.jump(stillDepth(opts));
+      draw(0);
+      return;
+    }
     raf = requestAnimationFrame(frame);
     sDescent.target = opts.base + scrollProgress() * opts.range;
     const dt = Math.min(0.05, (now - last) / 1000 || 0.016);
