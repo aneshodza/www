@@ -693,9 +693,6 @@ const contact = [
             <div class="cv-doc__desc">
               <Content />
             </div>
-            {entry.data.tech.length > 0 && (
-              <p class="cv-doc__tech">{entry.data.tech.join(' · ')}</p>
-            )}
           </div>
         </article>
       ))}
@@ -970,7 +967,7 @@ const contact = [
       display: grid;
       grid-template-columns: 19mm 1fr;
       gap: 3mm;
-      margin-bottom: 1.5mm;
+      margin-bottom: 3mm;
       break-inside: avoid;
     }
     .cv-doc__entry-meta {
@@ -1016,13 +1013,6 @@ const contact = [
     }
     .cv-doc__desc :global(em) {
       font-style: italic;
-    }
-    .cv-doc__tech {
-      margin-top: 1.2mm;
-      font-family: var(--font-sans);
-      font-size: 8.2pt;
-      letter-spacing: 0.02em;
-      color: #666;
     }
 
     /* Compact projects & research list: title + terse measured result per line. */
