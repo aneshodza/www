@@ -3,8 +3,8 @@ locale: de
 company: Centro Labs
 role: Mitgründer
 location: Zürich
-period: Jan 2026 · heute
-order: 1
+period: Jan 2026 · Sep 2026
+order: 3
 tech:
   - TypeScript
   - LangGraph.js

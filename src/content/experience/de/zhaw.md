@@ -4,7 +4,7 @@ company: ZHAW
 role: Forscher & Hilfsassistenz
 location: Zürich
 period: Aug 2024 · heute
-order: 3
+order: 1
 tech: []
 ---
 

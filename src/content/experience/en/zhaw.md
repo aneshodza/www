@@ -4,7 +4,7 @@ company: ZHAW
 role: Student Researcher & Teaching Assistant
 location: Zurich
 period: Aug 2024 · present
-order: 3
+order: 1
 tech: []
 ---
 
